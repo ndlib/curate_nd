@@ -1,14 +1,16 @@
 <dl class="<%= dom_class(curation_concern) %> attributes">
-  <%= curation_concern_attribute_to_html(curation_concern, :identifier, "Digital Object Identifier (DOI)") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :creator, 'Author(s)') %>
   <%= curation_concern_attribute_to_html(curation_concern, :description, 'Abstract') %>
-  <%= curation_concern_attribute_to_html(curation_concern, :contributor, "Contributor") %>
-  <%= curation_concern_attribute_to_html(curation_concern, :subject, "Subject") %>
-  <%= curation_concern_attribute_to_html(curation_concern, :publisher, "Publisher") %>
-  <%= curation_concern_attribute_to_html(curation_concern, :advisor, "Advisor") %>
-  <%= curation_concern_attribute_to_html(curation_concern, :bibliographic_citation, "Bibliographic Citation") %>
-  <%= curation_concern_attribute_to_html(curation_concern, :source, "Source") %>
-  <%= curation_concern_attribute_to_html(curation_concern, :language, "Language") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :created, 'Date Completed') %>
   <dt>Access Rights</dt>
   <dd class="attribute permission"><%= link_to_edit_permissions(curation_concern) %></dd>
   <%= curation_concern_attribute_to_html(curation_concern, :embargo_release_date, "Embargo Release Date") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :identifier, "Digital Object Identifier (DOI)") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :advisor, "Advisor(s)") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :contributor, "Contributing Author(s)") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :subject, "Keyword(s) or phrase(s)") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :bibliographic_citation, "Bibliographic citation") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :language, "Language") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :publisher, "Publisher") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :source, "Source") %>
 </dl>
