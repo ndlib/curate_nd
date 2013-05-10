@@ -1,0 +1,47 @@
+@import 'compass';
+@import 'global-variables';
+
+/* Accordion Overrides */
+.accordion-heading {
+  background-color:$tableBackgroundAccent;
+
+  h3 {
+    margin:0;
+  }
+}
+
+
+/* Custom required field indicator */
+.control-group {
+  margin-left:.7em;
+  position:relative;
+}
+
+.control-label .required-indicator {
+  border-bottom:none;
+  color:$red;
+  left:-1.3em;
+  position:absolute;
+  top:0;
+}
+
+
+/* Pills Overrides */
+.action-bar .nav > li > a {
+  border-color:transparent;
+  border-style:solid;
+  border-width:1px;
+}
+
+.action-bar .nav > li > a:hover {
+  background-color:#EFDA88;
+  border-color:#EFDA88;
+}
+
+.action-bar .nav-pills > .active > a,
+.action-bar .nav-pills > .active > a:hover {
+  @include background-image(linear-gradient(#F5E59E, $yellow 98%, #9C7012));
+  background-color:$yellow;
+  border-color:#C59B2B #A17515 #A17515 #C59B2B;
+  color:$blue;
+}
