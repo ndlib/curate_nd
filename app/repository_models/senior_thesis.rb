@@ -81,6 +81,14 @@ class SeniorThesis < ActiveFedora::Base
     File.join(Rails.configuration.doi_url, self.identifier)
   end
 
+  def authors_for_citation
+    creator | advisor | contributor
+  end
+
+  def citation
+    @citation ||= Citation.new(self)
+  end
+
   private
   def parse_person_name(values)
     Array(values).each_with_object([]) {|value, collector|
