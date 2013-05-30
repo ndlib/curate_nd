@@ -39,7 +39,7 @@ describe 'ActiveFedora::DelegateAttributes' do
     }
 
     def set_locations(value)
-      "LOCATION: #{value}"
+      value.dup << '127.0.0.1'
     end
     protected :set_locations
 
@@ -109,13 +109,14 @@ describe 'ActiveFedora::DelegateAttributes' do
     it "allows for a writer to intercept the setting of values" do
       values = ['foo.rb', 'bar.rb']
       subject.file_names = values
-      expect(subject.properties.file_names).to eq(values.collect(&:reverse))
-      expect(subject.file_names).to eq(values.collect(&:reverse))
+      expect(subject.properties.file_names).to eq(values.reverse)
+      expect(subject.file_names).to eq(values.reverse)
     end
 
     it "allows for a writer that is a symbol" do
       values = ['South Bend', 'State College', 'Minneapolis']
-      expected_values = values.collect{|v| "LOCATION: #{v}"}
+      expected_values = values.dup
+      expected_values << '127.0.0.1'
       subject.locations = values
       expect(subject.properties.locations).to eq(expected_values)
       expect(subject.locations).to eq(expected_values)

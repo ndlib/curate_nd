@@ -8,6 +8,7 @@ module ActiveFedora
 
       def initialize(name, options = {})
         @options = options.symbolize_keys
+        @options.assert_valid_keys(:default, :datastream, :validates, :at, :multiple, :writer, :reader)
         @name = name
         @options[:multiple] = true unless @options.key?(:multiple)
       end
@@ -33,57 +34,23 @@ module ActiveFedora
         end
       end
 
-      def create_writer(klass)
-        if writer = options[:writer]
-          writer_method_name = "#{name}="
-          writer_instance =  klass.instance_method(writer_method_name)
-          if writer.respond_to?(:call)
-            if multiple?
-              klass.send(:define_method, writer_method_name) do |values|
-                writer_instance.bind(self).call(values.collect{|v| writer.call(v)})
-              end
-            else
-              klass.send(:define_method, writer_method_name) do |value|
-                writer_instance.bind(self).call(writer.call(value))
-              end
-            end
-          else
-            if multiple?
-              klass.send(:define_method, writer_method_name) do |values|
-                writer_instance.bind(self).call(values.collect{|value| send(writer,value)})
-              end
-            else
-              klass.send(:define_method, writer_method_name) do |value|
-                writer_instance.bind(self).call(send(writer, value))
-              end
+      def wrap_writer_method(context)
+        with_writer_method_wrap do |method_name, block|
+          context.instance_exec do
+            original_method = instance_method(method_name)
+            define_method(method_name) do |*args|
+              original_method.bind(self).call(instance_exec(*args, &block))
             end
           end
         end
       end
 
-      def create_reader(klass)
-        if reader = options[:reader]
-          reader_method_name = "#{name}"
-          reader_instance =  klass.instance_method(reader_method_name)
-          if reader.respond_to?(:call)
-            if multiple?
-              klass.send(:define_method, reader_method_name) do
-                reader_instance.bind(self).call.collect{|value| reader.call(value)}
-              end
-            else
-              klass.send(:define_method, reader_method_name) do
-                reader.call(reader_instance.bind(self).call)
-              end
-            end
-          else
-            if multiple?
-              klass.send(:define_method, reader_method_name) do
-                reader_instance.bind(self).call.collect{|value| send(reader, value)}
-              end
-            else
-              klass.send(:define_method, reader_method_name) do
-                send(reader, reader_instance.bind(self).call)
-              end
+      def wrap_reader_method(context)
+        with_reader_method_wrapper do |method_name, block|
+          context.instance_exec do
+            original_method = instance_method(method_name)
+            define_method(method_name) do |*args|
+              instance_exec(original_method.bind(self).call(*args), &block)
             end
           end
         end
@@ -91,8 +58,24 @@ module ActiveFedora
 
       private
 
-        def multiple?
-          options[:multiple]
+        def with_writer_method_wrap
+          if writer = options[:writer]
+            method_name = "#{name}=".to_sym
+            proc = writer.respond_to?(:call) ?
+              writer :
+              lambda { |value| send(writer, value) }
+            yield(method_name, proc)
+          end
+        end
+
+        def with_reader_method_wrapper
+          if reader = options[:reader]
+            method_name = "#{name}".to_sym
+            proc = reader.respond_to?(:call) ?
+              reader :
+              lambda { |value| send(reader, value) }
+            yield(method_name, proc)
+          end
         end
 
         def options
@@ -115,8 +98,9 @@ module ActiveFedora
 
         validates(attribute.name, attribute.options_for_validation) if attribute.options_for_validation.present?
         delegate(attribute.name, attribute.options_for_delegation)
-        attribute.create_writer(self)
-        attribute.create_reader(self)
+
+        attribute.wrap_writer_method(self)
+        attribute.wrap_reader_method(self)
       end
     end
 
