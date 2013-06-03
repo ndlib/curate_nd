@@ -11,6 +11,7 @@ require 'rspec/autorun'
 require 'database_cleaner'
 require 'capybara/rspec'
 require 'webmock/rspec'
+require 'timeout'
 
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -58,5 +59,11 @@ RSpec.configure do |config|
 
   config.after(:each) do
     DatabaseCleaner.clean
+  end
+
+  config.around(:each) do |example|
+    Timeout::timeout(120) {
+      example.run
+    }
   end
 end
