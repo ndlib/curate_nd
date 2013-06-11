@@ -4,6 +4,10 @@ class CurationConcern::SeniorThesesController < CurationConcern::BaseController
   respond_to(:html)
   layout 'curate_nd/1_column'
 
+  rescue_from Citation::InvalidCurationConcern do |exception|
+    redirect_to polymorphic_path([:curation_concern, curation_concern], :action => "edit"), notice: "Could not show citation. #{exception.message}"
+  end
+    
   def curation_concern
     @curation_concern ||=
     if params[:id]

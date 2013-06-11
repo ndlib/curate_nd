@@ -1,8 +1,19 @@
 class Citation
   include Rails.application.routes.url_helpers
 
+  attr_reader :curation_concern, :authors, :title, :publishers
+
+  class InvalidCurationConcern < RuntimeError
+    def initialize(url_string)
+      super(url_string)
+    end
+  end
+
   def initialize(curation_concern)
     @curation_concern = curation_concern
+    @authors = authors_in_apa
+    @title = title_in_apa
+    @publishers = curation_concern.publisher.join(", ")
   end
 
   def to_s
@@ -10,17 +21,23 @@ class Citation
   end
 
   def to_apa
-    authors_in_apa + published_date_in_apa + @curation_concern.title.strip + ". " + publishers_in_apa + ". " + doi_apa
-  end
-
-  def authors
-    @curation_concern.authors_for_citation
+    authors + published_date_in_apa + title + ". " + publishers + ". " + doi_apa
   end
 
   private
 
+  def title_in_apa
+    if curation_concern.title.blank?
+      raise InvalidCurationConcern.new("Invalid Title!")
+    end
+    curation_concern.title
+  end
+
   def authors_in_apa
-    authors.collect {|name| name_format(name.strip) }.to_sentence(:last_word_connector => ', & ', :two_words_connector => ', & ')
+    if curation_concern.authors_for_citation.blank?
+      raise InvalidCurationConcern.new("Invalid Author!")
+    end
+    curation_concern.authors_for_citation.collect {|name| name_format(name.strip) }.to_sentence(:last_word_connector => ', & ', :two_words_connector => ', & ')
   end
 
   def name_format(name)
@@ -38,26 +55,19 @@ class Citation
   end
 
   def published_date_in_apa
-    if @curation_concern.created.blank?
+    if curation_concern.created.blank?
       return " "
     end
-    date = Date.parse(@curation_concern.created)
+    date = Date.parse(curation_concern.created)
     date.strftime("(%Y, %B %d). ")
   end
 
-  def publishers_in_apa
-    if @curation_concern.publisher.size == 1
-      return @curation_concern.publisher.first
-    end
-    @curation_concern.publisher.join(", ")
-  end
-
   def doi_apa
-    @curation_concern.identifier.nil? ? no_doi : @curation_concern.identifier
+    curation_concern.identifier.nil? ? no_doi : curation_concern.identifier
   end
 
   def no_doi
-    "Retrieved from #{File.join(Rails.configuration.application_url, common_object_path(@curation_concern.to_param))}"
+    "Retrieved from #{File.join(Rails.configuration.application_url, common_object_path(curation_concern.to_param))}"
   end
 end
 
