@@ -18,6 +18,8 @@ describe 'ActiveFedora::DelegateAttributes' do
     attribute :title, {
       datastream: 'properties',
       multiple: false,
+      label: 'Title of your Work',
+      hint: "How would you name this?",
       validates: { presence: true }
     }
 
@@ -68,6 +70,27 @@ describe 'ActiveFedora::DelegateAttributes' do
   subject { MockDelegateAttribute.new() }
 
   let(:reloaded_subject) { subject.class.find(subject.pid) }
+  describe '#attribute_config' do
+    let(:attribute_config) { subject.attribute_config(:title) }
+    it do
+      expect(attribute_config.options_for_delegation).to be_instance_of(Hash)
+      expect(attribute_config.options_for_validation).to be_instance_of(Hash)
+      expect(attribute_config.options_for_input).to be_instance_of(Hash)
+    end
+  end
+  describe '#input_options_for' do
+    let(:override_options) { {spam: true} }
+    let(:attribute_config) { subject.input_options_for(:title, override_options ) }
+    it 'merges the override and the input' do
+      expect(attribute_config.fetch(:spam)).to eq(true)
+      expect(attribute_config.fetch(:label)).to eq('Title of your Work')
+    end
+
+    it 'gracefully fails if the attribute is not configured' do
+      expect(subject.input_options_for(:missing, override_options)).to eq(override_options)
+    end
+
+  end
   describe '.attribute' do
     it "has creates a setter/getter" do
       subject.title = 'Hello'
