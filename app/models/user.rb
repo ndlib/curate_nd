@@ -20,6 +20,11 @@ class User < ActiveRecord::Base
   def password_required?; false; end
   def email_required?; false; end
 
+  def preferred_email
+    ldap_service = LdapService.new(self)
+    ldap_service.preferred_email
+  end
+
   def update_with_password(attributes)
     self.email = attributes[:email]
     self.save

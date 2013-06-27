@@ -23,6 +23,7 @@ describe HelpRequestsController do
     describe 'success' do
       let(:attributes) { FactoryGirl.attributes_for(:help_request) }
       it 'redirects to dashboard and flashes a message' do
+        User.any_instance.stub(:preferred_email) { "Pref.Email@example.com" }
         sign_in(user)
         post(:create, help_request: attributes)
         expect(response.status).to eq(302)

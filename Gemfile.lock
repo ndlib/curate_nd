@@ -272,6 +272,7 @@ GEM
     namae (0.7.1)
     nest (1.1.2)
       redis
+    net-ldap (0.3.1)
     net-scp (1.1.1)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
@@ -495,6 +496,7 @@ DEPENDENCIES
   morphine
   mysql2
   namae
+  net-ldap
   nokogiri (~> 1.6.0)
   poltergeist
   rails_best_practices

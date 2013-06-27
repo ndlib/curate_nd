@@ -24,6 +24,7 @@ group :default do
   gem 'therubyracer', :platforms => :ruby
   gem 'bootstrap-datepicker-rails'
   gem 'namae'
+  gem 'net-ldap'
 end
 
 group :pre_production, :production do
