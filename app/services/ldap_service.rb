@@ -16,13 +16,11 @@ class LdapService
   end
 
   def preferred_email
-    Timeout.timeout(LDAP_TIME_OUT){
-      if !(result = ldap_lookup).blank?
-        result[:mail].first
-      else
-        raise UserNotFoundError.new("User: #{net_id} is not found.")
-      end
-    }
+    ldap_query[:mail].first
+  end
+
+  def display_name
+    ldap_query[:displayName].first
   end
 
   def self.ldap_options
@@ -33,7 +31,7 @@ class LdapService
   def ldap_lookup
     results = connection.search(
                   :base => 'o="University of Notre Dame", st=Indiana, c=US',
-                  :attributes => ['uid', 'mail'],
+                  :attributes => ['uid', 'mail', 'displayName'],
                   :filter     => Net::LDAP::Filter.eq('uid', net_id),
                   :return_result => true
     ) 
@@ -42,6 +40,16 @@ class LdapService
       return nil
     end
     results.first
+  end
+
+  def ldap_query
+    Timeout.timeout(LDAP_TIME_OUT){
+      if !(result = ldap_lookup).blank?
+        return result
+      else
+        raise UserNotFoundError.new("User: #{net_id} is not found.")
+      end
+    }
   end
 
   def connection

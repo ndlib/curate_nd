@@ -21,8 +21,11 @@ class User < ActiveRecord::Base
   def email_required?; false; end
 
   def preferred_email
-    ldap_service = LdapService.new(self)
     ldap_service.preferred_email
+  end
+
+  def display_name
+    ldap_service.display_name
   end
 
   def update_with_password(attributes)
@@ -56,4 +59,11 @@ class User < ActiveRecord::Base
   def to_s
     username
   end
+
+  protected
+
+  def ldap_service
+    @ldap ||= LdapService.new(self)
+  end
+
 end
