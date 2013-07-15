@@ -15,7 +15,7 @@ class Person < ActiveFedora::Base
       datastream: :descMetadata, multiple: false
 
   def self.find_or_create_by_user(user)
-    return Person.find(user.id.to_s)
+    return Person.find(user.repository_id.to_s)
   rescue ActiveFedora::ObjectNotFoundError
     return create_person(user)
   end
@@ -26,7 +26,7 @@ class Person < ActiveFedora::Base
     person.alternate_email ||= user.email
     person.save!
     person.update_user!(user)
-    return person
+    person
   end
 
   def update_user!(user)
