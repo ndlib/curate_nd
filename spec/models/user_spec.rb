@@ -46,4 +46,20 @@ describe User do
       }.to change { User.count }.by(0)
     end
   end
+
+  let(:user){
+    @user = User.new
+    @user.username = "jsmith.test"
+    @user.save!
+    @user.stub!(:display_name).and_return("John Smith")
+    @user.stub!(:email).and_return("John.Smith@example.com")
+    @user
+  }
+
+  it 'should have a user object' do
+    user.repository_id.should == nil
+    person = user.person
+    puts person.inspect
+    user.repository_id.should_not == nil
+  end
 end

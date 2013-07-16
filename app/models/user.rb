@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :remember_me, :username#, :password
 
   attr_accessor :password
-
+  
   def password_required?; false; end
   def email_required?; false; end
 
@@ -58,6 +58,10 @@ class User < ActiveRecord::Base
   # the account.
   def to_s
     username
+  end
+
+  def person
+    @person ||= Person.find_or_create_by_user(self)
   end
 
   protected
