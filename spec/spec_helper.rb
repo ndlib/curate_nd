@@ -66,4 +66,12 @@ RSpec.configure do |config|
       example.run
     }
   end
+
+  config.before(:each) do
+    User.any_instance.stub(:ldap_service).and_return(nil)
+    User.any_instance.stub_chain(:ldap_service, :display_name).and_return(nil)
+    User.any_instance.stub_chain(:ldap_service, :preferred_email).and_return(nil)
+    allow_message_expectations_on_nil
+  end
 end
+

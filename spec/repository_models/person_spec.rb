@@ -12,7 +12,8 @@ describe Person do
   }
 
   describe '.find_or_create_by_user' do
-    it 'should create a new person object' do
+    it 'should create a new person object' do 
+      User.any_instance.stub(:get_value_from_ldap).and_return(nil)
       obtained_result = Person.find_or_create_by_user(user)
       obtained_result.class.should eq Person
     end
