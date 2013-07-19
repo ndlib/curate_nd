@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
     :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :remember_me, :username, :alternate_email, :preferred_email
+  attr_accessible :email, :remember_me, :username, :display_name, :alternate_email, :preferred_email
 
   attr_accessor :password
 
@@ -46,13 +46,11 @@ class User < ActiveRecord::Base
   end
 
   def display_name
-    if person.blank? || person.display_name.blank?
-      return ldap_service.display_name
-    end
-    person.display_name
+    @display_name ||= self.attributes['display_name'] || person.display_name || ldap_service.display_name
   end
 
   def display_name=(display_name)
+    write_attribute(:display_name, display_name)
     person.display_name= display_name
   end
 
