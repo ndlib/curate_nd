@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
     :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :remember_me, :username, :display_name, :alternate_email, :preferred_email
+  attr_accessible :email, :remember_me, :username, :name, :alternate_email, :preferred_email
 
   attr_accessor :password
 
@@ -103,6 +103,9 @@ class User < ActiveRecord::Base
   def get_value_from_ldap(attr)
     ldap_service.send(attr.to_sym)
   end
+
+  alias_method :name, :display_name
+  alias_method :name=, :display_name=
 
   protected
 

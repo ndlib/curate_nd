@@ -45,7 +45,7 @@ describe 'end to end behavior', FeatureSupport.options do
     let(:sign_in_count) { 2 }
     let(:expected_email) { 'hello@world.com' }
     it 'allows me to edit my email' do
-      expect(user.email).to be_empty
+      expect(user.alternate_email).to be_empty
       login_as(user)
       visit('/dashboard')
       within('.page-actions') do
@@ -60,7 +60,7 @@ describe 'end to end behavior', FeatureSupport.options do
         click_link('Profile')
       end
       within('form.edit_user') do
-        expect(find('#user_email').value).to eq(expected_email)
+        expect(find('#user_alternate_email').value).to eq(expected_email)
       end
     end
   end

@@ -8,6 +8,8 @@ CurateNd::Application.routes.draw do
     resources :senior_theses, except: :index
   end
 
+  resources :users, only: [:update]
+
   namespace :admin do
     constraints CurateND::AdminConstraint do
       mount Resque::Server, :at => "queues"
