@@ -1,6 +1,7 @@
 require 'spec_helper_features'
 
 describe 'end to end behavior', FeatureSupport.options do
+
   let(:sign_in_count) { 0 }
   let(:user) {
     FactoryGirl.create(
@@ -33,14 +34,19 @@ describe 'end to end behavior', FeatureSupport.options do
     it 'allows me to edit my email' do
       expect(user.alternate_email).to be_empty
       login_as(user)
+
       visit('/dashboard')
       within('.page-actions') do
         click_link('Profile')
       end
-      within('form.edit_user') do
-        fill_in('Alternate email', with: expected_email)
-        click_button('Update')
+
+      expect_to_create_activities do
+        within('form.edit_user') do
+          fill_in('Alternate email', with: expected_email)
+          click_button('Update')
+        end
       end
+
       page.should have_content('You updated your account successfully.')
       within('.page-actions') do
         click_link('Profile')

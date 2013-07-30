@@ -8,6 +8,12 @@ module FeatureSupport
     super(user, scope: :user, run_callbacks: false)
   end
 
+  def expect_to_create_activities
+    expect {
+      yield
+    }.to change { ActivityEngine::Activity.count }
+  end
+
   module_function
   def options(default = {type: :feature})
     if ENV['JS']
