@@ -1,1 +1,1 @@
-LDAP_OPTIONS = {:host => 'directory.nd.edu', :port => 636, :encryption => :simple_tls}
+LdapService.ldap_options= YAML.load_file(Rails.root.join('config/service_dn.yml'))

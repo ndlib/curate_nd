@@ -3,6 +3,8 @@ class LdapService
 
   attr_reader :net_id
 
+  class_attribute :ldap_options
+
   LDAP_TIME_OUT = 15
 
   def initialize(net_id)
@@ -21,10 +23,6 @@ class LdapService
 
   def display_name
     ldap_query[:displayName].first
-  end
-
-  def self.ldap_options
-    @ldap_options ||= LDAP_OPTIONS
   end
 
   private
@@ -53,7 +51,7 @@ class LdapService
   end
 
   def connection
-    @connection ||= Net::LDAP.new(self.class.ldap_options)
+    @connection ||= Net::LDAP.new(ldap_options)
   end
 end
 
