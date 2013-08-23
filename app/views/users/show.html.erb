@@ -1,0 +1,17 @@
+<div class="row-fluid">
+  <div class="span3" >
+    <div class="thumbnail">
+      <img src="<%= current_user.gravatar_link %>" alt="" />
+    </div>
+  </div>
+  <div class="span5" >
+    <%= render 'attributes', user: @user %>
+  </div>
+</div>
+<% content_for :second_row do %>
+  <div class="form-actions">
+    <%= link_to "Edit your profile", edit_user_path(current_user), class: 'btn btn-primary' %>
+    <%= link_to "Back to Dashboard", dashboard_index_path, class: 'btn btn-info pull-right' %>
+  </div>
+<% end %>
+

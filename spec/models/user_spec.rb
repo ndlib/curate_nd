@@ -54,7 +54,7 @@ describe User do
   let(:user){
     @user = User.new
     @user.username = "jsmith.test"
-    @user.stub(:display_name).and_return("John Smith")
+    @user.stub(:name).and_return("John Smith")
     @user.stub(:email).and_return("John.Smith@example.com")
     @user
   }
@@ -91,11 +91,11 @@ describe User do
   it 'should save person object when user is saved' do
     User.any_instance.stub(:get_value_from_ldap).and_return(nil)
     another_user.save!
-    another_user.person.display_name.should == nil
+    another_user.person.name.should == nil
 
-    another_user.display_name = "Test User"
+    another_user.name = "Test User"
     another_user.save!
 
-    another_user.person.display_name.should == "Test User"
+    another_user.person.name.should == "Test User"
   end
 end

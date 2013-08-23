@@ -1,0 +1,41 @@
+<%= simple_form_for(current_user) do |f| %>
+    <% if f.error_notification -%>
+      <div class="alert alert-error fade in">
+      <strong>Wait don't go!</strong> There was a problem with your submission. Please review the errors below:
+      <a class="close" data-dismiss="alert" href="#">&times;</a>
+    </div>
+  <% end -%>
+  <div class="row-fluid">
+    <fieldset>
+      <legend>
+        Update your profile. 
+      </legend>
+      <div class="span3" >
+        <div class="thumbnail">
+          <img src="<%= current_user.gravatar_link %>" alt="" />
+        </div>
+      </div>
+      <div class="span5">
+        <%= f.input :name %>
+        <%= f.input :preferred_email %>
+        <%= f.input :alternate_email %>
+        <%= f.input :date_of_birth %>
+        <%= f.input :gender %>
+        <%= f.input :title %>
+        <%= f.input :campus_phone_number %>
+        <%= f.input :alternate_phone_number %>
+        <%= f.input :personal_webpage %>
+        <%= f.input :blog %>
+      </div>
+    </fieldset>
+  </div>
+  <p>By providing an alternate email, you will be able to use that email to login to CurateND even after you have left the University of Notre Dame.</p>
+  <p><em>Note: The ability to login via this email is not yet functioning, but at least we'll have your email.</em></p>
+  <div class="row">
+    <div class="span12 form-actions">
+      <%= f.submit(class: 'btn btn-primary', value: 'Update') %>
+      <%= link_to "Cancel", :back, class: 'btn btn-info pull-right' %>
+    </div>
+  </div>
+<% end %>
+

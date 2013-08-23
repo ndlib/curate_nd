@@ -1,0 +1,14 @@
+<table class="table table-striped <%= dom_class(current_user) %> attributes">
+  <tbody>
+      <tr><th>Given Name: </th><td><ul class='tabular'><%= current_user.first_name %></ul></td></tr>
+      <tr><th>Last Name: </th><td><ul class='tabular'><%= current_user.last_name %></ul></td></tr>
+      <tr><th>Title: </th><td><ul class='tabular'><%= current_user.title %></ul></td></tr>
+      <tr><th>Campus Phone: </th><td><ul class='tabular'><%= current_user.campus_phone_number %></ul></td></tr>
+      <tr><th>Alternate Phone: </th><td><ul class='tabular'><%= current_user.alternate_phone_number %></ul></td></tr>
+      <tr><th>Preferred Email: </th><td><ul class='tabular'><%= current_user.preferred_email %></ul></td></tr>
+      <tr><th>Alternate Email: </th><td><ul class='tabular'><%= current_user.alternate_email %></ul></td></tr>
+      <tr><th>Date of Birth: </th><td><ul class='tabular'><%= current_user.date_of_birth %></ul></td></tr>
+      <tr><th>Personal Webpage: </th><td><ul class='tabular'><%= current_user.personal_webpage %></ul></td></tr>
+      <tr><th>Blog: </th><td><ul class='tabular'><%= current_user.blog %></ul></td></tr>
+  </tbody>
+</table>

@@ -8,7 +8,7 @@ CurateNd::Application.routes.draw do
     resources :senior_theses, except: :index
   end
 
-  resources :users, only: [:update]
+  resources :users, only: [:update, :show, :edit]
 
   namespace :admin do
     constraints CurateND::AdminConstraint do
