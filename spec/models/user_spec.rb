@@ -54,14 +54,13 @@ describe User do
   let(:user){
     @user = User.new
     @user.username = "jsmith.test"
-    @user.stub(:name).and_return("John Smith")
-    @user.stub(:email).and_return("John.Smith@example.com")
     @user
   }
 
-  it 'should have a user object' do
+  it 'should create an associated Person object' do
     User.any_instance.stub(:get_value_from_ldap).and_return(nil)
     user.repository_id.should == nil
+    user.person.class.should == Person
     user.save!
     user.repository_id.should_not == nil
   end
@@ -73,14 +72,6 @@ describe User do
     @new_user
   }
 
-  it 'should create a new person object when a new user is created' do
-    User.any_instance.stub(:get_value_from_ldap).and_return(nil)
-    new_user.person.should == nil 
-    new_user.save!
-    new_user.person.class.should == Person
-  end
-
-
   let(:another_user){
     @another_user = User.new
     @another_user.username = "test_user"
@@ -88,7 +79,7 @@ describe User do
     @another_user
   }
 
-  it 'should save person object when user is saved' do
+  it 'should save the assoicated person object when user is saved' do
     User.any_instance.stub(:get_value_from_ldap).and_return(nil)
     another_user.save!
     another_user.person.name.should == nil

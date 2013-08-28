@@ -1,0 +1,47 @@
+tcp_nopush on;
+tcp_nodelay off;
+
+upstream app_server {
+    server unix:/tmp/curatend.sock.0;
+}
+server {
+    listen 80;
+    server_name <%= fqdn %>;
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+server {
+    listen 443 ssl default_server deferred;
+    server_name _;
+    ssl_certificate      /etc/ssl/thawte/library.nd.edu.crt;
+    ssl_certificate_key  /etc/ssl/thawte/library.nd.edu.key;
+    ssl_session_cache shared:SSL:1m;
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
+
+    client_max_body_size 4G;
+    root /home/app/curatend/current/public;
+    location ^~ /assets/ {
+        # compress things on-the-fly
+        gzip on;
+        # first try to serve a precomputed gzipped version
+        gzip_static on;
+        expires 1y;
+        add_header Cache-Control public;
+        add_header ETag "";
+        break;
+    }
+
+    #try_files /system/maintenance.html $uri @app;
+    try_files $uri @app;
+
+    location @app {
+        # proxy_set_header Host $http_host;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+        proxy_redirect off;
+        proxy_pass http://app_server;
+    }
+}

@@ -25,10 +25,18 @@ group :default do
   gem 'therubyracer', :platforms => :ruby
   gem 'bootstrap-datepicker-rails'
   gem 'namae'
+  gem 'unicorn', '~> 4.0'
   gem 'net-ldap'
   gem 'activity_engine', '~>0.0.8'
   gem 'active_fedora-registered_attributes'
 end
+
+# Hack to work around some bundler strangeness
+#
+# This gem was appearing in the lock file, but was not
+# being listed in a `bundle list` command on the staging machine.
+# Explicitly require it here.
+gem 'addressable', '~> 2.3.5'
 
 group :pre_production, :production do
   gem "sentry-raven"

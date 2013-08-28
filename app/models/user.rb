@@ -20,29 +20,30 @@ class User < ActiveRecord::Base
 
   attr_accessor :password
 
+  # Every User has an associated Person record in Fedora, which is created lazily.
+  after_commit :update_person
+
   delegate :first_name, :last_name, *person_attribute_readers, *person_attribute_setters, to: :person
 
-  after_create :find_or_create_person
-  after_update :update_person
-  
   GRAVATAR_URL = "http://www.gravatar.com/avatar/"
 
   def password_required?; false; end
   def email_required?; false; end
 
   def preferred_email
-    if person.blank? || person.preferred_email.blank?
+    if person.preferred_email.blank?
       return ldap_service.preferred_email
     end
     person.preferred_email
   end
 
   def preferred_email=(preferred_email)
-    person.preferred_email= preferred_email
+    person.preferred_email = preferred_email
   end
 
+  # is this what is really desired? to return the email if the alternate email is blank?
   def alternate_email
-    if person.blank? || person.alternate_email.blank?
+    if person.alternate_email.blank?
       return email
     end
     person.alternate_email
@@ -96,15 +97,13 @@ class User < ActiveRecord::Base
   def to_param
     id
   end
-  
-  def person
-    @person ||= Person.find(self.repository_id)
-  rescue ArgumentError
-    nil
-  end
 
-  def find_or_create_person
-    @person = Person.find_or_create_by_user(self)
+  def person
+    @person ||= if self.repository_id
+                  Person.find(self.repository_id)
+                else
+                  create_person
+                end
   end
 
   def get_value_from_ldap(attr)
@@ -130,11 +129,26 @@ class User < ActiveRecord::Base
     @ldap ||= LdapService.new(self)
   end
 
+  # Make a new person object and populate it.
+  # Must be careful since when we update ourselves with a link to the new
+  # person object, we will trigger a callback to save the person
+  # object (again).
+  def create_person
+    person = Person.new
+    person.name = get_value_from_ldap(:display_name)
+    person.preferred_email = get_value_from_ldap(:preferred_email)
+    person.alternate_email = email
+    person.save!
+    self.repository_id = person.pid
+    self.save
+    person
+  end
+
   def update_person
     person.save
   end
 
   def email_hash(gravatar_email)
-    @md5 = Digest::MD5.hexdigest(gravatar_email.to_s.strip.downcase)
+    Digest::MD5.hexdigest(gravatar_email.to_s.strip.downcase)
   end
 end
