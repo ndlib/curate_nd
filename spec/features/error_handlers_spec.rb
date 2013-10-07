@@ -18,6 +18,5 @@ describe 'error behavior', FeatureSupport.options do
 
     visit("/concern/senior_theses/#{curation_concern.to_param}")
     expect(page).to have_content("Unauthorized")
-    expect(page).to have_content("You are not authorized to access the page.")
   end
 end

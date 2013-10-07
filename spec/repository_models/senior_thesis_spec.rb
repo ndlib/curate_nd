@@ -22,7 +22,7 @@ describe SeniorThesis do
   it('has a bibliographic_citation') { subject.should respond_to(:bibliographic_citation) }
   it('has a source') { subject.should respond_to(:source) }
   it('has a language') { subject.should respond_to(:language) }
-  it('has a archived_object_type') { subject.should respond_to(:archived_object_type) }
+  it('has a resource_type') { subject.should respond_to(:resource_type) }
   it('has a content_format') { subject.should respond_to(:content_format) }
   it('has a extent') { subject.should respond_to(:extent) }
   it('has a requires') { subject.should respond_to(:requires) }

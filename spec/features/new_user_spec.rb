@@ -25,7 +25,7 @@ describe 'first time user', FeatureSupport.options do
       click_button("Update")
     end
 
-    page.assert_selector("h2", text: "Search CurateND")
+    page.should have_content("Search CurateND")
 
     logout
     visit('/')

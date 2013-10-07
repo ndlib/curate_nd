@@ -59,8 +59,8 @@ class SeniorThesisMetadataDatastream < ActiveFedora::NtriplesRDFDatastream
       index.as :stored_searchable, :facetable
     end
 
-    map.archived_object_type({in: RDF::DC, to: 'type'}) do |index|
-      index.as :stored_searchable, :displayable, :facetable
+    map.resource_type({in: RDF::DC, to: "type"}) do |index|
+      index.as :stored_searchable, :facetable
     end
 
     map.content_format({in: RDF::DC, to: 'format'})

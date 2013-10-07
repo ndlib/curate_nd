@@ -83,6 +83,14 @@ class User < ActiveRecord::Base
     'curate_nd_batchuser'
   end
 
+  def person
+    if self.repository_id.blank?
+      create_person
+    else
+      Person.find(self.repository_id)
+    end
+  end
+
   def agree_to_terms_of_service!
     update_column(:agreed_to_terms_of_service, true)
   end
@@ -130,6 +138,8 @@ class User < ActiveRecord::Base
     person.name = get_value_from_ldap(:display_name)
     person.preferred_email = get_value_from_ldap(:preferred_email)
     person.alternate_email = email
+    person.depositor = [username]
+    person.edit_users = [username]
     person.save!
     self.repository_id = person.pid
     self.save
@@ -137,7 +147,7 @@ class User < ActiveRecord::Base
   end
 
   def update_person
-    person.save
+    person.save!
   end
 
   def email_hash(gravatar_email)

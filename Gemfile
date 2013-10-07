@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 group :default do
   gem 'mysql2'
   gem 'hydra-derivatives', git:"git://github.com/projecthydra/hydra-derivatives", branch: 'e2a6540044e5bb3045016646663f70a9d627c0aa'
-  gem 'curate', git: 'git://github.com/ndlib/curate.git', ref: 'dafbcc1542bb00852c6b9f61b8a45bcd0a4ccecf'
+  gem 'curate', git: 'git://github.com/ndlib/curate.git', ref: '175b17306ac022550d0030b7c8e51d3d26786af9'
   gem 'rsolr'
   gem 'nokogiri', "~>1.6.0"
   gem 'jettywrapper'
