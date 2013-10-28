@@ -18,9 +18,7 @@
       </fieldset>
       <%= render 'form_content_license', curation_concern: curation_concern, f: f %>
       <%= render "form_permission", curation_concern: curation_concern, f: f %>
-      <%- Hydra::RemoteIdentifier.with_registered_remote_service(:doi, curation_concern) do |remote_service| -%>
-        <%= render "form_doi", curation_concern: curation_concern, f: f, remote_service: remote_service %>
-      <%- end -%>
+      <%= render "form_doi", curation_concern: curation_concern, f: f %>
     <% end %>
 
     <%= container.pane("Additional Information and Metadata", class: 'optional prompt') do %>

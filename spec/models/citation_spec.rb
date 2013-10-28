@@ -77,7 +77,7 @@ describe Citation do
   }
 
   let(:expected_citation_with_no_doi){
-    "Smith, J.M., & Sultan, M.A. This is a test title for generating test citation. University of Notre Dame. Retrieved from #{File.join(Rails.configuration.application_url, "/show/jq085h7459h")}"
+    "Smith, J.M., & Sultan, M.A. This is a test title for generating test citation. University of Notre Dame. Retrieved from #{File.join(Rails.configuration.application_root_url, "/show/jq085h7459h")}"
   }
 
   let(:curation_concern_with_no_author){

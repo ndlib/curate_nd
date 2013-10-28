@@ -1,5 +1,4 @@
 CurateNd::Application.routes.draw do
-  root 'welcome#index'
   Blacklight.add_routes(self)
   HydraHead.add_routes(self)
 
@@ -9,6 +8,7 @@ CurateNd::Application.routes.draw do
     get 'dashboard', to: 'catalog#index', as: :user_root
   end
 
+  root 'catalog#index'
   curate_for containers: [:senior_theses, :datasets, :articles]
 
   resources :users, only: [:update, :show, :edit]

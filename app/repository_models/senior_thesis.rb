@@ -6,13 +6,13 @@ require 'active_fedora/registered_attributes'
 class SeniorThesis < ActiveFedora::Base
   include CurationConcern::Model
   include CurationConcern::WithGenericFiles
-  include CurationConcern::WithLinkedResources
   include CurationConcern::Embargoable
   include ActiveFedora::RegisteredAttributes
+  include CurationConcern::RemotelyIdentifiedByDoi::Attributes
 
   self.human_readable_short_description = "PDFs and other Documents for your Senior Thesis"
 
-  has_metadata name: "descMetadata", type: SeniorThesisMetadataDatastream, control_group: 'M'
+  has_metadata name: "descMetadata", type: SeniorThesisRdfDatastream, control_group: 'M'
 
   attribute :title,
     datastream: :descMetadata, multiple: false,

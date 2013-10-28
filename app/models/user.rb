@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   # Connects this user object to Sufia behaviors.
   include Sufia::User
 
-  include Curate::User
+  include Curate::UserBehavior
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,

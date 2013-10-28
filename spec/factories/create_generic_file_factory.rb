@@ -22,6 +22,6 @@ def FactoryGirl.create_generic_file(container_factory_name_or_object, user, file
     user,
     {file: file}
   )
-  actor.create!
+  actor.create
   return generic_file
 end

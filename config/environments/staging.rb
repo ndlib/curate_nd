@@ -39,7 +39,7 @@ CurateNd::Application.configure do
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   config.assets.precompile += %w( modernizr.js )
 
-  config.application_url = "http://localhost"
+  config.application_root_url = "http://localhost"
 
   if ENV['FULL_STACK']
     require 'clamav'
