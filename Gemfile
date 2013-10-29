@@ -4,8 +4,7 @@ source 'https://rubygems.org'
 # the environments that are not used to execute the deploy scripts
 group :default do
   gem 'mysql2'
-  gem 'hydra-derivatives', git:"git://github.com/projecthydra/hydra-derivatives", branch: '08b5f214f059f1310d60c007cf7a68953648b24d'
-  gem 'curate', git: 'git://github.com/ndlib/curate.git', ref: '302ff276824f89ef7026f6dd151378e7f0182876'
+  gem 'curate', git: 'git://github.com/ndlib/curate.git', ref: 'bcbfe0bf49eb1e443d448fdeb9ef247269e37f55'
   gem 'rsolr'
   gem 'nokogiri', "~>1.6.0"
   gem 'jettywrapper'
@@ -25,7 +24,7 @@ group :default do
   gem 'namae'
   gem 'unicorn', '~> 4.0'
   gem 'net-ldap'
-  gem 'method_decorators'
+  gem 'custom_configuration'
 end
 
 # Hack to work around some bundler strangeness
@@ -70,5 +69,5 @@ group :debug do
 end
 
 group :deploy do
-  gem 'capistrano'
+  gem 'capistrano', '~> 2.15'
 end

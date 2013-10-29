@@ -27,7 +27,7 @@ CurateNd::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  config.application_url = "http://localhost:3000"
+  config.application_root_url = "http://localhost:3000"
 
   if ENV['FULL_STACK']
     require 'clamav'

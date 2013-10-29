@@ -1,5 +1,7 @@
+# Generated via
+#  `rails generate curate:work SeniorThesis`
 require File.expand_path('../../../lib/rdf/qualified_dc', __FILE__)
-class SeniorThesisMetadataDatastream < ActiveFedora::NtriplesRDFDatastream
+class SeniorThesisRdfDatastream < ActiveFedora::NtriplesRDFDatastream
   map_predicates do |map|
     map.title(in: RDF::DC) do |index|
       index.as :stored_searchable, :displayable
@@ -72,3 +74,4 @@ class SeniorThesisMetadataDatastream < ActiveFedora::NtriplesRDFDatastream
 
   end
 end
+

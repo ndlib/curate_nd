@@ -67,7 +67,7 @@ class Citation
   end
 
   def no_doi
-    "Retrieved from #{File.join(Rails.configuration.application_url, common_object_path(curation_concern.to_param))}"
+    "Retrieved from #{File.join(Rails.configuration.application_root_url, common_object_path(curation_concern.to_param))}"
   end
 end
 

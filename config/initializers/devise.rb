@@ -7,8 +7,8 @@ Devise.setup do |config|
     config.cas_base_url = "https://login.nd.edu/cas"
     config.cas_validate_url = "https://login.nd.edu/cas/serviceValidate"
   end
-  config.cas_destination_url = Rails.configuration.application_url
-  config.cas_follow_url = Rails.configuration.application_url
+  config.cas_destination_url = Rails.configuration.application_root_url
+  config.cas_follow_url = Rails.configuration.application_root_url
   config.cas_logout_url_param = 'follow'
   config.cas_enable_single_sign_out = true
 
