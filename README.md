@@ -16,6 +16,18 @@ Once jetty is started, run either of the following
 
 `rake` or `rspec`
 
+### Using Zeus
+
+```shell
+$ zeus start
+```
+
+And then:
+
+```shell
+$ zeus test path/to/spec.rb:LINENO
+```
+
 ## Application Status
 
 [![Build Status](https://travis-ci.org/ndlib/curate_nd.png)](https://travis-ci.org/ndlib/curate_nd)

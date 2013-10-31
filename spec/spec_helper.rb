@@ -9,7 +9,9 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'curate/spec_support'
 
 require 'rspec/rails'
-require 'rspec/autorun'
+unless ENV.fetch('RUNNING_VIA_ZEUS', false)
+  require 'rspec/autorun'
+end
 require 'database_cleaner'
 require 'capybara/rspec'
 require 'webmock/rspec'

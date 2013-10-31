@@ -4,7 +4,8 @@ source 'https://rubygems.org'
 # the environments that are not used to execute the deploy scripts
 group :default do
   gem 'mysql2'
-  gem 'curate', git: 'git://github.com/ndlib/curate.git', ref: 'bcbfe0bf49eb1e443d448fdeb9ef247269e37f55'
+
+  gem 'curate', git: 'git://github.com/ndlib/curate.git', ref: 'a3231a078d2da7159a38d328daa00cdc30d48822'
   gem 'rsolr'
   gem 'nokogiri', "~>1.6.0"
   gem 'jettywrapper'
@@ -66,6 +67,7 @@ group :debug do
   gem 'sextant'
   gem 'simplecov'
   gem 'method_locator'
+  gem 'zeus', require: false
 end
 
 group :deploy do
