@@ -8,8 +8,8 @@ GIT
 
 GIT
   remote: git://github.com/ndlib/curate.git
-  revision: 5b6f56d25c7e490ec26cdb76152e3d02a8c489d3
-  ref: 5b6f56d25c7e490ec26cdb76152e3d02a8c489d3
+  revision: 4ab1c56651bf79c2dce1d417f5106bb54d3eb6c2
+  ref: 4ab1c56651bf79c2dce1d417f5106bb54d3eb6c2
   specs:
     curate (0.5.1)
       active_attr
@@ -28,7 +28,7 @@ GIT
       hydra-remote_identifier (~> 0.6)
       mini_magick
       morphine
-      rails (~> 4.0.0)
+      rails (= 4.0.0)
       simple_form (= 3.0.0)
       sufia-models (~> 3.4.0.rc4)
       virtus
