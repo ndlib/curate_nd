@@ -4,7 +4,7 @@ require 'curation_concern/model'
 require 'active_fedora/registered_attributes'
 
 class SeniorThesis < ActiveFedora::Base
-  include CurationConcern::Model
+  include CurationConcern::Work
   include CurationConcern::WithGenericFiles
   include CurationConcern::Embargoable
   include ActiveFedora::RegisteredAttributes
@@ -57,11 +57,7 @@ class SeniorThesis < ActiveFedora::Base
     datastream: :descMetadata, multiple: true
   attribute :publisher,
     default: ["University of Notre Dame"],
-    datastream: :descMetadata, multiple: true,
-    validates: { presence: true }
-  attribute :identifier,
-    datastream: :descMetadata, multiple: false,
-    editable: false
+    datastream: :descMetadata, multiple: true
   attribute :assign_doi,
     label: 'Assign Digital Object Identifier (DOI)',
     hint: "A Digital Object Identifier (DOI) is a permanent link to your Senior Thesis. It's an easy way for other people to cite your work",

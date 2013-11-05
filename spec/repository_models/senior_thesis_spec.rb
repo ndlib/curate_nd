@@ -11,7 +11,6 @@ describe SeniorThesis do
   it_behaves_like 'with_access_rights'
   it_behaves_like 'is_embargoable'
   it_behaves_like 'has_dc_metadata'
-  it_behaves_like 'doi_assignable'
   it_behaves_like 'remotely_identified', :doi
 
 end
