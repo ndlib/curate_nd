@@ -14,6 +14,10 @@ FactoryGirl.define do
         account.user
       }
     end
+
+    after(:create) do |user, evaluator|
+      UserWhitelist.new(username: user.username).save!
+    end
   end
 
   factory :account do

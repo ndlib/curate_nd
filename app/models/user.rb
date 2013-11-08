@@ -61,6 +61,10 @@ class User < ActiveRecord::Base
     id
   end
 
+  def whitelisted?
+    !UserWhitelist.where(username: self.username).blank?
+  end
+
   protected
 
   def ldap_service

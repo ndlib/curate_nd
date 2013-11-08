@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131030145448) do
+ActiveRecord::Schema.define(version: 20131105103105) do
 
   create_table "activity_engine_activities", force: true do |t|
     t.integer  "user_id"
@@ -19,8 +19,8 @@ ActiveRecord::Schema.define(version: 20131030145448) do
     t.string   "subject_id",    null: false
     t.string   "activity_type", null: false
     t.text     "message"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   add_index "activity_engine_activities", ["user_id"], name: "index_activity_engine_activities_on_user_id", using: :btree
@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(version: 20131030145448) do
     t.integer  "user_id",     null: false
     t.string   "document_id"
     t.string   "title"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.string   "user_type"
   end
 
@@ -43,8 +43,8 @@ ActiveRecord::Schema.define(version: 20131030145448) do
     t.integer  "pass"
     t.string   "expected_result"
     t.string   "actual_result"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   add_index "checksum_audit_logs", ["pid", "dsid"], name: "by_pid_and_dsid", using: :btree
@@ -76,8 +76,8 @@ ActiveRecord::Schema.define(version: 20131030145448) do
     t.integer  "follower_id",                     null: false
     t.string   "follower_type",                   null: false
     t.boolean  "blocked",         default: false, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   add_index "follows", ["followable_id", "followable_type"], name: "fk_followables", using: :btree
@@ -90,8 +90,8 @@ ActiveRecord::Schema.define(version: 20131030145448) do
     t.string   "resolution"
     t.text     "how_can_we_help_you"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.boolean  "javascript_enabled"
     t.string   "release_version"
   end
@@ -188,8 +188,8 @@ ActiveRecord::Schema.define(version: 20131030145448) do
   create_table "searches", force: true do |t|
     t.text     "query_params"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.string   "user_type"
   end
 
@@ -201,8 +201,8 @@ ActiveRecord::Schema.define(version: 20131030145448) do
     t.string   "path"
     t.string   "itemId"
     t.datetime "expires"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "subject_local_authority_entries", force: true do |t|
@@ -216,11 +216,15 @@ ActiveRecord::Schema.define(version: 20131030145448) do
   create_table "trophies", force: true do |t|
     t.integer  "user_id"
     t.string   "generic_file_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   add_index "trophies", ["user_id"], name: "index_trophies_on_user_id", using: :btree
+
+  create_table "user_whitelists", force: true do |t|
+    t.string "username"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                                default: "",    null: false
@@ -233,8 +237,8 @@ ActiveRecord::Schema.define(version: 20131030145448) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
     t.boolean  "guest",                                default: false
     t.string   "username",                                             null: false
     t.string   "facebook_handle"
@@ -258,6 +262,7 @@ ActiveRecord::Schema.define(version: 20131030145448) do
     t.datetime "groups_last_update"
     t.boolean  "agreed_to_terms_of_service",           default: false
     t.string   "repository_id"
+    t.boolean  "verify_flag"
     t.boolean  "user_does_not_require_profile_update", default: false
   end
 
@@ -271,8 +276,8 @@ ActiveRecord::Schema.define(version: 20131030145448) do
     t.string   "datastream_id"
     t.string   "version_id"
     t.string   "committer_login"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   add_foreign_key "notifications", "conversations", name: "notifications_on_conversation_id"

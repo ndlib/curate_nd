@@ -1,0 +1,58 @@
+<% content_for :page_title, "#{application_name} Search Results" %>
+<% content_for :page_class, 'search' %>
+<% content_for :page_header do %>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <ul class="nav">
+        <%= type_tab 'Works', 'Work' %>
+        <%= type_tab 'Collections', 'Collection' %>
+        <%= type_tab 'People', 'Person' %>
+        <%= all_type_tab %>
+      </ul>
+    </div>
+  </div>
+<% end %>
+<% content_for :sidebar do %>
+
+  <%= render 'facets' %>
+
+<% end %>
+
+<% if has_search_parameters? %>
+  <div class="alert alert-info search-constraints">
+    <i class="icon-search icon-large"></i>
+    Limited to:
+      <%= render_constraints(params) %>
+  </div>
+
+  <%= render :partial => 'did_you_mean' %>
+  <%= render :partial => 'facet_selected' %>
+
+  <div class="row">
+    <div class="span9">
+      <%= render_pagination_info @response, :entry_name=>'item' %>
+      <%= render 'sort_and_per_page' %>
+    </div>
+  </div>
+
+<%= render 'results_pagination' %>
+
+<%= render 'document_list' %>
+
+<%= render 'results_pagination' %>
+
+<% else %>
+
+  <% if current_user && current_user.whitelisted? %>
+
+    <%= render 'results_pagination' %>
+
+    <%= render 'document_list' %>
+
+    <%= render 'results_pagination' %>
+
+  <% else %>
+    <%= render 'home' %>
+  <% end %>
+
+<% end %>
