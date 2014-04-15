@@ -1,3 +1,19 @@
+GIT
+  remote: git://github.com/jeremyf/active_fedora.git
+  revision: ac0b0eb8f5c1545024b34682d6626fef9a584689
+  branch: fixing-rdf-datastream-encoding
+  specs:
+    active-fedora (6.7.7)
+      activesupport (>= 3.0.0)
+      deprecation
+      mediashelf-loggable
+      nom-xml (>= 0.5.1)
+      om (~> 3.0.0)
+      rdf (~> 1.1.1.1)
+      rdf-rdfxml (= 1.0.1)
+      rsolr
+      rubydora (~> 1.7.4)
+
 PATH
   remote: ../curate
   specs:
@@ -39,16 +55,6 @@ GEM
       erubis (~> 2.7.0)
       rack (~> 1.5.2)
       rack-test (~> 0.6.2)
-    active-fedora (6.7.7)
-      activesupport (>= 3.0.0)
-      deprecation
-      mediashelf-loggable
-      nom-xml (>= 0.5.1)
-      om (~> 3.0.0)
-      rdf (~> 1.1.1.1)
-      rdf-rdfxml (= 1.0.1)
-      rsolr
-      rubydora (~> 1.7.4)
     active_attr (0.8.3)
       activemodel (>= 3.0.2, < 4.2)
       activesupport (>= 3.0.2, < 4.2)
@@ -596,6 +602,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active-fedora!
   addressable (~> 2.3.5)
   better_errors
   binding_of_caller
