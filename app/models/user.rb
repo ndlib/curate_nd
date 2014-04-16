@@ -60,10 +60,6 @@ class User < ActiveRecord::Base
     id
   end
 
-  def whitelisted?
-    Admin::UserWhitelist.whitelisted?(self)
-  end
-
   protected
 
   def ldap_service
