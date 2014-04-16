@@ -1,10 +1,12 @@
 development: &DEFAULT
   manager_usernames:
   - <%= ENV['USER'] %>
+  - an_admin_username
 test: &TEST
   <<: *DEFAULT
   manager_usernames:
   - <%= ENV['USER'] %>
   - manager@example.com
+  - an_admin_username
 ci:
   <<: *TEST
