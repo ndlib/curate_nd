@@ -1,8 +1,8 @@
 development: &development
-  url: https://n2t.net/ezid/
-  shoulder: doi:10.5072/FK2
   username: apitest
   password: apitest
+  shoulder: doi:10.5072/FK2
+  url: https://ezid.lib.purdue.edu/
 
 test: &test
   <<: *development

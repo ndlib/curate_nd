@@ -15,9 +15,6 @@ FactoryGirl.define do
       }
     end
 
-    after(:create) do |user, evaluator|
-      Admin::UserWhitelist.new(username: user.username).save!
-    end
   end
 
   factory :account do

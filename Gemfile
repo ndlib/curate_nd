@@ -4,9 +4,8 @@ source 'https://rubygems.org'
 # the environments that are not used to execute the deploy scripts
 group :default do
   gem 'mysql2'
-  gem 'curate', '~> 0.6.1'
-  gem 'rdf', '>= 1.0.10.1', '< 1.1'
-  gem 'rsolr'
+  gem 'curate', github: 'ndlib/curate', branch: 'develop-curatend'
+  gem 'active-fedora', github: 'jeremyf/active_fedora', branch: 'fixing-rdf-datastream-encoding'
   gem 'nokogiri', "~>1.6.0"
   gem 'jettywrapper'
   gem 'jquery-rails'

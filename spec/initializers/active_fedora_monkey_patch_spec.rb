@@ -10,6 +10,7 @@ describe 'active fedora monkey patches' do
 
     content_datastream_url = generic_file.datastreams['content'].url
     datastream_url = content_datastream_url.split("/")[0..-2].join("/")
+
     senior_thesis.destroy
 
     # Why is this not ActiveFedora::ActiveObjectNotFoundError?

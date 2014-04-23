@@ -12,7 +12,6 @@ CurateNd::Application.routes.draw do
 
       mount Resque::Server, :at => "queues"
       resources :announcements
-      resources :user_whitelists
       resources :accounts, only: [:show, :index] do
         collection { get :start_masquerading }
       end

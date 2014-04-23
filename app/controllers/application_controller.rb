@@ -10,7 +10,6 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_filter :filter_notify
-  before_filter :allow_whitelisted_users
 
   def filter_notify
     # remove error inserted since we are not showing a page before going to web access, this error message always shows up a page too late.
@@ -23,20 +22,4 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  private
-
-  def allow_whitelisted_users
-    if Admin::UserWhitelist.whitelisted?(current_user)
-      return true
-    else
-      if( ["classify_concerns", "cas_sessions", "terms_of_service_agreements", "registrations"].include?(controller_name))
-        return true
-      elsif ["edit", "new", "update", "destroy"].include?(action_name)
-        redirect_to root_url, notice: "You do not have sufficient permissions for this action"
-        return false
-      else
-        return request.get?
-      end
-    end
-  end
 end
