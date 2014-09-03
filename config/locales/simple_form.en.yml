@@ -21,14 +21,19 @@ en:
     #     edit:
     #       email: 'E-mail.'
     hints:
-      #defaults:
-      #  files: 'A PDF is preferred.'
+      defaults:
+        files: '<p class="help-block">
+                  *Note - Files larger than 50MB are currently not supported by CurateND. Please contact curate@nd.edu for assistance.
+                </p>'
       article:
-        files: 'For your Article, a PDF is preferred.'
+        files: '<p class="help-block">  *Note - Files larger than 50MB are currently not supported by curatend. Please contact curate@nd.edu for assistance.
+                </p>For your Article, a PDF is preferred.'
       document:
-        files: 'For your Document, a PDF is preferred.'
+        files: '<p class="help-block">  *Note - Files larger than 50MB are currently not supported by curatend. Please contact curate@nd.edu for assistance.
+                                </p>For your Document, a PDF is preferred.'
       senior_thesis:
-        files: 'For your Senior Thesis, a PDF is preferred.'
+        files: '<p class="help-block">  *Note - Files larger than 50MB are currently not supported by curatend. Please contact curate@nd.edu for assistance.
+                                </p> For your Senior Thesis, a PDF is preferred.'
 
     #     username: 'User name to sign in.'
     #     password: 'No special characters, please.'
