@@ -1,0 +1,32 @@
+<% content_for :main_column_class, 'span8 offset2' %>
+<% content_for :page_title, construct_page_title('CurateND Request has Timed Out') %>
+<% content_for :page_header do %>
+  <h1 class="center">CurateND Request has Timed Out</h1>
+<% end %>
+<p>Oops!  It seems as if CurateND has timed out.</p>
+<p>
+  This could be due to
+  <ul>
+    <li>A large file has been selected for upload</li>
+    <li> An internal process is not working correctly</li>
+    <li>The connection has been interrupted in some manner</li>
+  </ul>
+</p>
+
+
+
+<p>Please help us to better understand what you were doing so that we can provide you with a better user experience in the future.</p>
+
+<article class="description">
+  <%= simple_form_for(@help_request) do |f| %>
+    <fieldset class="required with-side-padding">
+      <legend>Please submit a help request to give us more information about what is going on.</legend>
+      <%= f.input :javascript_enabled, as: 'hidden' %>
+      <%= f.input :how_can_we_help_you, as: 'text', input_html: { class: 'input-xxxlarge', rows: '10' } %>
+    </fieldset>
+
+    <div class="form-actions">
+      <%= f.submit "Let Us Know", class: 'btn btn-primary' %> <a href="/" id="never-mind" class="btn btn-link" data-dismiss="modal"> never mind</a>
+    </div>
+  <% end %>
+</article>
