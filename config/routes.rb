@@ -37,5 +37,6 @@ CurateNd::Application.routes.draw do
 
   get 'about', to: 'static_pages#about'
   get 'beta',  to: 'static_pages#beta'
+  get 'timeout_error',  to: 'static_pages#timeout'
 
 end

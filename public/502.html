@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Request Timeout Error (502)</title>
+  <style>
+
+    /* Default styles based on normalize.css: git.io/normalize */
+
+    html {
+      font-family: sans-serif;
+      -ms-text-size-adjust: 100%;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+    display: block;
+    }
+
+    [hidden], template {
+      display: none;
+    }
+
+    a {
+      background: transparent;
+    }
+
+    a:active, a:hover {
+      outline: 0;
+    }
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    small {
+      font-size: 80%;
+    }
+
+    hr {
+      -moz-box-sizing: content-box;
+      box-sizing: content-box;
+      height: 0;
+    }
+
+    /* Page-specific styles */
+
+    *, *:before, *:after {
+      -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+    }
+
+    #brand-bar {
+      font-family: 'Adobe Garamond', Georgia, serif;
+      letter-spacing:.2em;
+      padding:.7em 0 .8em;
+      text-transform:uppercase;
+      background-color:#0D407B;
+      background-image: linear-gradient(#0d407b,#07366c 85%,#001834);
+      border-bottom:1px solid #001834;
+    }
+
+    #title-bar {
+      background-color:#dcb439;
+      background-image:linear-gradient(#f5e59e,#dcb439 98%,#9c7012);
+      border-top:1px solid #FFF;
+      margin-bottom:.3em;
+    }
+
+    #title-bar a,
+    #title-bar a:visited,
+    #title-bar a:hover {
+      color:#002B5B:
+    }
+
+    .container {
+      max-width:1170px;
+      margin:0 auto;
+      padding:0 1em;
+    }
+
+    .half {
+      display:inline-block;
+      width:100%;
+      text-align:center;
+    }
+
+    #banner a {
+      text-decoration:none;
+    }
+
+    .white {
+      color:#FFF;
+    }
+
+    .university, .division {
+      font-size:.8em;
+      margin:0;
+      font-weight:normal;
+    }
+
+    .university i {
+      letter-spacing:0;
+      padding:0 .2em;
+      text-transform:none;
+    }
+
+    .site-title {
+      font-family: 'Adobe Garamond', Georgia, serif;
+      text-align:center;
+      font-size:2.1em;
+      font-weight:normal;
+      display:block;
+      padding:.3em 0;
+    }
+
+    h1 {
+      font-family: 'Adobe Garamond', Georgia, serif;
+      font-size: 2em;
+      margin: 0.67em 0;
+      font-weight:normal;
+    }
+
+    p {
+      font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+      margin:0 0 10px;
+      font-size:14px;
+      line-height:20px;
+    }
+
+    .description h1 {
+      text-align:center;
+    }
+
+    .description {
+      max-width:33em;
+      margin:0 auto;
+    }
+
+    input[type="text"]{
+      background-color: #FFFFFF;
+      border: 1px solid #CCCCCC;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+      transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+      font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size:14px;
+      line-height:20px;
+      width:270px;
+      border-radius: 4px 0 0 4px;
+      color: #555555;
+      display: inline-block;
+      padding: 4px 6px;
+      vertical-align: middle;
+    }
+
+    @media (min-width: 46em) {
+      .half {
+        width:49.5%;
+      }
+      .university {
+        text-align:left;
+      }
+      .division {
+        text-align:right;
+      }
+    }
+
+    @media (min-width: 1170px) {
+      .container {
+        padding:0;
+      }
+    }
+
+    .btn-primary {
+      background-color: #07286C;
+      background-image: linear-gradient(to bottom, #07366C, #07146C);
+      background-repeat: repeat-x;
+      border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+      color: #FFFFFF;
+      text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    }
+
+    .btn{
+      border-image: none;
+      border-radius: 4px;
+      border-style: solid;
+      border-width: 1px;
+      display: inline-block;
+      font-size: 14px;
+      line-height: 20px;
+      padding: 4px 12px;
+      text-align: center;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <header id="banner" role="banner">
+    <section id="brand-bar">
+      <div class="container">
+        <b class="university half">
+          <a class="white" href="http://www.nd.edu" tabindex="-1">University <i>of</i> Notre Dame</a>
+        </b>
+        <b class="division half">
+          <a class="white" href="http://library.nd.edu" tabindex="-1">Hesburgh Libraries</a>
+        </b>
+      </div>
+    </section>
+
+    <nav id="title-bar">
+      <strong class="site-title"><a href="/" id="home-link">CurateND</a></strong>
+    </nav>
+  </header>
+
+  <main role="main">
+    <section class="container">
+      <article class="description">
+        <h1>Request Timeout Error</h1>
+        <p>CurateND has encountered an timeout error. Please submit a help request and tell us what is going on.</p>
+
+        <form action="/timeout_error" method='get'>
+          <div class="container">
+          <label> Error Message:</label>
+          <input name="help_request[how_can_we_help_you]" type=text value="Curate caught a request timeout error."/>
+          <input type=submit value='Notify Us!' class='btn btn-primary'/>
+          </div>
+        </form>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
+
