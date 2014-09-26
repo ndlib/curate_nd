@@ -17,6 +17,7 @@ CurateNd::Application.routes.draw do
         collection { get :start_masquerading }
       end
     end
+    post 'reindex', to: 'reindex#reindex'
   end
 
   # Due to an apparent bug in devise the following routes should be presented
