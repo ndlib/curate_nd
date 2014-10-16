@@ -1,7 +1,7 @@
 #
 # Tasks specific to CurateND
 #
-
+require 'curate/orcid_migration'
 namespace :curatend do
   # don't define the ci stuff in production...since rspec is not available
   if defined?(RSpec)
@@ -84,5 +84,10 @@ namespace :curatend do
     RSpec::Core::RakeTask.new(:ci_spec) do |t|
       t.pattern = "./spec/**/*_spec.rb"
     end
+  end
+
+  desc "ORCID Migration"
+  task :migrate_orcid => :environment do
+    Curate::OrcidMigration.migrate!
   end
 end
