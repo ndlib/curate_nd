@@ -36,6 +36,7 @@ group :default do
   gem 'newrelic_rpm'
   gem 'flipper'
   gem 'roboto'
+  gem 'hesburgh-lib', github: 'ndlib/hesburgh-lib'
 end
 
 # Hack to work around some bundler strangeness

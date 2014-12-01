@@ -59,6 +59,12 @@ GIT
       rails (~> 4.0)
 
 GIT
+  remote: git://github.com/ndlib/hesburgh-lib.git
+  revision: a22bae11b65f1eabbdba3e02fabf1c5cded63ac0
+  specs:
+    hesburgh-lib (0.0.1)
+
+GIT
   remote: git://github.com/ndlib/noids_client
   revision: 7081fab70968d7c47ca3d1db8a74553082517507
   specs:
@@ -706,6 +712,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.2.0)
   flipper
   harbinger!
+  hesburgh-lib!
   jettywrapper
   jquery-rails
   kaminari!
