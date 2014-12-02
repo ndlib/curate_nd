@@ -1,0 +1,43 @@
+<% if((can? :edit, ContentLicense) || (!curation_concern.persisted?)) %>
+  <fieldset class="row contributor_agreement with-headroom" id="contributor-agreement">
+    <div class="span12">
+      <legend>
+        <%= t('sufia.product_name') %> Content Submission Terms
+      </legend>
+    </div>
+
+    <div class="span12">
+      <% if can? :edit, ContentLicense %>
+        <div>
+          <%= f.select :type_of_license, options_for_select(['Self Deposit', 'Independently Licensed'], selected: curation_concern.type_of_license) %>
+        </div>
+      <% end %>
+      <article class="lawyer_readable contributor_agreement ">
+        <div id="self_deposit" class="wide-text">
+          <%= render partial: 'legally_binding_text' %>
+        </div>
+        <% if can? :edit, ContentLicense %>
+          <div id="independent_license" style="display:none;">
+            <%= f.input :license, label: "Independent License", as: :text, input_html: { class: 'input-xxxlarge', rows: '14' }, type: 'text' %>
+          </div>
+        <% end %>
+      </article>
+    </div>
+
+    <% if !curation_concern.persisted? %>
+      <div class="span12 accept-contributor-agreement">
+        <%= label_tag 'accept_contributor_agreement', class: 'checkbox', for:  'accept_contributor_agreement' do %>
+          <%= check_box_tag(
+              "#{f.object_name}[accept_contributor_agreement]",
+              '1',
+              curation_concern.accept_contributor_agreement == '1',
+              required: :required,
+              id: 'accept_contributor_agreement'
+            )
+          %>
+          I have read and accept the contributor license agreement
+        <% end %>
+      </div>
+    <%- end -%>
+  </fieldset>
+<%- end -%>

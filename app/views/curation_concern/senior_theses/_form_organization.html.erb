@@ -1,0 +1,21 @@
+<% select_label_id ||= '' %>
+ <div class="control-group <%=curation_concern.class%>_organization">
+   <span class="control-label"><label name="<%= f.object_name %>[organization]" class="select optional">Organization</label></span>
+    <div class="controls">
+      <% options = "" %>
+      <% collections = Department.all_departments %>
+
+      <% collections.each do |department| -%>
+        <% options << options_from_collection_for_select([department], "id", "label") if department.eligible_for_selection?%>
+        <% if department.children.present? %>
+          <% enabled_children=department.children.reject {|n| !n.selectable?} %>
+          <% options << "<optgroup label=\"#{department.label}\">".html_safe %>
+          <% options << options_from_collection_for_select(enabled_children, "id", "label") %>
+          <% options << '</optgroup>'.html_safe %>
+        <% end %>
+      <% end %>
+
+      <%=select_tag "#{f.object_name}[organization]", options, {prompt: 'Make a Selection', class: 'input-xxlarge', :'aria-labelledby' => select_label_id,  :multiple => true, :size =>10 }  %>
+    </div>
+  </div>
+

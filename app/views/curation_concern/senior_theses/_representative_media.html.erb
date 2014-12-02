@@ -1,0 +1,12 @@
+<% if work.representative.present? && (gf = GenericFile.load_instance_from_solr(work.representative)) %>
+  <a href="<%=download_path(work.representative) %>" target = "_blank">
+    <%= render partial: 'curation_concern/generic_files/media_display', locals: {generic_file: gf, dom_class_name: 'representative_image'} %>
+  </a>
+<% elsif work.representative.present? %>
+  <a href="<%=download_path(work.representative) %>" target = "_blank">
+    <%= image_tag download_path(work.representative,'thumbnail'), class: 'representative_image' %>
+  </a>
+<% else %>
+  <%= image_tag 'curate/nope.png', class: "canonical-image" %>
+<% end %>
+

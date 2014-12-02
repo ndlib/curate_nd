@@ -11,9 +11,9 @@
     <%= container.pane("Required Information", class: 'required') do %>
       <fieldset class="required">
         <legend>This is what we need to know about your Senior Thesis</legend>
-        <%= f.input :title, input_html: { class: 'input-xxlarge'}, required: true %>
-        <%= f.input :creator, input_html: { class: 'input-xlarge', placeholder: 'George Washington' }, required: true %>
-        <%= f.input :description, input_html: { class: 'input-xxxlarge', rows: '9' }, as: :text, required: true %>
+        <%= f.input :title, input_html: { class: 'input-xxlarge'} %>
+        <%= f.input :creator, input_html: { class: 'input-xlarge', placeholder: 'George Washington' } %>
+        <%= f.input :description, input_html: { class: 'input-xxxlarge', rows: '9' }, as: :text %>
         <%= f.input :date_created, input_html: { class: 'datepicker', placeholder: Date.today } %>
       </fieldset>
       <%= render 'form_content_license', curation_concern: curation_concern, f: f %>
@@ -56,7 +56,7 @@
 
   <% end %>
 
-  <%= render 'form_contributor_agreement', curation_concern: curation_concern, contributor_agreement: contributor_agreement, f: f %>
+  <%= render 'form_contributor_agreement', curation_concern: curation_concern, f: f %>
 
   <div class="row">
     <div class="span12 form-actions">

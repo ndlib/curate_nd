@@ -1,0 +1,43 @@
+<% if current_user.can_make_deposits_for.any? %>
+  <% if curation_concern.new_record? %>
+
+    <div class="row with-footroom">
+      <div class="span12">
+
+        <fieldset id="set-owner">
+
+          <legend>
+            Ownership
+            <small>Are you depositing your own <%= curation_concern.human_readable_type %> or depositing it on behalf of someone else?</small>
+          </legend>
+
+          <%= f.input :owner,
+                      as: :select,
+                      collection: objects_to_array(current_user.can_make_deposits_for, 'name', 'user_key').unshift(['Myself', current_user.user_key]),
+                      input_html: { class: 'input-xxlarge', onChange: 'updateCreators();' },
+                      label: "Create this #{curation_concern.human_readable_type} on behalf of:",
+                      required: true
+          %>
+
+        </fieldset>
+
+      </div>
+    </div>
+  <% elsif !(curation_concern.owner == current_user.user_key) %>
+    <div class="row with-footroom">
+      <div class="span12">
+        <fieldset>
+          <legend>
+            Ownership
+          </legend>
+
+          <div class="controls" id="delegate-actions">
+            <section class="help-block">
+              This <%= curation_concern.human_readable_type %> is owned by <%= curation_concern.owner %>.
+            </section>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  <% end %>
+<% end %>

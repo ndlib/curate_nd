@@ -55,6 +55,11 @@ gem 'compass-rails', '~> 1.1.2'
 gem 'sass-rails',   '~> 4.0'
 gem 'uglifier', '>= 1.0.3'
 
+group :development do
+  gem 'spring'
+  gem "spring-commands-rspec"
+end
+
 group :test do
   gem 'capybara', "~> 2.4"
   gem 'database_cleaner'
