@@ -31,8 +31,22 @@ class NewSeniorThesisForm
   validates :creator, presence: true
   validates :description, presence: true
   validates :rights, presence: true
-  validates :visibility, presence: true
   validates :accept_contributor_agreement, inclusion: %w(1 true yes)
+
+  validates :visibility, inclusion: {
+    in: ->(_) {
+      [
+        Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC,
+        Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_EMBARGO,
+        Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED,
+        Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE
+      ]
+    }
+  }
+
+  def visibility
+    @visibility.present? ? @visibility : Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED
+  end
 
   # @return false if the form was not valid
   # @return true if the form was valid and the caller's submission block was

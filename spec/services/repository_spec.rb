@@ -9,7 +9,7 @@ describe Repository do
   end
 
   context '#submit_new_senior_thesis_form' do
-    let(:current_user) { User.new(id: '123') }
+    let(:current_user) { FactoryGirl.create(:user) }
     let(:form) { described_class.new.build_new_senior_thesis_form(attributes: attributes) }
     let(:file) { Rack::Test::UploadedFile.new(__FILE__, 'text/plain', false) }
     let(:attributes) do

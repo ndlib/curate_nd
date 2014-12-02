@@ -5,7 +5,7 @@ require 'hesburgh/lib/mock_runner'
 
 module CurationConcern
   RSpec.describe SeniorThesesController, type: :controller do
-    it_behaves_like 'is_a_curation_concern_controller', SeniorThesis, actions: :all
+    it_behaves_like 'is_a_curation_concern_controller', SeniorThesis, actions: [:show, :edit, :update, :delete]
 
     context 'GET #new' do
       before { controller.runner = runner }
@@ -26,5 +26,6 @@ module CurationConcern
         end
       end
     end
+
   end
 end
