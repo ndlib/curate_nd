@@ -36,6 +36,7 @@ group :default do
   gem 'newrelic_rpm'
   gem 'flipper'
   gem 'roboto'
+  gem 'hesburgh-lib', github: 'ndlib/hesburgh-lib'
 end
 
 # Hack to work around some bundler strangeness
@@ -53,6 +54,11 @@ gem 'coffee-rails', '~> 4.0'
 gem 'compass-rails', '~> 1.1.2'
 gem 'sass-rails',   '~> 4.0'
 gem 'uglifier', '>= 1.0.3'
+
+group :development do
+  gem 'spring'
+  gem "spring-commands-rspec"
+end
 
 group :test do
   gem 'capybara', "~> 2.4"

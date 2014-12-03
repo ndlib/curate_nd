@@ -1,0 +1,10 @@
+  <tr>
+    <th>Contributor(s)</th>
+    <td><ul class='tabular'>
+    <% curation_concern.contributor.each do |contributor| %>
+      <li class="attribute contributors"><%= contributor %></li>
+    <% end %>
+    </ul></td>
+  </tr>
+
+

@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="span12" id="required-information">
+    <%= render "form_required_information", curation_concern: curation_concern, f: f %>
+  </div>
+</div>
+
+<div class="row">
+  <fieldset id="content-editor">
+    <legend class="span12">
+      <%=t('sufia.work.editor.legend') %>
+      <small><%=t('sufia.work.editor.caption') %></small>
+    </legend>
+    <div class="span7" id="required-information">
+      <%= render "linked_editors", curation_concern: curation_concern, f: f %>
+    </div>
+
+    <div class="span7" id="additional-information">
+      <%= render "linked_groups", curation_concern: curation_concern, f: f %>
+    </div>
+  </fieldset>
+</div>
+
+<div class="row">
+  <div class="span12">
+    <%= render "form_additional_information", curation_concern: curation_concern, f: f %>
+  </div>
+</div>
