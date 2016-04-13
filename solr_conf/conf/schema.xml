@@ -174,6 +174,8 @@
     <!-- you must define copyField source and dest fields explicity or schemaBrowser doesn't work -->
     <field name="all_text_timv" type="text" stored="false" indexed="true" multiValued="true" termVectors="true" termPositions="true" termOffsets="true"/>
 
+    <field name="desc_metadata_admin_unit_tesim" type="admin_unit_text_en" stored="true" indexed="true" multiValued="true"/>
+
   </fields>
 
   <!-- START hydra deprecated items -->
@@ -256,7 +258,7 @@
 
   <!-- copy fields;  note that you must define copyField source and dest fields explicity or schemaBrowser doesn't work -->
 
-  <copyField source="desc_metadata__administrative_unit_tesim" dest="all_text_timv" />
+  <copyField source="desc_metadata__administrative_unit_tesim" dest="desc_metadata_admin_unit_tesim" />
 
   <types>
     <fieldType name="string" class="solr.StrField" sortMissingLast="true" />
@@ -340,6 +342,22 @@
         <!-- EnglishMinimalStemFilterFactory is less aggressive than PorterStemFilterFactory: -->
         <filter class="solr.EnglishMinimalStemFilterFactory"/>
         <filter class="solr.StopFilterFactory" words="stopwords.txt" ignoreCase="true"/>
+        <!--
+        <filter class="solr.PorterStemFilterFactory"/>
+        -->
+        <filter class="solr.TrimFilterFactory"/>
+      </analyzer>
+    </fieldType>
+
+    <!-- A text field with defaults appropriate for English -->
+    <fieldType name="admin_unit_text_en" class="solr.TextField" positionIncrementGap="100">
+      <analyzer>
+        <tokenizer class="solr.ICUTokenizerFactory"/>
+        <filter class="solr.ICUFoldingFilterFactory"/>  <!-- NFKC, case folding, diacritics removed -->
+        <filter class="solr.EnglishPossessiveFilterFactory"/>
+        <!-- EnglishMinimalStemFilterFactory is less aggressive than PorterStemFilterFactory: -->
+        <filter class="solr.EnglishMinimalStemFilterFactory"/>
+        <filter class="solr.StopFilterFactory" words="admin_unit_stopwords.txt" ignoreCase="true"/>
         <!--
         <filter class="solr.PorterStemFilterFactory"/>
         -->
