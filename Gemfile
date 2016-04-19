@@ -62,11 +62,23 @@ group :default do
   gem 'select2-rails'
   gem 'share_notify', '~> 0.2'
   gem 'simple_form', '~> 3.0.1'
-  gem 'sufia-models', '~>3.4.0'
   gem 'therubyracer', '0.12.1', platforms: :ruby, require: 'v8'
   gem 'unicode', :platforms => [:mri_18, :mri_19]
   gem 'unicorn', '~> 4.0'
   gem 'virtus'
+
+  gem "active-fedora", "~> 6.7.0"
+  gem "blacklight", "~> 4.5.0"
+  gem "hydra-head", "~> 6.4.0"
+
+  gem 'nest', '~> 1.1.1'
+  gem 'mailboxer', '~> 0.11.0'
+  gem 'acts_as_follower', '>= 0.1.1', '< 0.3'
+  gem 'paperclip', '~> 3.4.0'
+  gem 'noid', '~> 0.6.6'
+  gem 'activerecord-import'
+  gem 'activeresource', '~>4.0.0'
+
 end
 
 group :headless do

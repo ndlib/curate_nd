@@ -1,6 +1,6 @@
-require Sufia::Models::Engine.root.join('app/models/datastreams/file_content_datastream')
-
-class FileContentDatastream
+class FileContentDatastream < ActiveFedora::Datastream
+  include Hydra::Derivatives::ExtractMetadata
+  include Sufia::FileContent::Versions
 
   def extract_metadata
     return unless has_content?

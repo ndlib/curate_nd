@@ -1,4 +1,3 @@
-require 'sufia/models'
 require 'chronic'
 require "curate/active_model_adaptor"
 require "curate/configuration"
@@ -34,5 +33,4 @@ module Curate
   def all_relationships_reindexer
     Curate.configuration.all_relationships_reindexer
   end
-
 end
