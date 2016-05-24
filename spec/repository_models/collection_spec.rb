@@ -1,58 +1,43 @@
 require 'spec_helper'
 require 'active_fedora/test_support'
 describe Collection do
-  before(:all) do
-    @user = FactoryGirl.create(:user)
-    class GenericFile < ActiveFedora::Base
-      include Hydra::Collections::Collectible
 
-      def to_solr(solr_doc={}, opts={})
-        super(solr_doc, opts)
-        solr_doc = index_collection_pids(solr_doc)
-        return solr_doc
-      end
 
-    end
-  end
-  after(:all) do
-    @user.destroy
-    Object.send(:remove_const, :GenericFile)
-  end
+  let(:user) { FactoryGirl.create(:user) }
+  let(:generic_work1) { FactoryGirl.create(:generic_work, user: user, title:"My Work 1")}
+  let(:generic_work2) {FactoryGirl.create(:generic_work, user: user, title:"My Fabulous Work") }
+
   before(:each) do
     @collection = Collection.new
-    @collection.apply_depositor_metadata(@user.user_key)
+    @collection.apply_depositor_metadata(user.user_key)
     @collection.save
-    @gf1 = GenericFile.create
-    @gf2 = GenericFile.create
   end
   after(:each) do
-    @collection.destroy rescue
-        @gf1.destroy
-    @gf2.destroy
+    @collection.destroy
   end
   it "should have a depositor" do
-    @collection.depositor.should == @user.user_key
+    @collection.depositor.should == user.user_key
   end
   it "should allow the depositor to edit and read" do
-    ability = Ability.new(@user)
+    ability = Ability.new(user)
     ability.can?(:read, @collection).should == true
     ability.can?(:edit, @collection).should == true
   end
   it "should be empty by default" do
     expect(@collection.members).to eq([])
   end
-  it "should have many files" do
-    @collection.members = [@gf1, @gf2]
+  it "should have many works" do
+    @collection.members = [generic_work1, generic_work2]
     @collection.save
-    Collection.find(@collection.pid).members.should == [@gf1, @gf2]
+    Collection.find(@collection.pid).members.should == [generic_work1, generic_work2]
   end
-  it "should allow new files to be added" do
-    @collection.members = [@gf1]
+  it "should allow new work to be added" do
+    @collection.members = [generic_work1]
     @collection.save
     @collection = Collection.find(@collection.pid)
-    @collection.members << @gf2
+    @collection.members << generic_work2
     @collection.save
-    Collection.find(@collection.pid).members.should == [@gf1, @gf2]
+    Collection.find(@collection.pid).members.should == [generic_work1, generic_work2]
   end
   it "should set the date uploaded on create" do
     @collection.save
@@ -64,12 +49,12 @@ describe Collection do
     Date.stub(:today).and_return(uploaded_date, modified_date)
     @collection.save
     @collection.date_modified.should == uploaded_date
-    @collection.members = [@gf1]
+    @collection.members = [generic_work1]
     @collection.save
     @collection.date_modified.should == modified_date
-    @gf1 = @gf1.reload
-    @gf1.collections.include?(@collection).should be_truthy
-    @gf1.to_solr[Solrizer.solr_name(:collection)].should == [@collection.id]
+    new_generic_work1 = GenericWork.find(generic_work1.pid)
+    new_generic_work1.collections.include?(@collection).should be_truthy
+    new_generic_work1.to_solr[Solrizer.solr_name(:collection)].should == [@collection.id]
   end
   it "should have a title" do
     @collection.title = "title"
@@ -87,12 +72,12 @@ describe Collection do
   it "should have the expected edit terms" do
     @collection.terms_for_editing.should == [:part_of, :contributor, :creator, :title, :description, :publisher, :administrative_unit, :curator, :date, :date_created, :subject, :language, :rights, :resource_type, :identifier, :based_near, :tag, :related_url, :source]
   end
-  it "should not delete member files when deleted" do
-    @collection.members = [@gf1, @gf2]
+  it "should not delete member work when deleted" do
+    @collection.members = [generic_work1, generic_work2]
     @collection.save
     @collection.destroy
-    GenericFile.exists?(@gf1.pid).should be_truthy
-    GenericFile.exists?(@gf2.pid).should be_truthy
+    GenericWork.exists?(generic_work1.pid).should be_truthy
+    GenericWork.exists?(generic_work2.pid).should be_truthy
   end
 
   describe "Collection by another name" do
