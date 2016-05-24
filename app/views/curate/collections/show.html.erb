@@ -28,7 +28,22 @@
 <div class="collection-description">
   <%= richly_formatted_text(@collection.description) %>
 </div>
-
+<table class="table table-striped <%= dom_class(@collection) %> attributes">
+  <caption class="table-heading"><h2>Attributes</h2></caption>
+  <thead>
+  <tr><th>Attribute Name</th><th>Values</th></tr>
+  </thead>
+  <tbody>
+    <%= curation_concern_attribute_to_html(@collection, :subject, "Subject") %>
+    <%= curation_concern_attribute_to_html(@collection, :creator, "Creator") %>
+    <%= curation_concern_attribute_to_html(@collection, :tag, "Related Resources") %>
+    <%= curation_concern_attribute_to_html(@collection, :source, "Source") %>
+    <%= curation_concern_attribute_to_html(@collection, :contributor, "Collector") %>
+    <%= curation_concern_attribute_to_html(@collection, :curator, "Curator") %>
+    <%= curation_concern_attribute_to_html(@collection, :date, "Coverage Date") %>
+    <%= decode_administrative_unit(@collection, :administrative_unit, "Departments and Units") %>
+  </tbody>
+</table>
 <div id="documents" class="clear">
   <%= list_items_in_collection(@collection) %>
 </div>

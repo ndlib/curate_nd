@@ -11,6 +11,7 @@ module RDF
     property 'contributor#institution'.to_sym
     property 'contributor#photographer'.to_sym
     property 'contributor#repository'.to_sym
+    property 'contributor#curator'.to_sym
     property 'coverage#spatial'.to_sym
     property 'coverage#temporal'.to_sym
     property 'creator#administrative_unit'.to_sym

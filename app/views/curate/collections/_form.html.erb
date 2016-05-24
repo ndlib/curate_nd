@@ -30,14 +30,94 @@
 
   <div class="control-group string required collection_description">
     <span class="control-label">
-      <%= f.label :description %>
+      <%= f.label :description, "About the Collection" %>
     </span>
     <div class="controls">
       <%= f.text_area :description, class: 'text input-xxlarge' %>
     </div>
   </div>
 
-  <%# We want to display neither the avatar control nor the access permission controls if this collection is a profile section. %>
+  <div class="control-group collection_administrative_unit">
+    <span class="control-label"><label name="<%=f.object_name%>administrative_unit[]" class="select optional">Departments and Units</label>
+    <span id="<%=f.object_name%>administrative_unit[]" class="field-hint" role="tooltip">
+      Identify <strong>all</strong> the department(s), center(s), or institute(s) <strong>primarily</strong> affiliated with this work.<br />
+      Choosing a department <strong>also</strong> associates the work with its college e.g. selecting <em>Africana Studies</em> will associate the work with the <em>College of Arts and Letters</em> as well.
+    </span>
+    </span>
+      <div class="controls">
+        <% options = "" %>
+        <% options << administrative_unit_option_listing(@collection) %>
+        <%=select_tag "#{f.object_name}[administrative_unit][]", options, {prompt: 'Please select one or more; type to search', class: 'input-xxlarge department-select', :size =>10, multiple:true}  %>
+      </div>
+  </div>
+  <div class="control-group string required collection_creator">
+    <span class="control-label">
+      <%= f.label :creator%>
+    </span>
+    <div class="controls">
+      <%= f.text_field :creator, input_html: { class: 'input-xlarge' } %>
+    </div>
+  </div>
+  <div class="control-group string required collection_subject">
+    <span class="control-label">
+      <%= f.label :subject%>
+    </span>
+    <div class="controls">
+      <%= f.text_field :subject, input_html: { class: 'input-xlarge' } %>
+    </div>
+  </div>
+  <!--<div class="control-group string required collection_coverage_date">-->
+    <!--<span class="control-label">-->
+      <!--<%# f.label :date%>-->
+    <!--</span>-->
+    <!--<div class="controls">-->
+      <!--<%# f.text_field :date, input_html: { class: 'input-xlarge' } %>-->
+    <!--</div>-->
+  <!--</div>-->
+  <div class="control-group string required collection_relation">
+    <span class="control-label">
+      <%= f.label :tag, 'Related Resources'%>
+    </span>
+    <div class="controls">
+      <%= f.text_field :tag, input_html: { class: 'input-xlarge' } %>
+    </div>
+  </div>
+  <div class="control-group string required collection_creator">
+    <span class="control-label">
+      <%= f.label :creator%>
+    </span>
+    <div class="controls">
+      <%= f.text_field :creator, input_html: { class: 'input-xlarge' } %>
+    </div>
+  </div>
+  <div class="control-group string required collection_contributor">
+    <span class="control-label">
+      <%= f.label :contributor, 'Collector'%>
+    </span>
+    <div class="controls">
+      <%= f.text_field :contributor, input_html: { class: 'input-xlarge' } %>
+    </div>
+  </div>
+  <div class="control-group string required collection_source">
+    <span class="control-label">
+      <%= f.label :source%>
+    </span>
+    <div class="controls">
+      <%= f.text_field :source, input_html: { class: 'input-xlarge' } %>
+    </div>
+  </div>
+  <div class="control-group string required collection_curator">
+    <span class="control-label">
+      <%= f.label :curator%>
+    </span>
+    <div class="controls">
+      <%= f.text_field :curator, input_html: { class: 'input-xlarge' } %>
+    </div>
+  </div>
+
+
+
+    <%# We want to display neither the avatar control nor the access permission controls if this collection is a profile section. %>
   <%# There are 2 situations where this partial is rendered, 1) when the section is created 2) when the section is edited.      %>
   <%# We must check for both those situations: 1) is_a? and 2) include?, respectively.                                          %>
   <% if !@collection.is_a?(ProfileSection) && !ActiveFedora::ContentModel.known_models_for(@collection).include?(ProfileSection) %>
