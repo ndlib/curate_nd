@@ -6,25 +6,6 @@
   <% end %>
   <h1> <%= @collection.title %> </h1>
 <% end %>
-<% if can? :edit, @collection %>
-  <% content_for :page_actions do %>
-
-  <%= button_to(
-    "Delete",
-    {
-      action: :destroy,
-      controller: :collections,
-      id: @collection.id
-    },
-    data: {confirm: 'Are you sure you want to delete this collection?'},
-    class: 'btn',
-    form_class: 'button-to pull-right',
-    method: :delete
-  )%>
-
-    <%= link_to 'Edit', edit_collection_path(@collection), class: 'btn' %>
-  <% end %>
-<% end %>
 <div class="collection-description">
   <%= richly_formatted_text(@collection.description) %>
 </div>
