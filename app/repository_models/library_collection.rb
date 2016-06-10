@@ -10,7 +10,7 @@ class LibraryCollection < ActiveFedora::Base
   include Hydra::Derivatives
   include CurationConcern::HumanReadableType
 
-  has_metadata "descMetadata", type: Hydra::CollectionRdfDatastream
+  has_metadata "descMetadata", type: LibraryCollectionRdfDatastream
   has_metadata "properties", type: Hydra::Datastream::Properties
 
   has_and_belongs_to_many :members, property: :has_collection_member, class_name: "ActiveFedora::Base"
