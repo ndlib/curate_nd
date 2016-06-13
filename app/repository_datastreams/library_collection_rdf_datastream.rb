@@ -65,5 +65,15 @@ class LibraryCollectionRdfDatastream < ActiveFedora::NtriplesRDFDatastream
       index.as :stored_searchable, :facetable
     end
     map.related_url(:to => "seeAlso", :in => RDF::RDFS)
+    map.administrative_unit(to: 'creator#administrative_unit', in: RDF::QualifiedDC) do |index|
+      index.as :stored_searchable, :facetable
+    end
+    map.source({in: RDF::DC})
+    map.curator(to: 'contributor#curator', in: RDF::QualifiedDC) do |index|
+      index.as :stored_searchable, :facetable
+    end
+    map.date(:in => RDF::DC) do |index|
+      index.as :stored_searchable
+    end
   end
 end

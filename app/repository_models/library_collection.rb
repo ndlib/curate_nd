@@ -13,8 +13,8 @@ class LibraryCollection < ActiveFedora::Base
   has_metadata "descMetadata", type: LibraryCollectionRdfDatastream
   has_metadata "properties", type: Hydra::Datastream::Properties
 
-  has_and_belongs_to_many :members, property: :has_collection_member, class_name: "ActiveFedora::Base"
-  has_many :collections, property: :has_collection_member, class_name: "ActiveFedora::Base"
+  has_many :library_collection_members, property: :is_member_of, class_name: "ActiveFedora::Base"
+  has_and_belongs_to_many :library_collections, property: :is_member_of, class_name: "ActiveFedora::Base"
 
   # include CurationConcern::WithRecordViewers
   # has_and_belongs_to_many :record_viewers, class_name: "::Person", property: :has_viewer, inverse_of: :is_viewer_of
