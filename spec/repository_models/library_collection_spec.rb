@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 RSpec.describe LibraryCollection do
+  it_behaves_like 'can_be_a_member_of_library_collections'
+
   let(:attributes) do
     {
       title: 'The Title', description: 'The Description', creator: ['The Creator', 'The Other Creator'],
@@ -19,10 +21,6 @@ RSpec.describe LibraryCollection do
   context '#library_collection_members relationship' do
     subject { described_class.new.reflections.fetch(:library_collection_members).macro }
     it { is_expected.to eq(:has_many) }
-  end
-  context '#library_collections relationship' do
-    subject { described_class.new.reflections.fetch(:library_collections).macro }
-    it { is_expected.to eq(:has_and_belongs_to_many) }
   end
   context 'create and update cycle' do
     it 'sets the metadata attributes, sets date uploaded, and launches and index job' do

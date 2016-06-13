@@ -7,5 +7,6 @@ describe FindingAid do
 
   it_behaves_like 'is_a_curation_concern_model'
   it_behaves_like 'with_access_rights'
+  it_behaves_like 'can_be_a_member_of_library_collections'
 
 end

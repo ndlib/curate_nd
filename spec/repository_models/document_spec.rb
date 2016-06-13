@@ -7,6 +7,7 @@ describe Document do
   it { should have_unique_field(:type) }
 
   it_behaves_like 'is_a_curation_concern_model'
+  it_behaves_like 'can_be_a_member_of_library_collections'
   it_behaves_like 'with_related_works'
   it_behaves_like 'is_embargoable'
   it_behaves_like 'has_dc_metadata'
