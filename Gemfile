@@ -12,6 +12,7 @@ group :default do
   gem 'chronic', '>= 0.10.2'
   gem 'citeproc-ruby', '~> 1.1'
   gem 'csl-styles', '~> 1.0'
+  gem 'curate-indexer'
   gem 'custom_configuration'
   gem 'decent_exposure'
   gem 'devise', '~>3.2.2'

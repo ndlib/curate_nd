@@ -217,6 +217,8 @@ GEM
       namae (~> 0.7)
     csl-styles (1.0.1.6)
       csl (~> 1.0)
+    curate-indexer (0.1.1)
+      dry-equalizer
     custom_configuration (0.0.2)
       railties (> 3.0)
     daemons (1.2.2)
@@ -245,6 +247,7 @@ GEM
     diff-lcs (1.2.5)
     dry-configurable (0.1.6)
       concurrent-ruby (~> 1.0)
+    dry-equalizer (0.2.0)
     email_validator (1.5.0)
       activemodel
     equalizer (0.0.11)
@@ -687,6 +690,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0)
   compass-rails (~> 1.1.2)
   csl-styles (~> 1.0)
+  curate-indexer
   custom_configuration
   database_cleaner
   decent_exposure
