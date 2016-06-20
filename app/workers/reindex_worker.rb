@@ -37,5 +37,6 @@ class ReindexWorker
 
   def reindex_for(pid)
     ActiveFedora::Base.find(pid, :cast=>true).update_index
+    Curate.relationship_reindexer.call(pid)
   end
 end

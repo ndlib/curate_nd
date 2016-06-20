@@ -20,6 +20,7 @@ describe ReindexWorker do
     object = double('ActiveFedora::Base')
     expect(object).to receive("update_index").exactly(n).times
     expect(ActiveFedora::Base).to receive("find").and_return(object).exactly(n).times
+    expect(Curate.relationship_reindexer).to receive(:call).exactly(n).times
     worker.run
   end
 end
