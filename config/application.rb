@@ -34,6 +34,7 @@ module CurateNd
       #{config.root}/app/repository_datastreams
       #{config.root}/app/repository_models/concerns
       #{config.root}/app/services
+      #{config.root}/app/workers
     )
 
     # Only load the plugins named here, in the order given (default is alphabetical).

@@ -20,6 +20,19 @@ module Curate
       }
     end
 
+    def relationship_reindexer
+      @relationship_reindexer || default_relationship_reindexer
+    end
+    attr_writer :relationship_reindexer
+
+    def default_relationship_reindexer
+      @default_relationship_reindexer ||= lambda { |pid|
+        require 'object_relationship_reindexing_worker'
+        Sufia.queue.push(ObjectRelationshipReindexerWorker.new(pid))
+      }
+    end
+    private :default_relationship_reindexer
+
     # Configure default search options from config/search_config.yml
     attr_writer :search_config
     def search_config

@@ -58,7 +58,10 @@ module CurationConcern
     def save
       curation_concern.extend(CurationConcern::RemotelyIdentifiedByDoi::MintingBehavior)
       return curation_concern.apply_doi_assignment_strategy(self) do |*|
-        curation_concern.save && (block_given? ? yield : true) && apply_access_permissions
+        curation_concern.save &&
+        (block_given? ? yield : true) &&
+        apply_access_permissions &&
+        Curate.relationship_reindexer.call(curation_concern.pid)
       end
     end
 
