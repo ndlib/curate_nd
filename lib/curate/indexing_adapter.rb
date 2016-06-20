@@ -34,9 +34,12 @@ module Curate
     # @param pid [String]
     # @return Curate::Indexer::Documents::IndexDocument
     def self.find_index_document_by(pid)
-      # Find the SOLR object
-      # Capture the eTags of the SOLR document for update
-      # Map that object to a IndexDocument
+      query = ActiveFedora::SolrService.construct_query_for_pids([pid])
+      solr_document = ActiveFedora::SolrService.query(query).first
+      parent_pids = solr_document.fetch(Solrizer.solr_name(:library_collections), [])
+      ancestors = solr_document.fetch(Solrizer.solr_name(:ancestors), [])
+      pathnames = solr_document.fetch(Solrizer.solr_name(:pathnames), [])
+      Curate::Indexer::Documents::IndexDocument.new(pid: pid, parent_pids: parent_pids, pathnames: pathnames, ancestors: ancestors)
     end
 
     # @api public

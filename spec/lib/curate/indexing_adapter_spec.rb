@@ -39,5 +39,12 @@ module Curate
         expect { |b| described_class.each_preservation_document(&b) }.to yield_with_args(Curate::Indexer::Documents::PreservationDocument)
       end
     end
+
+    context '.find_index_document_by' do
+      it 'will retrieve the SOLR document by PID and return a Curate::Indexer::Documents::IndexDocument' do
+        work = FactoryGirl.create(:document)
+        expect(described_class.find_index_document_by(work.pid)).to be_a(Curate::Indexer::Documents::IndexDocument)
+      end
+    end
   end
 end
