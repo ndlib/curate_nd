@@ -4,6 +4,9 @@ require 'curate/indexer/adapters/abstract_adapter'
 
 module Curate
   RSpec.describe IndexingAdapter do
+    it 'is the adapter for the Curate::Indexer', context: :integration do
+      expect(Curate::Indexer.adapter).to eq(described_class)
+    end
     it 'implements all of the methods of the Curate::Indexer::Adapters::AbstractAdapter' do
       methods_implemented_in_abstract = Curate::Indexer::Adapters::AbstractAdapter.methods(false)
       methods_implemented_for_curate_nd_indexing = described_class.methods(false)
