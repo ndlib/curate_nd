@@ -217,7 +217,7 @@ GEM
       namae (~> 0.7)
     csl-styles (1.0.1.6)
       csl (~> 1.0)
-    curate-indexer (0.1.1)
+    curate-indexer (0.1.2)
       dry-equalizer
     custom_configuration (0.0.2)
       railties (> 3.0)
