@@ -29,6 +29,7 @@ module Curate
       @default_relationship_reindexer ||= lambda { |pid|
         require 'object_relationship_reindexing_worker'
         Sufia.queue.push(ObjectRelationshipReindexerWorker.new(pid))
+        true
       }
     end
     private :default_relationship_reindexer

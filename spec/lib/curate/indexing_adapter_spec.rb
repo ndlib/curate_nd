@@ -58,7 +58,7 @@ module Curate
             pid: work.pid, pathnames: ["#{collection.pid}/#{work.pid}"], ancestors: [collection.pid], parent_pids: [collection.pid]
           )
         end
-        expect { |b| described_class.each_child_document_of(collection.pid, &b) }.to yield_successive_args(
+        expect { |b| described_class.each_child_document_of(collection, &b) }.to yield_successive_args(
           Curate::Indexer::Documents::IndexDocument,
           Curate::Indexer::Documents::IndexDocument
         )

@@ -39,10 +39,9 @@ module Curate
     end
 
     # @api public
-    # @param pid [String]
+    # @param document [Curate::Indexer::Documents::IndexDocument]
     # @yield Curate::Indexer::Documents::IndexDocument
-    def self.each_child_document_of(pid, &block)
-      parent_document = find_index_document_by(pid)
+    def self.each_child_document_of(parent_document, &block)
       # Need to find all documents that have ancestors equal to one or more of the given parent_document's pathnames
       pathname_query = parent_document.pathnames.map do |pathname|
         "_query_:\"{!raw f=#{SOLR_KEY_ANCESTOR_SYMBOLS}}#{pathname.gsub('"', '\"')}\""
