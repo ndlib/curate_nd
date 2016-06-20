@@ -18,11 +18,16 @@ module Curate
     end
 
     # @api public
-    # @yield Curate::Indexer::Document::PreservationDocument
+    # @yield Curate::Indexer::Documents::PreservationDocument
     def self.each_preservation_document
-      # Find each of the active fedora objects
-      # Within the block, map the fedora object to PreservationDocument
-      # Yield the PreservationDocument
+      query = "pid~#{Sufia.config.id_namespace}:*"
+      ActiveFedora::Base.send(:connections).each do |conn|
+        conn.search(query) do |object|
+          next if object.pid.start_with?(ReindexWorker::FEDORA_SYSTEM_PIDS)
+          # Because I have a Rubydora object, I need to find it via ActiveFedora, thus the reuse.
+          yield(find_preservation_document_by(object.pid))
+        end
+      end
     end
 
     # @api public

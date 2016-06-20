@@ -32,5 +32,12 @@ module Curate
         end
       end
     end
+
+    context '.each_preservation_document' do
+      it 'will iterate through Fedora and yield Curate::Indexer::Documents::PreservationDocument instances' do
+        work = FactoryGirl.create(:document)
+        expect { |b| described_class.each_preservation_document(&b) }.to yield_with_args(Curate::Indexer::Documents::PreservationDocument)
+      end
+    end
   end
 end
