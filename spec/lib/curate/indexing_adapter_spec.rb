@@ -15,5 +15,22 @@ module Curate
       # If the intersection is the same as the methods in the abstract, then we have adequately implemented the interface
       expect((methods_implemented_for_curate_nd_indexing & methods_implemented_in_abstract).sort).to eq(methods_implemented_in_abstract.sort)
     end
+
+    context '.find_preservation_document_by' do
+      context 'for a library collectable item' do
+        it 'will return a Curate::Indexer::Documents::PreservationDocument' do
+          work = FactoryGirl.create(:document)
+          expect(described_class.find_preservation_document_by(work.pid)).to be_a(Curate::Indexer::Documents::PreservationDocument)
+        end
+      end
+      context 'for a non-library collectable item' do
+        it 'will return a Curate::Indexer::Documents::PreservationDocument with empty parent_pids' do
+          work = double('Work', pid: '123')
+          allow(ActiveFedora::Base).to receive(:find).and_return(work)
+          preservation_document = described_class.find_preservation_document_by(work.pid)
+          expect(preservation_document.parent_pids).to eq([])
+        end
+      end
+    end
   end
 end

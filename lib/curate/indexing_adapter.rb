@@ -4,10 +4,25 @@ module Curate
   module IndexingAdapter
     # @api public
     # @param pid [String]
-    # @return Curate::Indexer::Document::PreservationDocument
+    # @return Curate::Indexer::Documents::PreservationDocument
     def self.find_preservation_document_by(pid)
-      # Find the active fedora object
-      # Map that object to a PreservationDocument
+      # Not everything is guaranteed to have library_collection_ids
+      # If it doesn't have it, what do we do?
+      fedora_object = ActiveFedora::Base.find(pid, cast: true)
+      if fedora_object.respond_to?(:library_collection_ids)
+        parent_pids = fedora_object.library_collection_ids
+      else
+        parent_pids = []
+      end
+      Curate::Indexer::Documents::PreservationDocument.new(pid: pid, parent_pids: parent_pids)
+    end
+
+    # @api public
+    # @yield Curate::Indexer::Document::PreservationDocument
+    def self.each_preservation_document
+      # Find each of the active fedora objects
+      # Within the block, map the fedora object to PreservationDocument
+      # Yield the PreservationDocument
     end
 
     # @api public
@@ -17,14 +32,6 @@ module Curate
       # Find the SOLR object
       # Capture the eTags of the SOLR document for update
       # Map that object to a IndexDocument
-    end
-
-    # @api public
-    # @yield Curate::Indexer::Document::PreservationDocument
-    def self.each_preservation_document
-      # Find each of the active fedora objects
-      # Within the block, map the fedora object to PreservationDocument
-      # Yield the PreservationDocument
     end
 
     # @api public
