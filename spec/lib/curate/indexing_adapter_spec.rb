@@ -35,7 +35,7 @@ module Curate
 
     context '.each_preservation_document' do
       it 'will iterate through Fedora and yield Curate::Indexer::Documents::PreservationDocument instances' do
-        work = FactoryGirl.create(:document)
+        FactoryGirl.create(:document)
         expect { |b| described_class.each_preservation_document(&b) }.to yield_with_args(Curate::Indexer::Documents::PreservationDocument)
       end
     end
@@ -44,6 +44,37 @@ module Curate
       it 'will retrieve the SOLR document by PID and return a Curate::Indexer::Documents::IndexDocument' do
         work = FactoryGirl.create(:document)
         expect(described_class.find_index_document_by(work.pid)).to be_a(Curate::Indexer::Documents::IndexDocument)
+      end
+    end
+
+    context '.each_child_document_of' do
+      it 'will retrieve the SOLR document by PID and return a Curate::Indexer::Documents::IndexDocument' do
+        collection = FactoryGirl.create(:collection)
+        described_class.write_document_attributes_to_index_layer(
+          pid: collection.pid, pathnames: [collection.pid], ancestors: [], parent_pids: []
+        )
+        [FactoryGirl.create(:document), FactoryGirl.create(:document)].each do |work|
+          described_class.write_document_attributes_to_index_layer(
+            pid: work.pid, pathnames: ["#{collection.pid}/#{work.pid}"], ancestors: [collection.pid], parent_pids: [collection.pid]
+          )
+        end
+        expect { |b| described_class.each_child_document_of(collection.pid, &b) }.to yield_successive_args(
+          Curate::Indexer::Documents::IndexDocument,
+          Curate::Indexer::Documents::IndexDocument
+        )
+      end
+    end
+    context '.write_document_attributes_to_index_layer' do
+      it 'will update the underlying solr document' do
+        work = FactoryGirl.create(:document)
+        attributes = { pid: work.pid, pathnames: ["und:123/#{work.pid}"], ancestors: ["und:123"], parent_pids: ["und:123"] }
+        described_class.write_document_attributes_to_index_layer(attributes)
+
+        solr_document = described_class.send(:find_solr_document_by, work.pid)
+        expect(solr_document.fetch(described_class::SOLR_KEY_PARENT_PIDS)).to eq(attributes.fetch(:parent_pids))
+        expect(solr_document.fetch(described_class::SOLR_KEY_ANCESTORS)).to eq(attributes.fetch(:ancestors))
+        expect(solr_document.fetch(described_class::SOLR_KEY_ANCESTOR_SYMBOLS)).to eq(attributes.fetch(:ancestors))
+        expect(solr_document.fetch(described_class::SOLR_KEY_PATHNAMES)).to eq(attributes.fetch(:pathnames))
       end
     end
   end

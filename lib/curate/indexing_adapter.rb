@@ -34,21 +34,23 @@ module Curate
     # @param pid [String]
     # @return Curate::Indexer::Documents::IndexDocument
     def self.find_index_document_by(pid)
-      query = ActiveFedora::SolrService.construct_query_for_pids([pid])
-      solr_document = ActiveFedora::SolrService.query(query).first
-      parent_pids = solr_document.fetch(Solrizer.solr_name(:library_collections), [])
-      ancestors = solr_document.fetch(Solrizer.solr_name(:ancestors), [])
-      pathnames = solr_document.fetch(Solrizer.solr_name(:pathnames), [])
-      Curate::Indexer::Documents::IndexDocument.new(pid: pid, parent_pids: parent_pids, pathnames: pathnames, ancestors: ancestors)
+      solr_document = find_solr_document_by(pid)
+      coerce_solr_document_to_index_document(solr_document)
     end
 
     # @api public
     # @param pid [String]
     # @yield Curate::Indexer::Documents::IndexDocument
     def self.each_child_document_of(pid, &block)
-      # Find the SOLR documents that are children of the given pid
-      # Map each SOLR document to an IndexDocument
-      # Yield the IndexDocument
+      parent_document = find_index_document_by(pid)
+      # Need to find all documents that have ancestors equal to one or more of the given parent_document's pathnames
+      pathname_query = parent_document.pathnames.map do |pathname|
+        "_query_:\"{!raw f=#{SOLR_KEY_ANCESTOR_SYMBOLS}}#{pathname.gsub('"', '\"')}\""
+      end.join(" OR ")
+      results = ActiveFedora::SolrService.query(pathname_query)
+      results.each do |solr_document|
+        yield(coerce_solr_document_to_index_document(solr_document))
+      end
     end
 
     # @api public
@@ -56,9 +58,34 @@ module Curate
     # @option pid [String]
     # @return Curate::Indexer::Documents::IndexDocument
     def self.write_document_attributes_to_index_layer(attributes = {})
-      # Given the attributes
-      # Merge those attributes into the related SOLR document for the object
-      # At present, I believe this minds re-find the object and then post an update
+      solr_document = find_solr_document_by(attributes.fetch(:pid))
+
+      solr_document[SOLR_KEY_PARENT_PIDS] = attributes.fetch(:parent_pids)
+      solr_document[SOLR_KEY_ANCESTORS] = attributes.fetch(:ancestors)
+      solr_document[SOLR_KEY_ANCESTOR_SYMBOLS] = attributes.fetch(:ancestors)
+      solr_document[SOLR_KEY_PATHNAMES] = attributes.fetch(:pathnames)
+
+      ActiveFedora::SolrService.add(solr_document)
+      ActiveFedora::SolrService.commit
     end
+
+    SOLR_KEY_PARENT_PIDS = ActiveFedora::SolrService.solr_name(:library_collections).freeze
+    SOLR_KEY_ANCESTORS = ActiveFedora::SolrService.solr_name(:library_collections_ancestors).freeze
+    SOLR_KEY_ANCESTOR_SYMBOLS = ActiveFedora::SolrService.solr_name(:library_collections_ancestors, :symbol).freeze
+    SOLR_KEY_PATHNAMES = ActiveFedora::SolrService.solr_name(:library_collections_pathnames).freeze
+
+    def self.coerce_solr_document_to_index_document(solr_document, pid = solr_document.fetch('id'))
+      parent_pids = solr_document.fetch(SOLR_KEY_PARENT_PIDS, [])
+      ancestors = solr_document.fetch(SOLR_KEY_ANCESTORS, [])
+      pathnames = solr_document.fetch(SOLR_KEY_PATHNAMES, [])
+      Curate::Indexer::Documents::IndexDocument.new(pid: pid, parent_pids: parent_pids, pathnames: pathnames, ancestors: ancestors)
+    end
+    private_class_method :coerce_solr_document_to_index_document
+
+    def self.find_solr_document_by(pid)
+      query = ActiveFedora::SolrService.construct_query_for_pids([pid])
+      ActiveFedora::SolrService.query(query).first
+    end
+    private_class_method :find_solr_document_by
   end
 end
