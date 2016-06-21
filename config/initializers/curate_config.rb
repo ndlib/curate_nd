@@ -28,6 +28,6 @@ end
 ActiveFedora::Predicates.set_predicates("http://projecthydra.org/ns/relations#"=>{:has_profile => "hasProfile"})
 
 Curate::Indexer.configure do |config|
-  require 'curate/indexing_adapter'
-  config.adapter = Curate::IndexingAdapter
+  require 'curate/library_collection_indexing_adapter'
+  config.adapter = Curate::LibraryCollectionIndexingAdapter
 end

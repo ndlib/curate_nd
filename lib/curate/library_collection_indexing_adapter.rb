@@ -1,7 +1,7 @@
 module Curate
   # An implementation of the required methods to integrate with the Curate::Indexer gem.
   # @see Curate::Indexer::Adapters::AbstractAdapter
-  module IndexingAdapter
+  module LibraryCollectionIndexingAdapter
     # @api public
     # @param pid [String]
     # @return Curate::Indexer::Documents::PreservationDocument
@@ -55,21 +55,26 @@ module Curate
     # @api public
     # @param attributes [Hash]
     # @option pid [String]
-    # @return Curate::Indexer::Documents::IndexDocument
+    # @return Hash
     def self.write_document_attributes_to_index_layer(attributes = {})
       solr_document = find_solr_document_by(attributes.fetch(:pid))
 
       solr_document[SOLR_KEY_PARENT_PIDS] = attributes.fetch(:parent_pids)
+      solr_document[SOLR_KEY_PARENT_PIDS_FACETABLE] = attributes.fetch(:parent_pids)
       solr_document[SOLR_KEY_ANCESTORS] = attributes.fetch(:ancestors)
       solr_document[SOLR_KEY_ANCESTOR_SYMBOLS] = attributes.fetch(:ancestors)
       solr_document[SOLR_KEY_PATHNAMES] = attributes.fetch(:pathnames)
 
       ActiveFedora::SolrService.add(solr_document)
       ActiveFedora::SolrService.commit
+      solr_document
     end
 
     SOLR_KEY_PARENT_PIDS = ActiveFedora::SolrService.solr_name(:library_collections).freeze
+    SOLR_KEY_PARENT_PIDS_FACETABLE = ActiveFedora::SolrService.solr_name(:library_collections, :facetable).freeze
     SOLR_KEY_ANCESTORS = ActiveFedora::SolrService.solr_name(:library_collections_ancestors).freeze
+    # Adding the ancestor symbol as a means of looking up relations; This is cribbed from our current version of ActiveFedora's
+    # relationship
     SOLR_KEY_ANCESTOR_SYMBOLS = ActiveFedora::SolrService.solr_name(:library_collections_ancestors, :symbol).freeze
     SOLR_KEY_PATHNAMES = ActiveFedora::SolrService.solr_name(:library_collections_pathnames).freeze
 
