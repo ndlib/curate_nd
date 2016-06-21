@@ -1,0 +1,8 @@
+<div class="library-collection-members">
+  <h2>Library Collection Members</h2>
+  <ul>
+    <% curation_concern.library_collection_members.each do |member| %>
+      <li><%= link_to(member, common_object_path(member.noid)) %></li>
+    <% end %>
+  </ul>
+</div>

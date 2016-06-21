@@ -17,11 +17,11 @@
   <%= render "curation_concern/#{curation_concern.class.model_name.plural}/attributes", curation_concern: curation_concern, with_actions: false %>
 </div>
 
-<%
-  # Files do not have attached files; they can be downloaded instead
-  if curation_concern.is_a? GenericFile
-%>
+<% case curation_concern %>
+<% when GenericFile %>
   <%= link_to 'Download this File', download_path(curation_concern), class: 'btn btn-default' %>
+<% when LibraryCollection %>
+  <%= render 'curation_concern/library_collections/library_collection_members', curation_concern: curation_concern %>
 <% else %>
   <%= render 'curation_concern/base/related_files', curation_concern: curation_concern, with_actions: true %>
 <% end %>
