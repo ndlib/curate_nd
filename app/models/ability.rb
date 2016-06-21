@@ -4,6 +4,7 @@ class Ability
 
   self.ability_logic += [:curate_permissions, :collection_permissions, :licensing_permissions]
 
+  # Note: custom_permissions are assumed to injected into the process as well.
   def custom_permissions
     @user_work_type_policy ||= WorkTypePolicy.new(user: current_user)
 
@@ -28,6 +29,11 @@ class Ability
     if current_user.manager?
       can [:discover, :show, :read, :edit, :update, :destroy], :all
     end
+
+    can [:read, :show], LibraryCollection
+    # This is a concession concerning the UI; LibraryCollections are made
+    # via the batch ingest.
+    cannot [:edit, :update, :destroy, :create], LibraryCollection
 
     can :edit, Person do |p|
       p.pid == current_user.repository_id
