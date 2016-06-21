@@ -49,6 +49,11 @@ class LibraryCollection < ActiveFedora::Base
     'Collection'
   end
 
+  # Returns a string identifying the path associated with the object. ActionPack uses this to find a suitable partial to represent the object.
+  def to_partial_path
+    "curation_concern/#{super}"
+  end
+
   def to_s
     title
   end

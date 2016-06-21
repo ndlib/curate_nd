@@ -1,0 +1,27 @@
+<%# This is a search result view %>
+<% noid = library_collection.noid %>
+<% solr_doc = library_collection.inner_object.solr_doc %>
+<li id="document_<%= noid %>" class="search-result">
+  <%= render(
+    partial: 'catalog/_index_partials/identifier_and_action',
+    locals: {
+      document: library_collection,
+      counter: library_collection_counter,
+      title_link_target: common_object_path(library_collection),
+      solr_doc: solr_doc,
+      edit_path: ''
+    })
+  %>
+  <div class="row-fluid">
+    <div class="span2">
+      <%= render partial: 'catalog/_index_partials/thumbnail_display', locals: { document: library_collection, title_link_target: common_object_path(library_collection) } %>
+    </div>
+    <div class="span10">
+      <dl class="attribute-list">
+        <% if solr_doc.has?('desc_metadata__description_tesim') %>
+          <dt>Description:</dt>
+          <dd class="readmore"><%= escape_html_for_solr_text(truncate(render_index_field_value(document: solr_doc, field: 'desc_metadata__description_tesim'), length: 500)).html_safe %></dd>
+        <% end %>
+    </div>
+  </div>
+</li>
