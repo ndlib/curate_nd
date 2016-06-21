@@ -49,6 +49,10 @@ class LibraryCollection < ActiveFedora::Base
     'Collection'
   end
 
+  def to_s
+    title
+  end
+
   def to_solr(solr_doc={}, opts={})
     super(solr_doc, opts)
     Solrizer.set_field(solr_doc, 'generic_type', human_readable_type, :facetable)

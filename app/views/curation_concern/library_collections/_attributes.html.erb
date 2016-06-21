@@ -1,0 +1,32 @@
+<%= curation_concern_attribute_to_formatted_text(curation_concern, :description, 'Description') %>
+
+<table class="table table-striped <%= dom_class(curation_concern) %> attributes">
+  <caption class="table-heading"><h2>Attributes</h2></caption>
+  <thead>
+    <tr><th>Attribute Name</th><th>Values</th></tr>
+  </thead>
+  <tbody>
+  <% curation_concern.creator.each do |creator| %>
+    <tr><th> Creator </th><td><%= creator %></td></tr>
+  <% end %>
+  <% curation_concern.contributor.each do |contributor| %>
+    <tr><th> Contributor </th><td><%= contributor %></td></tr>
+  <% end %>
+  <% curation_concern.curator.each do |curator| %>
+    <tr><th> Curator </th><td><%= curator %></td></tr>
+  <% end %>
+  <%= curation_concern_attribute_to_html(curation_concern, :based_near, "Based Near") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :part_of, "Part of") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :publisher, "Publisher") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :date_created, "Date Created") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :subject, "Subject") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :resource_type, "Resource Type") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :rights, "Rights") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :identifier, "Identifier") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :language, "Language") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :tag, "Tag") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :related_url, "Related URL") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :source, "Source") %>
+  <%= decode_administrative_unit(curation_concern, :administrative_unit, "Departments and Units") %>
+  </tbody>
+</table>
