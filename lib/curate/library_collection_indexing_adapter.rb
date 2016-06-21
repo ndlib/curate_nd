@@ -57,7 +57,10 @@ module Curate
     # @option pid [String]
     # @return Hash
     def self.write_document_attributes_to_index_layer(attributes = {})
-      solr_document = find_solr_document_by(attributes.fetch(:pid))
+      # As much as I'd love to use the SOLR document, I don't believe this is feasable as not all elements of the
+      # document are stored and returned.
+      fedora_object = ActiveFedora::Base.find(attributes.fetch(:pid), cast: true)
+      solr_document = fedora_object.to_solr
 
       solr_document[SOLR_KEY_PARENT_PIDS] = attributes.fetch(:parent_pids)
       solr_document[SOLR_KEY_PARENT_PIDS_FACETABLE] = attributes.fetch(:parent_pids)
