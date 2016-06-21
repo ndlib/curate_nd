@@ -7,14 +7,14 @@
     locals: {
       document: library_collection,
       counter: library_collection_counter,
-      title_link_target: common_object_path(library_collection),
+      title_link_target: common_object_path(noid),
       solr_doc: solr_doc,
       edit_path: ''
     })
   %>
   <div class="row-fluid">
     <div class="span2">
-      <%= render partial: 'catalog/_index_partials/thumbnail_display', locals: { document: library_collection, title_link_target: common_object_path(library_collection) } %>
+      <%= render partial: 'catalog/_index_partials/thumbnail_display', locals: { document: library_collection, title_link_target: common_object_path(noid) } %>
     </div>
     <div class="span10">
       <dl class="attribute-list">
