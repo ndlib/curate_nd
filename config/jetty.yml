@@ -13,5 +13,5 @@ test: &TEST
   jetty_home: <%= Rails.root.join('jetty') %>
 ci:
   <<: *TEST
-  startup_wait: 75
+  startup_wait: 90
   jetty_home: <%= Rails.root.join('jetty') %>
