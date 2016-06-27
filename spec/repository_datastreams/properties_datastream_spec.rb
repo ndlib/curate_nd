@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'equivalent-xml/rspec_matchers'
 
 describe PropertiesDatastream do
 
