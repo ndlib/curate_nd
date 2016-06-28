@@ -1,5 +1,3 @@
-require "sufia/models/version"
-
 module Sufia
   extend ActiveSupport::Autoload
 
