@@ -1,13 +1,25 @@
-require Sufia::Models::Engine.root.join('lib/sufia/models/jobs/characterize_job')
+class CharacterizeJob < ActiveFedoraPidBasedJob
 
-class CharacterizeJob
-  module WithAntiVirusHandler
-    def run
-      super
-    rescue AntiVirusScanner::VirusDetected => e
-      GenericFile.find(generic_file_id).destroy
-      raise e
+  def queue_name
+    :characterize
+  end
+
+  def run
+    generic_file.characterize
+    after_characterize
+  rescue AntiVirusScanner::VirusDetected => e
+    GenericFile.find(generic_file_id).destroy
+    raise e
+  end
+
+  def after_characterize
+    if generic_file.pdf? || generic_file.image? || generic_file.video?
+      generic_file.create_thumbnail
+    end
+    if generic_file.video?
+      Sufia.queue.push(TranscodeVideoJob.new(generic_file_id))
+    elsif generic_file.audio?
+      Sufia.queue.push(TranscodeAudioJob.new(generic_file_id))
     end
   end
-  include(WithAntiVirusHandler) unless included_modules.include?(WithAntiVirusHandler)
 end
