@@ -6,9 +6,9 @@
   <tbody>
     <%= curation_concern_attribute_to_html(curation_concern, :creator, 'Creator') %>
     <%= curation_concern_attribute_to_html(curation_concern, :subject, "Subject") %>
-    <%= curation_concern_attribute_to_html(curation_concern, :date_created, "Date Created") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :date_archived, "Archive Date") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :source, "Original Project") %>
     <%= curation_concern_attribute_to_html(curation_concern, :language, "Language") %>
-    <%= curation_concern_attribute_to_html(curation_concern, :source, "Source") %>
     <%= decode_administrative_unit(curation_concern, :administrative_unit, "Departments and Units") %>
     <%= curation_concern_attribute_to_html(curation_concern, :library_collections, "Member of") %>
     <tr>
