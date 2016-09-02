@@ -10,7 +10,7 @@ CurateNd::Application.routes.draw do
   get '/classify_concerns/new', to: redirect('deposit')
 
   # Some ETDs are not loading correctly on the curation concern page
-  ['etds', 'articles', 'datasets', 'senior_theses', 'images', 'patents', 'generic_files', 'finding_aids', 'documents'].each do |curation_concern|
+  ['etds', 'articles', 'datasets', 'senior_theses', 'images', 'patents', 'generic_files', 'finding_aids', 'documents', 'osf_archive'].each do |curation_concern|
     get "/concern/#{curation_concern}/new", to: "curation_concern/#{curation_concern}#new"
     get "/concern/#{curation_concern}/:id", to: redirect { |params, request|
       "/show/#{params[:id]}"

@@ -1,0 +1,34 @@
+<%# This is a search result view %>
+<% solr_doc = osf_archive.inner_object.solr_doc %>
+<li id="document_<%= osf_archive.noid %>" class="search-result">
+
+  <%= render :partial => 'catalog/_index_partials/identifier_and_action', locals: {document: osf_archive, counter: osf_archive_counter} %>
+
+  <div class="row-fluid">
+
+    <div class="span2">
+      <%= render :partial => 'catalog/_index_partials/thumbnail_display', locals: {document: osf_archive} %>
+    </div>
+
+    <div class="span10">
+      <dl class="attribute-list">
+        <% if solr_doc.has?('desc_metadata__creator_tesim') %>
+          <dt>Author(s):</dt>
+          <dd><%= render_index_field_value(document: solr_doc, field: 'desc_metadata__creator_tesim') %></dd>
+        <% end %>
+
+        <% if solr_doc.has?('desc_metadata__abstract_tesim') %>
+          <dt>Abstract:</dt>
+          <dd class="readmore"><%= escape_html_for_solr_text(truncate(render_index_field_value(document: solr_doc, field: 'desc_metadata__abstract_tesim'), length: 500)).html_safe %></dd>
+        <% end %>
+        <% if solr_doc.has?('desc_metadata__date_created_tesim') %>
+          <dt>Date Created:</dt>
+          <dd><%= render_index_field_value(document: solr_doc, field: 'desc_metadata__date_created_tesim') %></dd>
+        <% end %>
+      </dl>
+
+    </div>
+
+  </div>
+
+</li>
