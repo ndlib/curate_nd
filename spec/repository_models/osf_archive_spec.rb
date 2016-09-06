@@ -22,7 +22,7 @@ describe OsfArchive do
     it "should set initialize dates on create" do
       archive.valid?
       expect(archive.date_modified).to eq(Date.today)
-      expect(archive.date_archived).to eq(Date.today)
+      expect(Date.parse(archive.date_archived)).to eq(Date.today)
     end
   end
 end
