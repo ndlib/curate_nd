@@ -27,8 +27,22 @@ class OsfArchive < ActiveFedora::Base
 
   has_metadata 'descMetadata', type: OsfArchiveDatastream
 
+  attribute :administrative_unit,
+    datastream: :descMetadata, multiple: true,
+    label: "Departments and Units",
+    hint: "Departments and Units that creator belong to."
+
+  attribute :affiliation,
+    datastream: :descMetadata,
+    hint: "Creator's Affiliation to the Institution.",
+    multiple: false
+
   attribute :creator,
     datastream: :descMetadata, multiple: true
+
+  attribute :identifier,
+    datastream: :descMetadata, multiple: false,
+    editable: false
 
   attribute :title,
     datastream: :descMetadata, multiple: false,
@@ -76,6 +90,9 @@ class OsfArchive < ActiveFedora::Base
     datastream: :descMetadata, multiple: false,
     label: "Date Archived",
     validates: {presence: { message: 'Archived date is required.' }}
+
+  attribute :date_uploaded,
+    datastream: :descMetadata, multiple: false
 
   attribute :rights,
     datastream: :descMetadata, multiple: true
