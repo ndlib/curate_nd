@@ -1,0 +1,29 @@
+<% content_for :page_title, construct_page_title('Batch Ingest Jobs', 'Administrative Functions') %>
+<% content_for :page_header do %>
+  <h1>Batch Ingest Jobs</h1>
+
+  <ul class="breadcrumb">
+    <li><%= link_to 'CurateND', root_path %> <span class="divider">/</span></li>
+    <li><%= link_to 'Administrative Functions', admin_path %> <span class="divider">/</span></li>
+    <li class="active">Batch Ingest Jobs</li>
+  </ul>
+<% end %>
+
+<table class="table table-striped">
+  <caption class="accessible-hidden">List of All Ingest Jobs</caption>
+  <thead>
+    <tr>
+      <th>Job</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @jobs.sort_by!{ |job| [job[:status], job[:job]] }.each do |job| %>
+      <tr>
+        <td><%= job[:job] %></td>
+        <td><%= job[:status] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

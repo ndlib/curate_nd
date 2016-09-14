@@ -13,8 +13,7 @@
   <caption class="accessible-hidden">List of All OSF Project Ingest Jobs</caption>
   <thead>
     <tr>
-      <th>Project Identifier</th>
-      <th>Owner</th>
+      <th>Job</th>
       <th>Status</th>
     </tr>
   </thead>
@@ -22,9 +21,8 @@
   <tbody>
     <% @archives.each do |archive| %>
       <tr>
-        <td><%= archive.project_identifier %></td>
-        <td><%= archive.owner %></td>
-        <td><%= archive.status %></td>
+        <td><%= archive[:job] %></td>
+        <td><%= archive[:status] %></td>
       </tr>
     <% end %>
   </tbody>
