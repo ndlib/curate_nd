@@ -619,22 +619,6 @@ GEM
     stomp (1.3.4)
     stud (0.0.22)
     subexec (0.2.3)
-    sufia-models (3.4.0)
-      active-fedora (~> 6.7.0)
-      activerecord-import
-      activeresource
-      acts_as_follower (>= 0.1.1, < 0.3)
-      blacklight (~> 4.5.0)
-      hydra-derivatives (~> 0.0.5)
-      hydra-head (~> 6.4.0)
-      mailboxer (~> 0.11.0)
-      nest (~> 1.1.1)
-      noid (~> 0.6.6)
-      paperclip (~> 3.4.0)
-      rails (>= 3.2.13, < 5.0)
-      resque (~> 1.23)
-      resque-pool (= 0.3.0)
-      zipruby (= 0.3.6)
     test_after_commit (0.2.1)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
@@ -677,18 +661,22 @@ GEM
     xml-simple (1.1.5)
     xpath (2.0.0)
       nokogiri (~> 1.3)
-    zipruby (0.3.6)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  active-fedora (~> 6.7.0)
   active_attr
   active_fedora-registered_attributes (~> 0.2.0)
+  activerecord-import
+  activeresource (~> 4.0.0)
+  acts_as_follower (>= 0.1.1, < 0.3)
   addressable (~> 2.3.5)
   airbrake (~> 4.2)
   better_errors
   binding_of_caller
+  blacklight (~> 4.5.0)
   blacklight-hierarchy!
   bootstrap-datepicker-rails
   breach-mitigation-rails
@@ -720,6 +708,7 @@ DEPENDENCIES
   hydra-collections (~> 1.3.0)
   hydra-derivatives (~> 0.0.7)
   hydra-file_characterization (>= 0.2.3)
+  hydra-head (~> 6.4.0)
   hydra-remote_identifier (~> 0.6, >= 0.6.7)
   jettywrapper
   jquery-rails
@@ -731,6 +720,7 @@ DEPENDENCIES
   lograge
   logstash-event
   logstash-logger
+  mailboxer (~> 0.11.0)
   meta_request
   method_locator
   method_source
@@ -738,10 +728,13 @@ DEPENDENCIES
   morphine
   mysql2
   namae
+  nest (~> 1.1.1)
   net-ldap
+  noid (~> 0.6.6)
   noids_client!
   nokogiri (~> 1.6.0)
   orcid!
+  paperclip (~> 3.4.0)
   poltergeist (~> 1.5)
   qa
   quiet_assets
@@ -769,7 +762,6 @@ DEPENDENCIES
   share_notify (~> 0.2)
   simple_form (~> 3.0.1)
   simplecov
-  sufia-models (~> 3.4.0)
   test_after_commit
   therubyracer (= 0.12.1)
   thin

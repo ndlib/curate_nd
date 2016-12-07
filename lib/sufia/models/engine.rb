@@ -1,0 +1,1 @@
+require 'sufia/models/resque'
