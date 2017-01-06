@@ -6,9 +6,9 @@
     <tr><th>Attribute Name</th><th>Values</th></tr>
   </thead>
   <tbody>
-    <%= curation_concern_attribute_to_html(curation_concern, :alternate_title, 'Alternate Title') %>
-    <%= curation_concern_attribute_to_html(curation_concern, :creator, 'Creator') %>
-    <%= curation_concern_attribute_to_html(curation_concern, :contributor, 'Contributor') %>
+    <%= curation_concern_attribute_to_html(curation_concern, :alternate_title, "Alternate Title") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :creator, "Creator") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :contributor, "Contributor") %>
     <%= curation_concern_attribute_to_html(curation_concern, :subject, "Subject") %>
     <%= curation_concern_attribute_to_html(curation_concern, :source, "Source") %>
     <%= curation_concern_attribute_to_html(curation_concern, :size, "Size") %>
@@ -18,7 +18,50 @@
     <%= curation_concern_attribute_to_html(curation_concern, :date_digitized, "Date Digitized") %>
     <%= curation_concern_attribute_to_html(curation_concern, :digitizing_equipment, "Digitizing Equipment") %>
     <%= curation_concern_attribute_to_html(curation_concern, :recommended_citation, "Recommended Citation") %>
-    <%= curation_concern_attribute_to_html(curation_concern, :language, "Language") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_designer, "Designer") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_manufacturer, "Manufacturer") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_printer, "Printer") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_has_technique, "Technique") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_material, "Material") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_cultural_context, "Cultural Context") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :is_part_of, "Part Of") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :is_version_of, "Version Of") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_depth, "Depth") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_diameter, "Diameter") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_height, "Height") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_length, "Length") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_width, "Width") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_weight, "Weight") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_was_performed, "Performance Date") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_was_presented, "Presentation Date") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_was_produced, "Production Date") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :date_issued, "Publication Date") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_plan_for, "Plan For") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_preparatory_for, "Preparatory Work For") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_printing_plate_for, "Printing Plate For") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_prototype_for, "Prototype For") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_relief_for, "Relief For") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_replica_of, "Replica Of") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_study_for, "Study For") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_depicts, "Depicts") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_image_of, "Image Of") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_derived_from, "Derives From") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_facsimile_of, "Facsimile Of") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_mate_of, "Mate Of") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_partner_in_set_with, "In Set With") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_was_alteration, "Alteration Date") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_was_commission, "Commission Date") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_was_designed, "Design Date") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_was_destroyed, "Destruction Date") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_was_discovered, "Discovery Date") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_was_restored, "Restoration Date") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_place_of_creation, "Place of Creation") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_place_of_discovery, "Place of Discovery") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_place_of_exhibition, "Place of Exhibition") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_place_of_installation, "Place of Installation") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_place_of_publication, "Place of Publication") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_place_of_repository, "Place of Repository") %>
+    <%= curation_concern_attribute_to_html(curation_concern, :vra_place_of_site, "Place of Site") %>
     <%= decode_administrative_unit(curation_concern, :administrative_unit, "Departments and Units") %>
     <%= curation_concern_attribute_to_html(curation_concern, :library_collections, "Member of") %>
     <%= curation_concern_attribute_to_html(
@@ -28,6 +71,7 @@
             callout_pattern: /\Ahttp?:\/\/onesearch\.library\.nd\.edu\/NDU\:nd_campus\:ndu_aleph/,
             callout_text: "View the library catalog record for this item"
         ) %>
+    <%= curation_concern_attribute_to_html(curation_concern, :language, "Language") %>
     <%= curation_concern_attribute_to_html(curation_concern, :spatial_coverage, "Spatial Coverage") %>
     <%= curation_concern_attribute_to_html(curation_concern, :temporal_coverage, "Temporal Coverage") %>
     <tr>
