@@ -56,6 +56,16 @@ class LibraryCollection < ActiveFedora::Base
     solr_doc
   end
 
+  def check_and_clear_representative
+    begin
+      GenericFile.load_instance_from_solr(self.representative) if self.representative.present?
+    rescue ActiveFedora::ObjectNotFoundError
+      representative_pid = self.representative
+      self.representative = self.generic_file_ids.select{|i| i if i != representative_pid}.first
+      self.save!
+    end
+  end
+
   private :date_uploaded=, :date_modified=
 
   private

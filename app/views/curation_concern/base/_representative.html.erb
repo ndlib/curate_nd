@@ -1,8 +1,9 @@
 <% if work.representative.present? %>
+  <!-- make sure representative file is available for use -->
+  <% work.check_and_clear_representative %>
   <% if work.try(:generic_files) || work.class == GenericFile %>
     <% generic_file = GenericFile.load_instance_from_solr(work.representative) %>
-
-<!-- if representative file is audio, regardless of class, use audio player -->
+    <!-- if representative file is audio, regardless of class, use audio player -->
     <% if can?(:read, generic_file) && generic_file.audio? %>
       <div class="row">
         <div class="work-representation span12">
@@ -12,7 +13,7 @@
           <%= details %>
         </div>
       </div>
-<!-- else if Image class and representative file is image -->
+    <!-- else if Image class and representative file is image -->
     <% elsif can?(:read, generic_file) && generic_file.image? && (work.class == Image || work.class == GenericFile) %>
       <div class="row">
         <div class="work-representation span12">
@@ -24,7 +25,7 @@
           <%= details %>
         </div>
       </div>
-<!-- else use basic logic -->
+    <!-- else use basic logic -->
     <% else %>
       <div class="row">
         <div class="work-representation span3">
@@ -35,7 +36,7 @@
         </div>
       </div>
     <% end %>
-<!-- else if no generic file use basic logic -->
+  <!-- else if no generic file use basic logic -->
   <% else %>
     <div class="row">
       <div class="work-representation span3">
@@ -47,3 +48,4 @@
     </div>
   <% end %>
 <% end %>
+
