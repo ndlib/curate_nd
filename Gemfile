@@ -87,7 +87,6 @@ group :orcid do
   gem 'railties', '~> 4.0'
   gem 'omniauth-orcid', '0.6'
   gem 'mappy'
-  gem 'virtus'
   gem 'email_validator'
   gem 'omniauth-oauth2', '< 1.4'
   gem 'hashie', '3.4.6'
