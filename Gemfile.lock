@@ -51,6 +51,15 @@ GIT
       rest-client (~> 1.6)
 
 GIT
+  remote: https://github.com/samvera-labs/hydra-remote_identifier.git
+  revision: 9c03618a34e2177471d4ed858c7898609c097c35
+  ref: 9c03618a34e2177471d4ed858c7898609c097c35
+  specs:
+    hydra-remote_identifier (0.6.8)
+      activesupport (>= 3.2.13)
+      rest-client (~> 1.8)
+
+GIT
   remote: https://github.com/samvera-labs/share_notify.git
   revision: 96c16ab13c596f479f83cb55c70b27309f4d5f2d
   specs:
@@ -239,6 +248,8 @@ GEM
       railties (>= 3.0)
     diff-lcs (1.3)
     docile (1.1.5)
+    domain_name (0.5.20180417)
+      unf (>= 0.0.5, < 1.0.0)
     dry-configurable (0.7.0)
       concurrent-ruby (~> 1.0)
     dry-equalizer (0.2.0)
@@ -276,6 +287,8 @@ GEM
     hike (1.2.3)
     hooks (0.3.6)
       uber (~> 0.0.4)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
     httparty (0.16.0)
       multi_xml (>= 0.5.2)
     hydra-access-controls (6.4.2)
@@ -310,9 +323,6 @@ GEM
       hydra-access-controls (= 6.4.2)
       hydra-core (= 6.4.2)
       rails (>= 3.2.6)
-    hydra-remote_identifier (0.6.7)
-      activesupport (>= 3.2.13, < 5.0)
-      rest-client (~> 1.6.7)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
@@ -361,7 +371,7 @@ GEM
       railties (>= 3.0.0, < 5.1.0)
     method_locator (0.0.4)
     method_source (0.8.2)
-    mime-types (1.25.1)
+    mime-types (2.99.3)
     mini_magick (3.8.1)
       subexec (~> 0.2.1)
     mini_portile2 (2.1.0)
@@ -383,6 +393,7 @@ GEM
     net-ssh (4.1.0)
     net-ssh-gateway (2.0.0)
       net-ssh (>= 4.0.0)
+    netrc (0.11.0)
     noid (0.6.6)
       backports
     nokogiri (1.6.8)
@@ -505,8 +516,10 @@ GEM
       rake
       resque (~> 1.20)
       trollop (~> 1.16)
-    rest-client (1.6.9)
-      mime-types (~> 1.16)
+    rest-client (1.8.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     roboto (0.2.0)
       actionpack (>= 3.0.0)
       rails (>= 3.1.0)
@@ -721,7 +734,7 @@ DEPENDENCIES
   hydra-collections (~> 1.3.0)
   hydra-derivatives (~> 0.0.7)
   hydra-file_characterization (>= 0.2.3)
-  hydra-remote_identifier (~> 0.6, >= 0.6.7)
+  hydra-remote_identifier!
   jettywrapper
   jquery-rails
   jshintrb

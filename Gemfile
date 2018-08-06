@@ -38,7 +38,7 @@ group :default do
   gem 'hydra-collections', '~> 1.3.0'
   gem 'hydra-derivatives', '~> 0.0.7'
   gem 'hydra-file_characterization', ">= 0.2.3"
-  gem 'hydra-remote_identifier', '~> 0.6', '>= 0.6.7'
+  gem 'hydra-remote_identifier', github: 'samvera-labs/hydra-remote_identifier', ref: '9c03618a34e2177471d4ed858c7898609c097c35'
   gem "json-ld"
   gem 'jettywrapper'
   gem 'jquery-rails'
