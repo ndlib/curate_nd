@@ -51,6 +51,18 @@ GIT
       rest-client (~> 1.6)
 
 GIT
+  remote: https://github.com/ndlib/questioning_authority.git
+  revision: e1dfeddb3b1f7ea31e1cee1fb225905ed38e5e1b
+  branch: stable_0_8
+  specs:
+    qa (0.8.0)
+      activerecord-import
+      deprecation
+      faraday
+      nokogiri (~> 1.8)
+      rails (>= 3.2.13, < 5.0)
+
+GIT
   remote: https://github.com/samvera-labs/hydra-remote_identifier.git
   revision: 9c03618a34e2177471d4ed858c7898609c097c35
   ref: 9c03618a34e2177471d4ed858c7898609c097c35
@@ -375,7 +387,7 @@ GEM
     mini_magick (3.8.1)
       subexec (~> 0.2.1)
     mini_mime (1.0.0)
-    mini_portile2 (2.1.0)
+    mini_portile2 (2.3.0)
     minitest (4.7.5)
     mono_logger (1.1.0)
     morphine (0.1.1)
@@ -397,8 +409,8 @@ GEM
     netrc (0.11.0)
     noid (0.6.6)
       backports
-    nokogiri (1.6.8.1)
-      mini_portile2 (~> 2.1.0)
+    nokogiri (1.8.4)
+      mini_portile2 (~> 2.3.0)
     nokogumbo (1.1.12)
       nokogiri
     nom-xml (0.6.0)
@@ -441,12 +453,6 @@ GEM
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
     powerpack (0.1.1)
-    qa (0.8.0)
-      activerecord-import
-      deprecation
-      faraday
-      nokogiri (~> 1.6.0)
-      rails (>= 3.2.13, < 5.0)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.5.5)
@@ -758,7 +764,7 @@ DEPENDENCIES
   omniauth-oauth2 (< 1.4)
   omniauth-orcid (= 0.6)
   poltergeist (~> 1.5)
-  qa
+  qa!
   quiet_assets
   rails (~> 4.0.2)
   rails-assets-Leaflet--Leaflet.fullscreen!

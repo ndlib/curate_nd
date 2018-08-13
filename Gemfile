@@ -58,7 +58,7 @@ group :default do
   gem 'net-ldap'
   gem 'noids_client', github: 'ndlib/noids_client'
   gem 'nokogiri'
-  gem 'qa'
+  gem 'qa', github: 'ndlib/questioning_authority', branch: 'stable_0_8'
   gem 'rails', '~>4.0.2'
   gem 'rails_autolink'
   gem 'rake', '~> 11.0'
