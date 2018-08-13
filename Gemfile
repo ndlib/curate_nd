@@ -57,7 +57,7 @@ group :default do
   gem 'namae'
   gem 'net-ldap'
   gem 'noids_client', github: 'ndlib/noids_client'
-  gem 'nokogiri', "~>1.6.0"
+  gem 'nokogiri'
   gem 'qa'
   gem 'rails', '~>4.0.2'
   gem 'rails_autolink'

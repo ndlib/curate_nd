@@ -754,7 +754,7 @@ DEPENDENCIES
   namae
   net-ldap
   noids_client!
-  nokogiri (~> 1.6.0)
+  nokogiri
   omniauth-oauth2 (< 1.4)
   omniauth-orcid (= 0.6)
   poltergeist (~> 1.5)
