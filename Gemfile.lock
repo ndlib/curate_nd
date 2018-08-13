@@ -26,14 +26,6 @@ GIT
       rails (~> 4.0)
 
 GIT
-  remote: https://github.com/ndlib/harbinger.git
-  revision: f330a0ead6136f9aadbcd0ada1a927b38cec85cd
-  specs:
-    harbinger (0.2.3)
-      kaminari (~> 0.14s)
-      rails (~> 4.0)
-
-GIT
   remote: https://github.com/ndlib/locabulary.git
   revision: a5b932d8da6060be302b3d0ba57ecb87e02ffc3b
   specs:
@@ -732,7 +724,6 @@ DEPENDENCIES
   factory_girl_rails (~> 4.2.0)
   figaro
   flipper
-  harbinger!
   hashie (= 3.4.6)
   httparty
   hydra-batch-edit (~> 1.1.1)
