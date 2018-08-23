@@ -55,6 +55,27 @@ GIT
       rails (>= 3.2.13, < 5.0)
 
 GIT
+  remote: https://github.com/ndlib/sufia.git
+  revision: a9b5f922278a3eff8f6b4511cf49d3cd387a87e8
+  branch: v3.4.0-removing-paperclip-usage
+  specs:
+    sufia-models (3.4.0)
+      active-fedora (~> 6.7.0)
+      activerecord-import
+      activeresource
+      acts_as_follower (>= 0.1.1, < 0.3)
+      blacklight (~> 4.5.0)
+      hydra-derivatives (~> 0.0.5)
+      hydra-head (~> 6.4.0)
+      mailboxer (~> 0.11.0)
+      nest (~> 1.1.1)
+      noid (~> 0.6.6)
+      rails (>= 3.2.13, < 5.0)
+      resque (~> 1.23)
+      resque-pool (= 0.3.0)
+      zipruby (= 0.3.6)
+
+GIT
   remote: https://github.com/samvera-labs/hydra-remote_identifier.git
   revision: 9c03618a34e2177471d4ed858c7898609c097c35
   ref: 9c03618a34e2177471d4ed858c7898609c097c35
@@ -132,7 +153,7 @@ GEM
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
-    backports (3.8.0)
+    backports (3.11.3)
     bcrypt (3.1.11)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
@@ -177,7 +198,7 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    carrierwave (1.1.0)
+    carrierwave (1.2.3)
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
       mime-types (>= 1.16)
@@ -191,10 +212,7 @@ GEM
       citeproc (>= 1.0.2, < 2.0)
       csl (~> 1.4)
     clamav (0.4.1)
-    climate_control (0.1.0)
     cliver (0.3.2)
-    cocaine (0.5.8)
-      climate_control (>= 0.0.3, < 1.0)
     code_analyzer (0.4.7)
       sexp_processor
     coderay (1.1.1)
@@ -432,12 +450,6 @@ GEM
       omniauth (~> 1.0)
       omniauth-oauth2 (~> 1.1)
     orm_adapter (0.5.0)
-    paperclip (3.4.2)
-      activemodel (>= 3.0.0)
-      activerecord (>= 3.0.0)
-      activesupport (>= 3.0.0)
-      cocaine (~> 0.5.0)
-      mime-types
     parser (2.4.0.0)
       ast (~> 2.2)
     poltergeist (1.15.0)
@@ -619,22 +631,6 @@ GEM
       sprockets (>= 2.8, < 4.0)
     stomp (1.4.3)
     subexec (0.2.3)
-    sufia-models (3.4.0)
-      active-fedora (~> 6.7.0)
-      activerecord-import
-      activeresource
-      acts_as_follower (>= 0.1.1, < 0.3)
-      blacklight (~> 4.5.0)
-      hydra-derivatives (~> 0.0.5)
-      hydra-head (~> 6.4.0)
-      mailboxer (~> 0.11.0)
-      nest (~> 1.1.1)
-      noid (~> 0.6.6)
-      paperclip (~> 3.4.0)
-      rails (>= 3.2.13, < 5.0)
-      resque (~> 1.23)
-      resque-pool (= 0.3.0)
-      zipruby (= 0.3.6)
     test_after_commit (1.1.0)
       activerecord (>= 3.2)
     therubyracer (0.12.1)
@@ -761,6 +757,7 @@ DEPENDENCIES
   rails-assets-Leaflet--Leaflet.fullscreen!
   rails-assets-leaflet!
   rails-erb-lint
+  rails-observers (= 0.1.2)
   rails_autolink
   rails_best_practices
   railties (~> 4.0)
@@ -782,7 +779,7 @@ DEPENDENCIES
   share_notify!
   simple_form (~> 3.0.1)
   simplecov
-  sufia-models (~> 3.4.0)
+  sufia-models!
   test_after_commit
   therubyracer (= 0.12.1)
   thin
