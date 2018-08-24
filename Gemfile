@@ -99,7 +99,7 @@ end
 # Explicitly require it here.
 gem 'addressable', '~> 2.3.5'
 gem 'coffee-rails', '~> 4.0'
-gem 'compass-rails', '~> 1.1.2'
+gem 'compass-rails', '~> 2.0.0'
 gem 'sass-rails',   '~> 4.0'
 gem 'uglifier', '>= 1.0.3'
 
