@@ -66,7 +66,7 @@ group :default do
   gem 'resque-pool'
   gem 'roboto'
   gem 'rubydora', '~> 1.7.4'
-  gem 'sanitize', '~> 3.0.2'
+  gem 'sanitize', '~> 4.6.3'
   gem 'select2-rails'
   gem 'share_notify', github: 'samvera-labs/share_notify'
   gem 'simple_form', '~> 3.0.1'
