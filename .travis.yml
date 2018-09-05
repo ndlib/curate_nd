@@ -1,11 +1,11 @@
 language: ruby
 rvm:
   - "2.1.10"
-  - "2.2.2"
+  - "2.2.10"
 
 matrix:
   allow_failures:
-    - rvm: "2.2.2"
+    - rvm: "2.2.10"
 
 script: 'bundle exec rake curatend:ci SPEC_OPTS="--tag ~js:true"'
 

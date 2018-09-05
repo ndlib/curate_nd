@@ -31,14 +31,13 @@ group :default do
   gem 'ezid-client', '~> 1.8'
   gem 'figaro'
   gem 'flipper'
-  gem 'harbinger', github: 'ndlib/harbinger'
   gem 'blacklight-hierarchy', github: 'ndlib/blacklight-hierarchy', branch: 'master'
   gem 'httparty'
   gem 'hydra-batch-edit', '~> 1.1.1'
   gem 'hydra-collections', '~> 1.3.0'
   gem 'hydra-derivatives', '~> 0.0.7'
   gem 'hydra-file_characterization', ">= 0.2.3"
-  gem 'hydra-remote_identifier', '~> 0.6', '>= 0.6.7'
+  gem 'hydra-remote_identifier', github: 'samvera-labs/hydra-remote_identifier', ref: '9c03618a34e2177471d4ed858c7898609c097c35'
   gem "json-ld"
   gem 'jettywrapper'
   gem 'jquery-rails'
@@ -47,7 +46,7 @@ group :default do
   # Need rubyracer to run integration tests.....really?!?
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'libv8', '~> 3.16.14.3'
-  gem 'locabulary', '0.8.1', github: 'ndlib/locabulary'
+  gem 'locabulary', github: 'ndlib/locabulary'
   gem 'lograge'
   gem 'logstash-event'
   gem 'logstash-logger'
@@ -57,20 +56,21 @@ group :default do
   gem 'namae'
   gem 'net-ldap'
   gem 'noids_client', github: 'ndlib/noids_client'
-  gem 'nokogiri', "~>1.6.0"
-  gem 'qa'
-  gem 'rails', '~>4.0.2'
+  gem 'nokogiri'
+  gem 'qa', github: 'ndlib/questioning_authority', branch: 'stable_0_8'
+  gem 'rails', '~> 4.0.2'
   gem 'rails_autolink'
+  gem 'rails-observers', '0.1.2' # required as part of the sufia-models change to point to github: "ndlib/sufia"
   gem 'rake', '~> 11.0'
   gem 'redcarpet'
   gem 'resque-pool'
   gem 'roboto'
   gem 'rubydora', '~> 1.7.4'
-  gem 'sanitize', '~> 3.0.2'
+  gem 'sanitize', '~> 4.6.3'
   gem 'select2-rails'
   gem 'share_notify', github: 'samvera-labs/share_notify'
   gem 'simple_form', '~> 3.0.1'
-  gem 'sufia-models', '~>3.4.0'
+  gem 'sufia-models', github: 'ndlib/sufia', branch: 'v3.4.0-removing-paperclip-usage'
   gem 'therubyracer', '0.12.1', platforms: :ruby, require: 'v8'
   gem 'unicode', :platforms => [:mri_18, :mri_19]
   gem 'unicorn', '~> 4.0'
@@ -87,7 +87,6 @@ group :orcid do
   gem 'railties', '~> 4.0'
   gem 'omniauth-orcid', '0.6'
   gem 'mappy'
-  gem 'virtus'
   gem 'email_validator'
   gem 'omniauth-oauth2', '< 1.4'
   gem 'hashie', '3.4.6'
@@ -100,7 +99,7 @@ end
 # Explicitly require it here.
 gem 'addressable', '~> 2.3.5'
 gem 'coffee-rails', '~> 4.0'
-gem 'compass-rails', '~> 1.1.2'
+gem 'compass-rails', '~> 2.0.0'
 gem 'sass-rails',   '~> 4.0'
 gem 'uglifier', '>= 1.0.3'
 
