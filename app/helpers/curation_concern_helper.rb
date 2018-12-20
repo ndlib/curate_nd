@@ -17,4 +17,24 @@ module CurationConcernHelper
     markup << %(</ul></td></tr>)
     markup.html_safe
   end
+
+  def build_access_request_for(curation_concern, file)
+    # look first for class-specific information
+    this_request = access_request_data[curation_concern.class.to_s.downcase]
+    # if not found, get default
+    this_request ||= access_request_data['default']
+
+    request_subject = "[#{ curation_concern.human_readable_type } Access Request] for #{curation_concern.title} (id: #{curation_concern.noid})"
+    request_body = "I am interested in #{ curation_concern.title }.\nI would like to view one of the withheld files associated with it (id: #{file.noid})."
+    request_html = <<-markup
+      request permission to view this file from the #{this_request["access_request_department"]}.
+      <p>
+      <a class="btn btn-default" href="mailto:#{URI.escape(this_request["access_request_recipient"])}?subject=#{URI.escape(request_subject)}&body=#{URI.escape(request_body)}">Request Access</a>
+      </p>
+    markup
+  end
+
+  def access_request_data
+    @access_request_data ||= YAML.load( File.open( Rails.root.join( 'config/access_request_map.yml' ) ) ).freeze
+  end
 end

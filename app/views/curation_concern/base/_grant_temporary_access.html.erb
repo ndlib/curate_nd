@@ -1,40 +1,25 @@
-<%
-  # Granting temporary access is limited to ETDs for the time being
-  if curation_concern.is_a? Etd
-%>
-  <% if cannot? :show, file %>
-    <span class="request-temporary-access">
-      <%
-        request_subject = "[ETD Access Request] for #{curation_concern.title} (id: #{curation_concern.noid})"
-        request_body = "I am interested in #{ curation_concern.title }.\nI would like to view one of the withheld files associated with it (id: #{file.noid})."
-        request_html = <<-markup
-          request permission to view this file from the Publications Manager of the Graduate School.
-          <p>
-          <a class="btn btn-default" href="mailto:dteditor@nd.edu?subject=#{URI.escape(request_subject)}&body=#{URI.escape(request_body)}">Request Access</a>
-          </p>
-        markup
-        request_access = request_html.html_safe
-      %>
-      <div class="alert alert-info">
-        <p>At the request of the author, this graduate work is not available to the public.</p>
-        <% if current_user %>
-          <p>You may <%= request_access %></p>
+<% if cannot? :show, file %>
+  <span class="request-temporary-access">
+    <% request_access = build_access_request_for(curation_concern, file).html_safe %>
+    <div class="alert alert-info">
+      <p>At the request of the author, this <%= curation_concern.human_readable_type %> is not available to the public.</p>
+      <% if current_user %>
+        <p>You may <%= request_access %></p>
+      <% else %>
+        <% show_msg = AccessRenderer.new(file) %>
+        <% if show_msg.viewable_by_institution_today? %>
+          <p>If you have Notre Dame credentials you can view this file after you <%= link_to 'Log in', new_user_session_path %>.</p>
+          <p>Otherwise, you must <%= request_access %></p>
         <% else %>
-          <% show_msg = AccessRenderer.new(file) %>
-          <% if show_msg.viewable_by_institution_today? %>
-            <p>If you have Notre Dame credentials you can view this file after you <%= link_to 'Log in', new_user_session_path %>.</p>
-            <p>Otherwise, you must <%= request_access %></p>
-          <% else %>
-            <p>You may <%= request_access %></p>
-          <% end %>
+          <p>You may <%= request_access %></p>
         <% end %>
-      </div>
-    </span>
-  <% end %>
+      <% end %>
+    </div>
+  </span>
+<% end %>
 
-  <% if can? :create, TemporaryAccessToken %>
-    <span class="grant-temporary-access">
-      <%= link_to 'Grant One-Time Access', new_admin_temporary_access_token_path(temporary_access_token: { noid: file.noid }), class: 'btn btn-default' %>
-    </span>
-  <% end %>
+<% if can? :create, TemporaryAccessToken %>
+  <span class="grant-temporary-access">
+    <%= link_to 'Grant One-Time Access', new_admin_temporary_access_token_path(temporary_access_token: { noid: file.noid }), class: 'btn btn-default' %>
+  </span>
 <% end %>

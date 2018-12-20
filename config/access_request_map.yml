@@ -1,0 +1,6 @@
+etd:
+  access_request_recipient: dteditor@nd.edu
+  access_request_department: "Publications Manager of the Graduate School"
+default:
+  access_request_recipient: curate@nd.edu
+  access_request_department: "CurateND Support Staff"
