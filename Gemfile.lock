@@ -27,7 +27,8 @@ GIT
 
 GIT
   remote: https://github.com/ndlib/locabulary.git
-  revision: 31c81079f60aed83e9cbea164588ae435a2fa099
+  revision: 9d4a7c1b6a5956c5152924b1ff51d3f0798581d8
+  ref: 9d4a7c1b6a5956c5152924b1ff51d3f0798581d8
   specs:
     locabulary (0.8.1)
       activesupport (>= 4.0, < 6.0)
@@ -272,7 +273,10 @@ GEM
     docile (1.3.1)
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
-    dry-configurable (0.7.0)
+    dry-configurable (0.8.2)
+      concurrent-ruby (~> 1.0)
+      dry-core (~> 0.4, >= 0.4.7)
+    dry-core (0.4.7)
       concurrent-ruby (~> 1.0)
     dry-equalizer (0.2.1)
     email_validator (1.6.0)

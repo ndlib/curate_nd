@@ -52,7 +52,7 @@ group :default do
   # Need rubyracer to run integration tests.....really?!?
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'libv8', '~> 3.16.14.3'
-  gem 'locabulary', github: 'ndlib/locabulary'
+  gem 'locabulary', github: 'ndlib/locabulary', ref: '9d4a7c1b6a5956c5152924b1ff51d3f0798581d8'
   gem 'logger', '1.2.8', path: 'lib/logger-1.2.8'
   gem 'lograge'
   gem 'logstash-event'
