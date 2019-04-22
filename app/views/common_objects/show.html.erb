@@ -56,7 +56,7 @@
 <% end %>
 
 <% if curation_concern.representative.present? %>
-  <%= render partial: 'curation_concern/base/representative', locals: { work: curation_concern, details: details } %>
+  <%= render partial: 'curation_concern/base/iiif_image_viewer', locals: { work: curation_concern, details: details } %>
 <% else %>
   <div class="work-attributes">
     <%= details %>

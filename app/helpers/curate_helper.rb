@@ -341,4 +341,9 @@ module CurateHelper
     return false unless collection_key.present?
     catalog_index_path(f: { ::Catalog::SearchSplashPresenter.collection_key => [collection_key] })
   end
+
+  # until such a time that the manifest is stored in the item itself, we need to construct it
+  def manifest_url_for(id:)
+    'https://marble.library.nd.edu/viewer/' + id.to_s
+  end
 end
