@@ -1,10 +1,10 @@
 <% manifest_url = manifest_url_for(id: curation_concern.id) %>
-<%= javascript_include_tag 'viewer_build'%>
+<%= javascript_include_tag 'viewer_build' %>
 
-<%if viewer_build(manifest_url)%>
+<% if viewer_build(manifest_url) %>
 <div class="row">
   <div class="work-representation span12">
-    IIIF IMAGE VIEWER GOES HERE
+    <iframe src='https://universalviewer.io/uv.html?manifest=<%= manifest_url %>'></iframe>
   </div>
 </div>
 <div class="row">
