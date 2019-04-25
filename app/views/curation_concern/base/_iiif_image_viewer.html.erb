@@ -8,10 +8,10 @@
         <!-- if representative file is audio, regardless of class, use audio player -->
         <% if can?(:read, generic_file) && generic_file.audio? %>
           <div class="row span12">
-            <div class="spinner"></div>
             <div class="work-representation">
               <%= render partial: 'curation_concern/base/audio_player', locals: { work: work, generic_file: generic_file  } %>
             </div>
+            <div class="spinner"></div>
           </div>
           <div class="row work-attributes span12">
             <%= details %>
@@ -19,10 +19,10 @@
         <!-- else if Image class and representative file is image -->
         <% elsif can?(:read, generic_file) && generic_file.image? && (work.class == Image || work.class == GenericFile) %>
           <div class="row span12">
-            <div class="spinner"></div>
             <div class="work-representation">
               <%= render partial: 'curation_concern/base/image_viewer', locals: { work: work, generic_file: generic_file } %>
             </div>
+            <div class="spinner"></div>
           </div>
           <div class="row work-attributes span12">
             <%= details %>
@@ -30,10 +30,10 @@
         <!-- else use basic logic -->
         <% else %>
           <div class="row span12">
-            <div class="spinner"></div>
             <div class="work-representation">
               <%= render partial: 'curation_concern/base/representative_media', locals: { work: work, generic_file: generic_file  } %>
             </div>
+            <div class="spinner"></div>
           </div>
           <div class="row work-attributes span12">
             <%= details %>
@@ -43,10 +43,10 @@
     <% else %>
       <div class="row">
         <div class="span3">
-          <div class="spinner"></div>
           <div class="work-representation">
             <%= render partial: 'curation_concern/base/representative_media', locals: { work: work, generic_file: generic_file } %>
           </div>
+          <div class="spinner"></div>
         </div>
         <div class="work-attributes span9">
           <%= details %>
