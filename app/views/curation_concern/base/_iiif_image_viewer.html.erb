@@ -1,17 +1,60 @@
-<% manifest_url = manifest_url_for(id: curation_concern.id) %>
-<%= javascript_include_tag 'viewer_build' %>
-
-<% if viewer_build(manifest_url) %>
-<div class="row">
-  <div class="work-representation span12">
-    <iframe src='https://universalviewer.io/uv.html?manifest=<%= manifest_url %>'></iframe>
-  </div>
+<!-- @TEMP: we are temporarily forcing one specific manifest for testing -->
+<% manifest_url = manifest_url_for(id: 'und:2r36tx34c11') %>
+<%# manifest_url = manifest_url_for(id: curation_concern.id) %>
+<div class="image-viewer-integration" data-manifest-url="<%= manifest_url %>">
+  <% begin %>
+    <% if work.try(:generic_files) || work.class == GenericFile %>
+        <% generic_file = GenericFile.load_instance_from_solr(work.representative) %>
+        <!-- if representative file is audio, regardless of class, use audio player -->
+        <% if can?(:read, generic_file) && generic_file.audio? %>
+          <div class="row span12">
+            <div class="spinner"></div>
+            <div class="work-representation">
+              <%= render partial: 'curation_concern/base/audio_player', locals: { work: work, generic_file: generic_file  } %>
+            </div>
+          </div>
+          <div class="row work-attributes span12">
+            <%= details %>
+          </div>
+        <!-- else if Image class and representative file is image -->
+        <% elsif can?(:read, generic_file) && generic_file.image? && (work.class == Image || work.class == GenericFile) %>
+          <div class="row span12">
+            <div class="spinner"></div>
+            <div class="work-representation">
+              <%= render partial: 'curation_concern/base/image_viewer', locals: { work: work, generic_file: generic_file } %>
+            </div>
+          </div>
+          <div class="row work-attributes span12">
+            <%= details %>
+          </div>
+        <!-- else use basic logic -->
+        <% else %>
+          <div class="row span12">
+            <div class="spinner"></div>
+            <div class="work-representation">
+              <%= render partial: 'curation_concern/base/representative_media', locals: { work: work, generic_file: generic_file  } %>
+            </div>
+          </div>
+          <div class="row work-attributes span12">
+            <%= details %>
+          </div>
+        <% end %>
+    <!-- else if no generic file use basic logic -->
+    <% else %>
+      <div class="row">
+        <div class="span3">
+          <div class="spinner"></div>
+          <div class="work-representation">
+            <%= render partial: 'curation_concern/base/representative_media', locals: { work: work, generic_file: generic_file } %>
+          </div>
+        </div>
+        <div class="work-attributes span9">
+          <%= details %>
+        </div>
+      </div>
+    <% end %>
+  <% rescue ActiveFedora::ObjectNotFoundError => e%>
+    <% exception = Curate::Exceptions::RepresentativeObjectMissingError.new(e, work)%>
+    <%= rescue_from_representative_missing(work, details, exception) %>
+  <% end %>
 </div>
-<div class="row">
-  <div class="work-attributes span12">
-    <%= details %>
-  </div>
-</div>
-<% else %>
-  <% render partial: 'curation_concern/base/representative', locals: { work: curation_concern, details: details } %>
-<% end %>
