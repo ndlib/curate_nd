@@ -1,6 +1,7 @@
+<% manifest_url = manifest_url_for(id: curation_concern.id) %>
 <%= javascript_include_tag 'viewer_build'%>
 
-<%if viewer_build(url)%>
+<%if viewer_build(manifest_url)%>
 <div class="row">
   <div class="work-representation span12">
     IIIF IMAGE VIEWER GOES HERE
