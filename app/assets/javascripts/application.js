@@ -23,6 +23,7 @@
 //= require citation_modal
 //= require jquery.sticky
 //= require jquery.colorbox
+//= require viewer_build
 
 $(function(){
   'use strict';

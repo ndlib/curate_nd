@@ -1,3 +1,16 @@
-<% manifest_url = manifest_url_for(id: curation_concern.id) %>
+<%= javascript_include_tag 'viewer_build'%>
 
-<%= render partial: 'curation_concern/base/representative', locals: { work: curation_concern, details: details } %>
+<%if viewer_build(url)%>
+<div class="row">
+  <div class="work-representation span12">
+    IIIF IMAGE VIEWER GOES HERE
+  </div>
+</div>
+<div class="row">
+  <div class="work-attributes span12">
+    <%= details %>
+  </div>
+</div>
+<% else %>
+  <% render partial: 'curation_concern/base/representative', locals: { work: curation_concern, details: details } %>
+<% end %>
