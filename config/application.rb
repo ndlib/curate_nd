@@ -77,7 +77,7 @@ module CurateNd
     config.assets.enabled = true
     # Default SASS Configuration, check out https://github.com/rails/sass-rails for details
     config.assets.compress = !Rails.env.development?
-    config.assets.js_compressor = :uglifier
+    config.assets.js_compressor = Uglifier.new(harmony: true)
 
     config.exceptions_app = lambda { |env| ErrorsController.action(:show).call(env) }
     config.action_dispatch.rescue_responses["ActionController::RoutingError"] = :not_found

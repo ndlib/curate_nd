@@ -1,4 +1,3 @@
-// The Error: ActionView::Template::Error - Unexpected token name appears to be because of semi-colons
 $('.image-viewer-integration').on('load', function() {
     // On that DOM element, is a data-manifest-url attribute, this is the URL to check
     // Now check the data-manifest-url (via an HTTP HEAD request) to see if it has a 2xx status
@@ -6,8 +5,7 @@ $('.image-viewer-integration').on('load', function() {
     //  <iframe src='https://universalviewer.io/uv.html?manifest=<%= manifest_url %>'></iframe>
     // Once replaced, we then toggle the ".work-representation" dom element's to now be visible (regardless of whether we replaced the inner HTML or not, because the CSS will default the ".image-viewer-integration .work-representation" to not visible
     // Then hide the spinner
-
-}
+})
 // Javascript, using JQuery library
 // Look for dom element with class "image-viewer-integration"
 
