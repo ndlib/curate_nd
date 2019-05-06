@@ -1,0 +1,13 @@
+<% content_for :page_title, construct_page_title('API Access Token List') %>
+<% content_for :page_header do %>
+  <ul class="breadcrumb">
+    <li><%= link_to 'CurateND', root_path %> <span class="divider">/</span></li>
+    <li><span class="active">API Access Token List</span></li>
+  </ul>
+
+  <h1>API Access Token List</h1>
+<% end %>
+
+<%= link_to 'Create New Token', new_api_access_token_path, { class: "btn btn-success" } %>
+
+<%= render partial: 'tokens' %>

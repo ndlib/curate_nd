@@ -119,6 +119,8 @@ CurateNd::Application.routes.draw do
     constraints CurateND::ExternalAPIConstraint do
       resource :items, only: [:show]
     end
+    # API management
+    resources :access_tokens, only: [:new, :index, :create, :destroy]
   end
 
   # clean up tokens

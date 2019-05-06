@@ -2,7 +2,7 @@
 class Ability
   include Hydra::Ability
 
-  self.ability_logic += [:curate_permissions, :collection_permissions, :licensing_permissions]
+  self.ability_logic += [:curate_permissions, :collection_permissions, :licensing_permissions, :api_token_permissions]
 
   # Note: custom_permissions are assumed to injected into the process as well.
   def custom_permissions
@@ -56,6 +56,14 @@ class Ability
 
   def collection_permissions
     can :collect, :all
+  end
+
+  def api_token_permissions
+    if CurateND::AdminConstraint.is_admin?(current_user)
+      can [:manage], ApiAccessToken
+    else
+      cannot [:manage], ApiAccessToken
+    end
   end
 
   # Overriding hydra-access-controls in order to enforce embargo

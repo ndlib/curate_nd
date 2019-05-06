@@ -1,0 +1,11 @@
+<%= simple_form_for(@api_access_token) do |f| %>
+  <%= f.error_notification %>
+
+  <fieldset>
+    <%= f.association :user, label: "Create token for user" %>
+  </fieldset>
+
+  <div class="form-actions">
+    <%= f.button :submit, 'Create API Token', class: 'btn btn-danger' %>
+  </div>
+<% end %>

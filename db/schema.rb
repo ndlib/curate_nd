@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181219223547) do
+ActiveRecord::Schema.define(version: 20190503191113) do
 
   create_table "activity_engine_activities", force: true do |t|
     t.integer  "user_id"
@@ -55,6 +55,17 @@ ActiveRecord::Schema.define(version: 20181219223547) do
   end
 
   add_index "admin_user_whitelists", ["username"], name: "index_admin_user_whitelists_on_username", unique: true, using: :btree
+
+  create_table "api_access_tokens", id: false, force: true do |t|
+    t.string   "sha",        null: false
+    t.string   "issued_by"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "api_access_tokens", ["sha"], name: "index_api_access_tokens_on_sha", unique: true, using: :btree
+  add_index "api_access_tokens", ["user_id"], name: "index_api_access_tokens_on_user_id", using: :btree
 
   create_table "bookmarks", force: true do |t|
     t.integer  "user_id",     null: false
@@ -384,6 +395,7 @@ ActiveRecord::Schema.define(version: 20181219223547) do
     t.datetime "updated_at"
   end
 
+  Foreigner.load
   add_foreign_key "notifications", "conversations", name: "notifications_on_conversation_id"
 
   add_foreign_key "receipts", "notifications", name: "receipts_on_notification_id"

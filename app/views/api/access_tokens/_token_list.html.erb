@@ -1,0 +1,10 @@
+<% @api_access_tokens.each do |api_access_token| %>
+  <tr>
+    <td><%= api_access_token.sha %></td>
+    <td><%= api_access_token.issued_by %></td>
+    <td><%= api_access_token.user %></td>
+    <td>
+      <%= link_to 'Destroy', api_access_token, method: :delete, class: "btn btn-danger", data: { confirm: 'Are you sure?' } %>
+    </td>
+  </tr>
+<% end %>

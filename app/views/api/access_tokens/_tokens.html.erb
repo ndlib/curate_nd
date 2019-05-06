@@ -1,0 +1,16 @@
+<%= paginate @api_access_tokens %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>API Access Token</th>
+      <th>Issued By</th>
+      <th>For User</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= render partial: 'token_list' %>
+  </tbody>
+</table>
