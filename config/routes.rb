@@ -116,7 +116,9 @@ CurateNd::Application.routes.draw do
   end
 
   namespace :api do
-    resource :items, only: [:show]
+    constraints CurateND::ExternalAPIConstraint do
+      resource :items, only: [:show]
+    end
   end
 
   # clean up tokens
