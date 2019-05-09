@@ -118,7 +118,6 @@ CurateNd::Application.routes.draw do
   namespace :api do
     resources :items, only: [:show]
     get 'items/download/:id', controller: 'items', action: 'download'
-    # API management
     resources :access_tokens, only: [:new, :index, :create, :destroy]
   end
 
