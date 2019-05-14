@@ -18,6 +18,13 @@ class Api::ItemsController < ApplicationController
   def new
   end
 
+  # GET /api/items/download/1
+  def download
+    download_noid = Sufia::Noid.noidify(params[:id])
+    response.headers['X-Accel-Redirect'] = "/download-content/#{download_noid}"
+    head :ok
+  end
+
   # GET /api/items/1/edit
   def edit
   end

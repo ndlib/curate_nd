@@ -116,9 +116,8 @@ CurateNd::Application.routes.draw do
   end
 
   namespace :api do
-    constraints CurateND::ExternalAPIConstraint do
-      resources :items, only: [:show]
-    end
+    resources :items, only: [:show]
+    get 'items/download/:id', controller: 'items', action: 'download'
     # API management
     resources :access_tokens, only: [:new, :index, :create, :destroy]
   end
