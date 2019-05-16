@@ -2,7 +2,7 @@ class Api::ItemsController < CatalogController
   respond_to :jsonld
   include Sufia::Noid # for normalize_identifier method
   prepend_before_filter :normalize_identifier, only: [:show]
-  before_filter :validate_permissions!, only: [:show]
+  before_filter :validate_permissions!, only: [:show, :download]
   before_filter :item, only: [:show]
   before_filter :set_current_user!, only: [:index]
 
