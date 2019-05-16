@@ -66,7 +66,8 @@ class Api::ItemsController < CatalogController
     def item
       @this_item ||= ActiveFedora::Base.find(params[:id], cast: true)
     rescue ActiveFedora::ObjectNotFoundError
-      render json: { error: 'Item not found', user: user_name, item: item_id }, status: :not_found
+      user_name = @current_user.try(:username) || @current_user
+      render json: { error: 'Item not found', user: user_name, item: params[:id] }, status: :not_found
     end
 
     def set_current_user!
