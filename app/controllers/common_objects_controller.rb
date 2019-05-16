@@ -26,6 +26,21 @@ class CommonObjectsController < ApplicationController
     end
   end
 
+  # Overriding this from Hydra::AccessControlsEnforcement.
+  # The code is identical but moving it seemed to solve a caching issue with Hydra::PermissionsCache,
+  # causing a user to not have permission to view their newly created work,
+  # and requiring a restart of the rails server to reset it.
+  # May need to override in catalog_controller as well, but only doing it here for now.
+  def enforce_show_permissions(opts={})
+    permissions = current_ability.permissions_doc(params[:id])
+    if permissions.under_embargo? && !can?(:edit, permissions)
+      raise Hydra::AccessDenied.new("This item is under embargo.  You do not have sufficient access privileges to read this document.", :edit, params[:id])
+    end
+    unless can? :read, curation_concern
+      raise Hydra::AccessDenied.new("You do not have sufficient access privileges to read this document, which has been marked private.", :read, params[:id])
+    end
+  end
+
   def show
     respond_to do |format|
       format.html
