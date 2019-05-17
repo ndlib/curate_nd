@@ -25,9 +25,7 @@ class Api::ItemsController < CatalogController
 
   # GET /api/items/1
   def show
-    render json: item.as_jsonld
-    # need to define new presenter for new item format, then do:
-    # render json: Api::ItemShowPresenter.new(item).to_json
+    render json: Api::ShowItemPresenter.new(item, request.url).to_json
   end
 
   # GET /api/items/new
