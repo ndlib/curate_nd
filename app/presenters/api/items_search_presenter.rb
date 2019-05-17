@@ -1,6 +1,7 @@
 # Responsible for generating the JSON search results from a Blacklight search response
 # (based on catalog_index_jsonld_presenter)
 class Api::ItemsSearchPresenter
+  include Sufia::Noid
   attr_reader :raw_response, :request_url, :documents, :pager, :query_parameters
 
   def initialize(raw_response, request_url, query_parameters)
@@ -77,9 +78,10 @@ class Api::ItemsSearchPresenter
     def content
       # always include standard list of fields
       results_hash = {
-        "pid" => item_id,
+        "id" => item_id,
         "title" => dc_title,
-        "type" => dc_type
+        "type" => dc_type,
+        "itemUrl" => File.join(Rails.configuration.application_root_url,  Rails.application.routes.url_helpers.api_item_path(item_id))
       }
       # always include any fields which were part of query.
       results_hash = results_hash.merge(load_query_fields)
@@ -107,7 +109,7 @@ class Api::ItemsSearchPresenter
     end
 
     def item_id
-      @item.fetch('id')
+      @item_id ||= Sufia::Noid.noidify(@item.fetch('id'))
     end
 
     def dc_title
