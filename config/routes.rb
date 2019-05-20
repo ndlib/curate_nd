@@ -116,7 +116,7 @@ CurateNd::Application.routes.draw do
   end
 
   namespace :api do
-    get 'items/download/:id', controller: 'items', action: 'download'
+    get 'items/download/:id', as: 'item_download', controller: 'items', action: 'download'
     resources :items, only: [:show, :index]
     resources :access_tokens, only: [:new, :index, :create, :destroy]
   end
