@@ -1,7 +1,7 @@
 class Api::ItemsController < CatalogController
   respond_to :jsonld
   include Sufia::Noid # for normalize_identifier method
-  prepend_before_filter :normalize_identifier, only: [:show]
+  prepend_before_filter :normalize_identifier, only: [:show, :download]
   before_filter :validate_permissions!, only: [:show, :download]
   before_filter :item, only: [:show]
   before_filter :set_current_user!, only: [:index]
@@ -139,7 +139,7 @@ class Api::QueryBuilder
   def filter_by_depositor(term)
     search_for_user = term
     if term == "self"
-      search_for_user = @current_user.username
+      search_for_user = current_user.username
     end
     search_for_user
   end
@@ -150,7 +150,7 @@ class Api::QueryBuilder
     num_elements = search_elements.size
     search_elements.each_with_index do |term, x|
       search_term = self.send("filter_by_#{key}", term)
-      filter += (prepare_search_term_for(key, term) + or_if_more(x, num_elements))
+      filter += (prepare_search_term_for(key, search_term) + or_if_more(x, num_elements))
     end
     filter
   end
