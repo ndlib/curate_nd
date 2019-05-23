@@ -11,12 +11,12 @@ module Api
 
     # GET /api/access_tokens/new
     def new
-      @api_access_token = ApiAccessToken.new
+      @api_access_token = ApiAccessToken.new(new_api_access_token_params)
+      create if params.has_key? :api_access_token
     end
 
     # POST /api/access_tokens
     def create
-
       @api_access_token = ApiAccessToken.new(api_access_token_params_with_user)
 
       if @api_access_token.save
@@ -40,7 +40,7 @@ module Api
           if can? :manage, ApiAccessToken
             @api_access_tokens = ApiAccessToken.all
           else
-            @api_access_tokens = ApiAccessToken.where(issued_by: current_user.username)
+            @api_access_tokens = ApiAccessToken.where(issued_by: current_user.user_key)
           end
         end.page(params[:page])
       end
@@ -50,11 +50,23 @@ module Api
       end
 
       def api_access_token_params
-        params.require(:api_access_token).permit(:user_id)
+        params.require(:api_access_token).permit(:user_id, :issued_by)
+      end
+
+      def new_api_access_token_params
+        if params.has_key? :api_access_token
+          params.require(:api_access_token).permit(:user_id, :issued_by)
+        else
+          {}
+        end
       end
 
       def api_access_token_params_with_user
-        api_access_token_params.merge({ :issued_by => current_user.user_key })
+        param_list = api_access_token_params.merge!({ :issued_by => current_user.user_key })
+        if cannot? :manage, ApiAccessToken
+          param_list[:user_id] = params[:api_access_token][:user_id]
+        end
+        param_list
       end
   end
 end
