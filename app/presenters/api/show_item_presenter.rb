@@ -4,7 +4,15 @@ class Api::ShowItemPresenter
   attr_reader :item, :request_url
 
   TERMS = ['http://purl.org/dc/terms/',
-           'http://purl.org/ontology/bibo/'].freeze
+           'http://purl.org/ontology/bibo/',
+           'http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#',
+           'http://www.ndltd.org/standards/metadata/etdms/1.1/',
+           'http://nd.edu/image#',
+           'https://library.nd.edu/ns/terms/',
+           'http://purl.org/pav/',
+           'http://xmlns.com/foaf/0.1/',
+           'http://id.loc.gov/vocabulary/relators/',
+           'http://purl.org/vra/'].freeze
 
   def initialize(item, request_url)
     @item = item
@@ -35,15 +43,8 @@ class Api::ShowItemPresenter
 
   def add_relationships_and_links
     relationship_data = {}
-    if item.respond_to?('collections')&& !item.collections.empty?
-      relationship_data['inCollections'] = item.collection_ids
-    end
     if item.respond_to?('generic_files')
       relationship_data['containedFiles'] = add_item_files
-    end
-    if item.respond_to?('parent')
-      parent = item.parent
-      relationship_data['parentUrl'] = File.join(root_url,  route_helper.api_item_path(Sufia::Noid.noidify(parent.id)))
     end
     relationship_data
   end
@@ -54,8 +55,8 @@ class Api::ShowItemPresenter
       file_id = Sufia::Noid.noidify(file.id)
       file_content = {
         'id' => file_id,
-        'fileUrl' => File.join(root_url,  route_helper.api_item_path(file_id)),
-        'downloadUrl' => File.join(root_url, route_helper.api_item_download_path(file_id))
+        'fileUrl' => url_for(pid: file_id, url_type: :show),
+        'downloadUrl' => url_for(pid: file_id, url_type: :download)
       }
       single_file = file_content.merge(process_datastreams(file))
       file_data << single_file
@@ -116,15 +117,14 @@ class Api::ShowItemPresenter
 
   def process_thumbnail(ds)
     data = {}
-    ds.datastream_content
-    thumbnail_id = Sufia::Noid.noidify(ds.pid)
-    data['thumbnailUrl'] = File.join(root_url, route_helper.api_item_download_path(thumbnail_id), '/thumbnail')
+    # ds.datastream_content
+    data['thumbnailUrl'] = url_for(pid: ds.pid, url_type: :thumbnail)
     data
   end
 
   def process_content(ds)
     data = {}
-    data['downloadUrl'] = File.join(root_url, route_helper.api_item_download_path(Sufia::Noid.noidify(ds.pid)))
+    data['downloadUrl'] = url_for(pid: ds.pid, url_type: :download)
     data['filename'] = ds.label
     data['mimeType'] = ds.mimeType
     bendo_url = bendo_location(ds.datastream_content)
@@ -149,7 +149,7 @@ class Api::ShowItemPresenter
       case predicate
       when 'representative'
         next if subject.blank?
-        data[predicate] = File.join(root_url, route_helper.api_item_download_path(subject))
+        data[predicate] = use_url_if_is_a_pid(subject, url_type: :download)
       when 'access'
         this_access = process_access_rights(element)
         data['access'].merge!(this_access) unless this_access.empty?
@@ -159,7 +159,7 @@ class Api::ShowItemPresenter
       else
         # TODO: Do we need to add a case: when 'copyright'? Or is it always blank?
         next if subject.blank?
-        data[predicate] = subject
+        data[predicate] = use_url_if_is_a_pid(subject, url_type: :show)
       end
     end
     data
@@ -202,7 +202,7 @@ class Api::ShowItemPresenter
           predicate = delete_prefix(string: statement.predicate.to_s)
           subject = statement.object.to_s
           if !subject.blank?
-            data[predicate] = subject
+            data[predicate] = use_url_if_is_a_pid(subject, url_type: :show)
           end
         end
       rescue RDF::ReaderError => e
@@ -222,9 +222,9 @@ class Api::ShowItemPresenter
         subject = subject.sub('afmodel:', "")
       end
       if predicate.nil?
-        data[key] = subject
+        data[key] = use_url_if_is_a_pid(subject, url_type: :show)
       else
-        data['access'][predicate] = Array.wrap(subject)
+        data['access'][predicate] = Array.wrap(use_url_if_is_a_pid(subject, url_type: :show))
       end
     end
     data
@@ -239,14 +239,6 @@ class Api::ShowItemPresenter
     string
   end
 
-  def root_url
-    Rails.configuration.application_root_url
-  end
-
-  def route_helper
-    Rails.application.routes.url_helpers
-  end
-
   ACCESS_PREDICATES = {
       'access' => 'access'.freeze,
       'readperson' => 'readPerson'.freeze,
@@ -256,6 +248,7 @@ class Api::ShowItemPresenter
       'embargo' => 'embargoDate'.freeze,
       'hasEditorGroup' => 'editGroup'.freeze,
       'hasViewerGroup' => 'readGroup'.freeze,
+      'hasViewer' => 'readPerson'.freeze,
       'hasEditor' => 'editPerson'.freeze
   }
   def find_access_predicate_for(element)
@@ -265,5 +258,32 @@ class Api::ShowItemPresenter
   def merge_hashes(h1, h2)
     merged = MergeHash.new.merge_hashes(h1, h2)
     merged
+  end
+
+  def use_url_if_is_a_pid(subject, url_type: :show)
+    return url_for(pid: subject, url_type: url_type) if subject.starts_with?('und:')
+    subject
+  end
+
+  def url_for(pid:, url_type: :show)
+    id = Sufia::Noid.noidify(pid)
+    url_type case
+    when :show
+      return File.join(root_url, route_helper.api_item_path(id))
+    when :download
+      return File.join(root_url, route_helper.api_item_download_path(id))
+    when :thumbnail
+      return File.join(root_url, route_helper.api_item_download_path(thumbnail_id), '/thumbnail')
+    else # default is show
+      return File.join(root_url, route_helper.api_item_path(id))
+    end
+  end
+
+  def root_url
+    Rails.configuration.application_root_url
+  end
+
+  def route_helper
+    Rails.application.routes.url_helpers
   end
 end
