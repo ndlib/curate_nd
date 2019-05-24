@@ -125,7 +125,7 @@ class Api::ShowItemPresenter
   def process_content(ds)
     data = {}
     data['downloadUrl'] = url_for(pid: ds.pid, url_type: :download)
-    data['filename'] = ds.label
+    data['label'] = ds.label
     data['mimeType'] = ds.mimeType
     bendo_url = bendo_location(ds.datastream_content)
     data['bendoUrl'] = bendo_url unless bendo_url.blank?
@@ -267,20 +267,20 @@ class Api::ShowItemPresenter
 
   def url_for(pid:, url_type: :show)
     id = Sufia::Noid.noidify(pid)
-    url_type case
+    case url_type
     when :show
       return File.join(root_url, route_helper.api_item_path(id))
     when :download
       return File.join(root_url, route_helper.api_item_download_path(id))
     when :thumbnail
-      return File.join(root_url, route_helper.api_item_download_path(thumbnail_id), '/thumbnail')
+      return File.join(root_url, route_helper.api_item_download_path(id), '/thumbnail')
     else # default is show
       return File.join(root_url, route_helper.api_item_path(id))
     end
   end
 
   def root_url
-    Rails.configuration.application_root_url
+    @root ||= request_url.root.to_s
   end
 
   def route_helper
