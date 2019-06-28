@@ -9,6 +9,10 @@ end
 # This should be everything except :deploy; And by default, we mean any of
 # the environments that are not used to execute the deploy scripts
 group :default do
+  gem 'rack-mini-profiler'
+  gem 'flamegraph'
+  gem 'stackprof'
+  gem 'memory_profiler'
   gem 'meta_request'
   gem 'active_attr'
   gem 'active_fedora-registered_attributes', '~> 0.2.0'
@@ -53,7 +57,7 @@ group :default do
   # Need rubyracer to run integration tests.....really?!?
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'libv8', '~> 3.16.14.3'
-  gem 'locabulary', github: 'ndlib/locabulary', ref: 'b8ab510dce637d37229d001fedfbc6af1ab510f2'
+  gem 'locabulary', github: 'ndlib/locabulary', ref: '9d4a7c1b6a5956c5152924b1ff51d3f0798581d8'
   gem 'lograge'
   gem 'logstash-event'
   gem 'logstash-logger'
