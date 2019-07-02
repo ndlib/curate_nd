@@ -115,10 +115,10 @@ class Api::QueryBuilder
 
   def build_filter_queries(solr_parameters, user_parameters)
     solr_parameters[:fq] ||= []
-    VALID_KEYS_AND_SEARCH_FIELDNAMES.keys.each do |key|
-      search_elements = Array.wrap(user_parameters[key])
-      if !search_elements.empty?
-        solr_parameters[:fq] << do_search_for(key, search_elements)
+    user_parameters.each do |term, value|
+      key = term.to_sym
+      if VALID_KEYS_AND_SEARCH_FIELDNAMES[key].present?
+        solr_parameters[:fq] << do_search_for(key, Array.wrap(value.split(',')))
       end
     end
     solr_parameters

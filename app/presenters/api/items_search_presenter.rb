@@ -58,7 +58,8 @@ class Api::ItemsSearchPresenter
     documents.each do |document|
       document_object = SingleItemResult.new(
         item: document,
-        params: query_parameters
+        params: query_parameters,
+        request_url: request_url
       ).content
       json['results'] << document_object
     end
@@ -67,13 +68,14 @@ class Api::ItemsSearchPresenter
   class SingleItemResult
     # item: a single Solr document
     # fields: list of additional fields to include from query parameters
-    def initialize(item:, params:)
+    def initialize(item:, params:, request_url:)
       @item = item
       @params = params
+      @request_url = request_url
       @fields = (params[:fl].nil? ? nil : params[:fl].split(","))
     end
 
-    attr_reader :item, :fields, :params
+    attr_reader :item, :fields, :params, :request_url
 
     def content
       # always include standard list of fields
@@ -81,14 +83,17 @@ class Api::ItemsSearchPresenter
         "id" => item_id,
         "title" => dc_title,
         "type" => dc_type,
-        "itemUrl" => File.join(Rails.configuration.application_root_url,  Rails.application.routes.url_helpers.api_item_path(item_id))
+        "itemUrl" => File.join(request_url.root.to_s,  Rails.application.routes.url_helpers.api_item_path(item_id))
       }
       # always include any fields which were part of query.
       results_hash = results_hash.merge(load_query_fields)
       # return any additional requested fields
       if !fields.nil?
         fields.each do |field|
-          results_hash[field] = self.send("include_#{field}")
+          begin
+            results_hash[field] = self.send("include_#{field}")
+          rescue NoMethodError
+          end
         end
       end
       results_hash

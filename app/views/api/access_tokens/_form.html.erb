@@ -2,7 +2,7 @@
   <%= f.error_notification %>
 
   <fieldset>
-    <%= f.association :user, label: "Create token for user" %>
+    <%= f.association :user, label: "Create token for user", :label_method => lambda { |user| "#{user.name}" }, selected: current_user.id %>
   </fieldset>
 
   <div class="form-actions">
