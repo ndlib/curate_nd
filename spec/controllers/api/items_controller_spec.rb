@@ -86,6 +86,22 @@ describe Api::ItemsController do
         expect(json['query']['queryParameters'].keys).to include("type", "editor", "depositor")
       end
     end
+
+    context 'with date filtering' do
+      let(:requested_date) { "after:2019-01-01" }
+
+      it 'searches dates and includes dates in the search results list' do
+        request.headers['X-Api-Token'] = token.sha
+        request.headers['HTTP_ACCEPT'] = "application/json"
+        get :index, { deposit_date: requested_date, modify_date: requested_date }
+        expect(response).to be_successful
+        json = JSON.parse(response.body)
+
+        expect(json['pagination']['totalResults']).to eq(3)
+        expect(json['results'].first.keys).to include("depositDate", "modifyDate")
+        expect(json['query']['queryParameters'].keys).to include("deposit_date", "modify_date")
+      end
+    end
   end
 
   describe '#download' do

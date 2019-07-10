@@ -39,6 +39,22 @@ class Api::ItemsController < CatalogController
     head :ok
   end
 
+  # GET /api/items/1/edit
+  def edit
+  end
+
+  # POST /api/items
+  def create
+  end
+
+  # PATCH/PUT /api/items/1
+  def update
+  end
+
+  # DELETE /api/items/1
+  def destroy
+  end
+
   private
     def enforce_show_permissions
       # do nothing. This overrides the method used in catalog controller which

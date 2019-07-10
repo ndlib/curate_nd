@@ -9,13 +9,6 @@ end
 # This should be everything except :deploy; And by default, we mean any of
 # the environments that are not used to execute the deploy scripts
 group :default do
-<<<<<<< HEAD
-  gem 'rack-mini-profiler'
-  gem 'flamegraph'
-  gem 'stackprof'
-  gem 'memory_profiler'
-=======
->>>>>>> adding rails profiling for admin user
   gem 'meta_request'
   gem 'active_attr'
   gem 'active_fedora-registered_attributes', '~> 0.2.0'
