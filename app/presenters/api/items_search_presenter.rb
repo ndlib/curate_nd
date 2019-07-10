@@ -91,7 +91,7 @@ class Api::ItemsSearchPresenter
       if !fields.nil?
         fields.each do |field|
           begin
-            results_hash[field] = self.send("include_#{field}")
+            results_hash[field.camelize(:lower)] = self.send("include_#{field}")
           rescue NoMethodError
           end
         end
@@ -106,7 +106,7 @@ class Api::ItemsSearchPresenter
         if fields.present?
           fields.each do |field|
             value = @item.fetch(field, [])
-            hash[key] = value unless value.empty?
+            hash[key.to_s.camelize(:lower)] = value unless value.empty?
           end
         end
       end
@@ -118,7 +118,7 @@ class Api::ItemsSearchPresenter
     end
 
     def dc_title
-      dc_title = Array.wrap(@item.fetch('desc_metadata__title_tesim', 'title-not-found' )).first
+      Array.wrap(@item.fetch('desc_metadata__title_tesim', 'title-not-found' )).first
     end
 
     def dc_type
@@ -137,6 +137,14 @@ class Api::ItemsSearchPresenter
 
     def include_depositor
       @item.fetch('depositor_tesim', []).first
+    end
+
+    def include_deposit_date
+      @item.fetch('system_create_dtsi', "")
+    end
+
+    def include_modify_date
+      @item.fetch('system_modified_dtsi', "")
     end
   end
 
