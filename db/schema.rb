@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190503191113) do
+ActiveRecord::Schema.define(version: 20190808202641) do
 
   create_table "activity_engine_activities", force: true do |t|
     t.integer  "user_id"
@@ -66,6 +66,18 @@ ActiveRecord::Schema.define(version: 20190503191113) do
 
   add_index "api_access_tokens", ["sha"], name: "index_api_access_tokens_on_sha", unique: true, using: :btree
   add_index "api_access_tokens", ["user_id"], name: "index_api_access_tokens_on_user_id", using: :btree
+
+  create_table "api_transactions", id: false, force: true do |t|
+    t.string   "trx_id",     null: false
+    t.string   "trx_status"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "api_transactions", ["trx_id"], name: "index_api_transactions_on_trx_id", unique: true, using: :btree
+  add_index "api_transactions", ["user_id", "trx_id"], name: "index_api_transactions_on_user_id_and_trx_id", unique: true, using: :btree
+  add_index "api_transactions", ["user_id"], name: "index_api_transactions_on_user_id", using: :btree
 
   create_table "bookmarks", force: true do |t|
     t.integer  "user_id",     null: false
