@@ -142,7 +142,7 @@ GEM
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
     backports (3.11.4)
-    bcrypt (3.1.12)
+    bcrypt (3.1.13)
     better_errors (2.5.0)
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
@@ -229,7 +229,7 @@ GEM
       compass (~> 1.0.0)
       sass-rails (< 5.1)
       sprockets (< 4.0)
-    concurrent-ruby (1.1.4)
+    concurrent-ruby (1.1.5)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     crass (1.0.4)
@@ -250,10 +250,11 @@ GEM
       activesupport
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
-    devise (3.2.4)
+    devise (3.5.10)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
+      responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     devise-guests (0.6.1)
@@ -519,6 +520,8 @@ GEM
     request_store (1.4.1)
       rack (>= 1.4)
     require_all (2.0.0)
+    responders (1.1.2)
+      railties (>= 3.2, < 4.2)
     resque (2.0.0)
       mono_logger (~> 1.0)
       multi_json (~> 1.0)
@@ -714,7 +717,7 @@ DEPENDENCIES
   database_cleaner
   decent_exposure
   deprecation (~> 0.2.2)
-  devise (~> 3.2.2)
+  devise (~> 3.2)
   devise-guests (~> 0.3)
   devise-multi_auth!
   devise_cas_authenticatable
