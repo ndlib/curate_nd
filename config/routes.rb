@@ -120,6 +120,7 @@ CurateNd::Application.routes.draw do
     get 'items/download/:id', as: 'item_download', controller: 'items', action: 'download'
     resources :items, only: [:show, :index]
     resources :access_tokens, only: [:new, :index, :create, :destroy]
+    get 'upload/new', as: 'initiate_trx', controller: 'items', action: 'initiate_trx'
   end
 
   # clean up tokens
