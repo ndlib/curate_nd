@@ -28,10 +28,6 @@ class Api::ItemsController < CatalogController
     render json: Api::ShowItemPresenter.new(item, request.url).to_json
   end
 
-  # GET /api/items/new
-  def new
-  end
-
   # GET /api/items/download/1
   def download
     download_noid = Sufia::Noid.noidify(params[:id])
@@ -50,22 +46,6 @@ class Api::ItemsController < CatalogController
     else
       render json: { error: 'Transaction not initiated' }, status: :expectation_failed
     end
-  end
-
-  # GET /api/items/1/edit
-  def edit
-  end
-
-  # POST /api/items
-  def create
-  end
-
-  # PATCH/PUT /api/items/1
-  def update
-  end
-
-  # DELETE /api/items/1
-  def destroy
   end
 
   private
