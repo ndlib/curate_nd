@@ -16,11 +16,13 @@ group :default do
   gem 'activerecord-import'
   gem 'activeresource'
   gem 'acts_as_follower', '>= 0.1.1', '< 0.3'
+  gem 'aws-sdk-s3'
   gem 'blacklight-hierarchy', github: 'ndlib/blacklight-hierarchy', branch: 'master'
   gem 'blacklight', "~> 4.5.0"
   gem 'bootstrap-datepicker-rails'
   gem 'breach-mitigation-rails'
   gem 'breadcrumbs_on_rails'
+  gem 'bundler', '~> 1.17.3'
   gem 'browser'
   gem 'chronic', '>= 0.10.2'
   gem 'citeproc-ruby', '1.1.0'
