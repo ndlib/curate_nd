@@ -3,6 +3,7 @@ class ApiTransaction < ActiveRecord::Base
   belongs_to :user
   validates_presence_of :user_id
   validates_uniqueness_of :trx_id
+  has_many :api_transaction_files, foreign_key: :trx_id, dependent: :destroy
 
   def self.new_trx_id
     # fill in whatever method is desired here to find trx id
