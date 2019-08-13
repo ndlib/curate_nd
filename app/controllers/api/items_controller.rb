@@ -1,6 +1,6 @@
 class Api::ItemsController < CatalogController
   respond_to :jsonld
-  include Sufia::Noid # for normalize_identifier method
+  include Sufia::Noid # for normalize_identifier method to add 'und:' prefix
   prepend_before_filter :normalize_identifier, only: [:show, :download]
   before_filter :validate_permissions!, only: [:show, :download]
   before_filter :item, only: [:show]
@@ -30,9 +30,18 @@ class Api::ItemsController < CatalogController
 
   # GET /api/items/download/1
   def download
-    download_noid = Sufia::Noid.noidify(params[:id])
-    response.headers['X-Accel-Redirect'] = "/download-content/#{download_noid}"
-    head :ok
+    request_noid = Sufia::Noid.noidify(params[:id])
+    download_noids = find_download_noids
+    case download_noids.count
+    when 0
+      render json: { error: 'No authorized content' }, status: :expectation_failed
+    when 1
+      response.headers['X-Accel-Redirect'] = "/download-content/#{download_noids.first}"
+      head :ok
+    else
+      response.headers['X-Accel-Redirect'] = "/download-content/#{request_noid}/zip/#{download_noids.join(',')}"
+      head :ok
+    end
   end
 
   # GET /api/upload/new
@@ -85,6 +94,20 @@ class Api::ItemsController < CatalogController
       end
     rescue ActiveFedora::ObjectNotFoundError
       render json: { error: 'Item not found', user: user_name, item: item_id }, status: :not_found
+    end
+
+    def find_download_noids
+      solr_query_string = ActiveFedora::SolrService.construct_query_for_pids([params[:id]])
+      solr_results = ActiveFedora::SolrService.query(solr_query_string)
+      this_item = ActiveFedora::SolrService.reify_solr_results(solr_results).first
+      # if item is a file, we have already validated authority, so just return noid
+      return [Sufia::Noid.noidify(params[:id])] if this_item.is_a?(GenericFile)
+      # if item is a work, we need to find all the generic files and check authority
+      authorized_file_noids = []
+      this_item.generic_files.each do |file|
+        authorized_file_noids << Sufia::Noid.noidify(file.id) if @current_user.can? :read, file
+      end
+      authorized_file_noids
     end
 
     def build_api_query(solr_parameters, user_parameters)
