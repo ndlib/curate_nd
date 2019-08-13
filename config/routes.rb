@@ -123,7 +123,7 @@ CurateNd::Application.routes.draw do
     get 'uploads/new', as: 'trx_initiate', controller: 'items', action: 'trx_initiate'
     post 'uploads/:tid/file/new', as: 'trx_new_file', controller: 'items', action: 'trx_new_file'
     post 'uploads/:tid/file/:fid', as: 'trx_append', controller: 'items', action: 'trx_append'
-    post 'uploads/:tid/commit', as: 'trx_commit', controller 'items', action 'trx_commit'
+    post 'uploads/:tid/commit', as: 'trx_commit', controller: 'items', action: 'trx_commit'
   end
 
   # clean up tokens
