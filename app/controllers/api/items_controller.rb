@@ -45,7 +45,7 @@ class Api::ItemsController < CatalogController
   end
 
   # GET /api/upload/new
-  def initiate_trx
+  def trx_initiate
     if @current_user
       trx_id = ApiTransaction.new_trx_id
       start_transaction = ApiTransaction.new(trx_id: trx_id, user_id: @current_user.id, trx_status: ApiTransaction.set_status(:new))
@@ -55,6 +55,24 @@ class Api::ItemsController < CatalogController
     else
       render json: { error: 'Transaction not initiated' }, status: :expectation_failed
     end
+  end
+
+  # POST /api/uploads/:tid/file/new
+  def trx_new_file
+    if @current_user
+      #parse out trx_id
+      #parse out file_name
+      #get a pid for the work
+      
+      # s3 bucket connection
+      #copy body of message to bucket:uploads/trix_id/pid-filename-001
+    end
+  end
+
+  def trx_append
+  end
+
+  def trx_commit
   end
 
   private
