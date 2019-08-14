@@ -4,7 +4,7 @@ class Api::ItemsController < CatalogController
   prepend_before_filter :normalize_identifier, only: [:show, :download]
   before_filter :validate_permissions!, only: [:show, :download]
   before_filter :item, only: [:show]
-  before_filter :set_current_user!, only: [:index, :initiate_trx]
+  before_filter :set_current_user!, only: [:index, :trx_initiate]
 
   self.solr_search_params_logic = [
     :default_solr_parameters,
@@ -61,18 +61,24 @@ class Api::ItemsController < CatalogController
   def trx_new_file
     if @current_user
       #parse out trx_id
+      trx_id = params[:tid]
+
       #parse out file_name
+      file_name = request.query_parameters[:file_name]
       #get a pid for the work
       
       # s3 bucket connection
       #copy body of message to bucket:uploads/trix_id/pid-filename-001
+      render json: { trx_id: #trx_id, file_name: #filename }, status: ok
     end
   end
 
   def trx_append
+      render json { error: 'Method trx_append not implemented' }, status: ok
   end
 
   def trx_commit
+      render json { error: 'Method trx_commit not implemented' }, status: ok
   end
 
   private
