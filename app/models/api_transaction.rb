@@ -17,6 +17,12 @@ class ApiTransaction < ActiveRecord::Base
     case status
     when :new
       'new_transaction'
+    when :update
+      'transaction_updated'
+    when :commit
+      'submitted_for_ingest'
+    when :complete
+      'ingest_complete'
     else
       nil
     end
