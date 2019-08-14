@@ -1,10 +1,13 @@
+require 'aws-sdk-s3'
+
 class Api::ItemsController < CatalogController
   respond_to :jsonld
-  include Sufia::Noid # for normalize_identifier method to add 'und:' prefix
+  include Sufia::Noid # for normalize_identifier method
+  include Sufia::IdService # for mint method
   prepend_before_filter :normalize_identifier, only: [:show, :download]
   before_filter :validate_permissions!, only: [:show, :download]
   before_filter :item, only: [:show]
-  before_filter :set_current_user!, only: [:index, :trx_initiate]
+  before_filter :set_current_user!, only: [:index, :trx_initiate, :trx_new_file]
 
   self.solr_search_params_logic = [
     :default_solr_parameters,
@@ -66,20 +69,23 @@ class Api::ItemsController < CatalogController
       #parse out file_name
       file_name = request.query_parameters[:file_name]
       #get a pid for the work
-      
+      work_pid = Sufia::Noid.noidify(Sufia::IdService.mint)
       # s3 bucket connection
-      #copy body of message to bucket:uploads/trix_id/pid-filename-001
-      render json: { trx_id: #trx_id, file_name: #filename }, status: ok
+      s3 = Aws::S3::Resource.new(region:'us-east-1')
+      obj = s3.bucket(ENV['S3_BUCKET']).object("#{trx_id}/#{work_pid}-#{file_name}-001")
+      #copy body of message to bucket
+      obj.put(body: request.body())
+      render json: { trx_id: trx_id, file_name: file_name, work_pid: work_pid, s3_bucket: ENV['S3_BUCKET'] }, status: :ok
     end
   end
 
   def trx_append
-      render json { error: 'Method trx_append not implemented' }, status: ok
+      render json: { error: 'Method trx_append not implemented' }, status: :ok
   end
 
   def trx_commit
-      render json { error: 'Method trx_commit not implemented' }, status: ok
-  end
+      render json: { error: 'Method trx_commit not implemented' }, status: :ok
+      end
 
   private
     def enforce_show_permissions
