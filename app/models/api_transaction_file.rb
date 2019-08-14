@@ -6,7 +6,7 @@ class ApiTransactionFile < ActiveRecord::Base
 
   def self.next_seq_nbr(trx_id:, file_id:)
     find_file = ApiTransactionFile.find(trx_id: trx_id, file_id: file_id).last
-    return 1 unless find_files.exists?
+    return 1 unless find_file.exists?
     1 + find_file.file_seq_nbr
   end
 end
