@@ -144,12 +144,12 @@ describe Api::ItemsController do
     end
   end
 
-  describe '#initiate_trx' do
+  describe '#trx_initiate' do
     context 'with api token which grants access' do
       it 'returns 200 and json document' do
         request.headers['X-Api-Token'] = token.sha
         request.headers['HTTP_ACCEPT'] = "application/json"
-        get :initiate_trx
+        get :trx_initiate
         expect(response).to be_successful
       end
     end
@@ -157,7 +157,7 @@ describe Api::ItemsController do
     context 'without api token which grants access' do
       it 'returns 417 and json document' do
         request.headers['HTTP_ACCEPT'] = "application/json"
-        get :initiate_trx
+        get :trx_initiate
         expect(response.status).to eq(417) #expectation_failed
       end
     end
