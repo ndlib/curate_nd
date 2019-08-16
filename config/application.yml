@@ -36,6 +36,10 @@ OSF_SCHEME: 'https'
 
 SENTRY_DSN: 'fakey-mcfake-face'
 
+S3_BUCKET: 'bucket-name'
+AWS_ACCESS_KEY_ID: 'abcde'
+AWS_SECRET_ACCESS_KEY: 'abcde'
+
 development:
   cas_base_url: "https://login-test.cc.nd.edu/cas"
   cas_destination_url: "https://localhost:3000"
