@@ -1,4 +1,5 @@
 require 'aws-sdk-s3'
+require 'json'
 
 class Api::ItemsController < CatalogController
   respond_to :jsonld
@@ -61,6 +62,7 @@ class Api::ItemsController < CatalogController
   end
 
   # POST /api/uploads/:tid/file/new
+  # Start a new upload of a file associated with this transaction
   def trx_new_file
     if @current_user
       #parse out trx_id
@@ -68,14 +70,16 @@ class Api::ItemsController < CatalogController
 
       #parse out file_name
       file_name = request.query_parameters[:file_name]
-      #get a pid for the work
-      work_pid = Sufia::Noid.noidify(Sufia::IdService.mint)
+      #get a pid for the file
+      file_pid = Sufia::Noid.noidify(Sufia::IdService.mint)
       # s3 bucket connection
       s3 = Aws::S3::Resource.new(region:'us-east-1')
-      obj = s3.bucket(ENV['S3_BUCKET']).object("#{trx_id}/#{work_pid}-#{file_name}-001")
+      content = s3.bucket(ENV['S3_BUCKET']).object("#{trx_id}/#{file_pid}-001")
       #copy body of message to bucket
-      obj.put(body: request.body())
-      render json: { trx_id: trx_id, file_name: file_name, work_pid: work_pid, s3_bucket: ENV['S3_BUCKET'] }, status: :ok
+      content.put(body: request.body())
+      metadata = s3.bucket(ENV['S3_BUCKET']).object("#{trx_id}/metadata-#{file_pid}.json")
+      metadata.put(body: initial_file_metadata(file_name, file_pid))
+      render json: { trx_id: trx_id, file_name: file_name, file_pid: file_pid, s3_bucket: ENV['S3_BUCKET'] }, status: :ok
     end
   end
 
@@ -143,5 +147,15 @@ class Api::ItemsController < CatalogController
     def build_api_query(solr_parameters, user_parameters)
       # translate API query terms into solr query
       Api::QueryBuilder.new(@current_user).build_filter_queries(solr_parameters, user_parameters)
+    end
+
+    def initial_file_metadata(file_name, file_pid)
+      metadata_hash = {}
+      metadata_hash[:pid] = "und:#{file_pid}"
+      metadata_hash[:content_meta] = {}
+      metadata_hash[:metadata] = {}
+      metadata_hash[:content_meta][:label] = "#{file_name}"
+      metadata_hash[:metadata]['dc:title'] = "#{file_name}"
+      JSON.dump(metadata_hash)
     end
 end
