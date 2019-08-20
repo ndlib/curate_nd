@@ -10,11 +10,13 @@ class Api::UploadsController < Api::BaseController
     if @current_user
       trx_id = ApiTransaction.new_trx_id
       start_transaction = ApiTransaction.new(trx_id: trx_id, user_id: @current_user.id, trx_status: ApiTransaction.set_status(:new))
-    end
-    if @current_user && start_transaction.save
-      render json: { trx_id: trx_id }, status: :ok
+      if start_transaction.save
+        render json: { trx_id: trx_id }, status: :ok
+      else
+        render json: { error: 'Transaction not initiated' }, status: :expectation_failed
+      end
     else
-      render json: { error: 'Transaction not initiated' }, status: :expectation_failed
+      render json: { error: 'Token is required to authenticate user' }, status: :unauthorized
     end
   end
 
@@ -39,9 +41,11 @@ class Api::UploadsController < Api::BaseController
       metadata.put(body: initial_file_metadata(file_name, file_pid))
 
       # update trx status
-      update_status(trx_id: trx_id, trx_status: :update)
+      update_status(trx_id: trx_id, status: :update)
 
       render json: { trx_id: trx_id, file_name: file_name, file_pid: file_pid, s3_bucket: ENV['S3_BUCKET'] }, status: :ok
+    else
+      render json: { error: 'Token is required to authenticate user' }, status: :unauthorized
     end
   end
 
@@ -50,14 +54,32 @@ class Api::UploadsController < Api::BaseController
   end
 
   def trx_commit
-      render json: { error: 'Method trx_commit not implemented' }, status: :ok
-      end
+    if @current_user
+      #parse out trx_id
+      trx_id = params[:tid]
+
+      test_it = next_file_sequence(trx_id: trx_id, file_id: '12345')
+
+      # write this file to S3 bucket!!
+      webhook_file_name = "WEBHOOK"
+      webhook_file_content = callback_url(trx_id: trx_id)
+
+      # update trx status
+      update_status(trx_id: trx_id, status: :commit)
+
+      # submit for ingest
+
+      render json: { error: 'Method trx_commit not fully implemented' }, status: :ok
+    else
+      render json: { error: 'Token is required to authenticate user' }, status: :unauthorized
+    end
+  end
 
   private
 
     def next_file_sequence(trx_id:, file_id:)
       next_sequence_nbr = ApiTransactionFile.next_seq_nbr(trx_id: trx_id, file_id: file_id)
-      ApiTransactionFile.new(trx_id: trx_id, file_id: file_id, file_seq_nbr: next_sequence_nbr)
+      ApiTransactionFile.new(trx_id: trx_id, file_id: file_id, file_seq_nbr: next_sequence_nbr).save
       next_sequence_nbr
     end
 
@@ -73,5 +95,22 @@ class Api::UploadsController < Api::BaseController
       metadata_hash[:content_meta][:label] = "#{file_name}"
       metadata_hash[:metadata]['dc:title'] = "#{file_name}"
       JSON.dump(metadata_hash)
+    end
+
+    def callback_url(trx_id:)
+      # note: we probably want to create a new key of some sort, store it in the
+      # ApiTransaction table, and not actually use the trx_id here
+      trx_basic_auth = "#{username_for(trx_id: trx_id)}:#{trx_id}"
+
+      # format is https://User Name:trx_authentication_key@localhost:3000/uploads/#{trx_id}/callback/ingest_completed.json
+      File.join("https://#{trx_basic_auth}@#{request.domain}","/uploads/#{trx_id}/callback/ingest_completed.json")
+    end
+
+    def username_for(trx_id:)
+      begin
+        return ApiTransaction.find(trx_id).user.username
+      rescue ActiveRecord::RecordNotFound
+        return 'user not found'
+      end
     end
 end
