@@ -31,11 +31,16 @@ class Api::UploadsController < Api::BaseController
       file_pid = Sufia::Noid.noidify(Sufia::IdService.mint)
       # s3 bucket connection
       s3 = Aws::S3::Resource.new(region:'us-east-1')
-      content = s3.bucket(ENV['S3_BUCKET']).object("#{trx_id}/#{file_pid}-001")
+      next_sequence = next_file_sequence(trx_id: trx_id, file_id: file_pid)
+      content = s3.bucket(ENV['S3_BUCKET']).object("#{trx_id}/#{file_pid}-#{next_sequence}")
       #copy body of message to bucket
       content.put(body: request.body())
       metadata = s3.bucket(ENV['S3_BUCKET']).object("#{trx_id}/metadata-#{file_pid}.json")
       metadata.put(body: initial_file_metadata(file_name, file_pid))
+
+      # update trx status
+      update_status(trx_id: trx_id, trx_status: :update)
+
       render json: { trx_id: trx_id, file_name: file_name, file_pid: file_pid, s3_bucket: ENV['S3_BUCKET'] }, status: :ok
     end
   end
@@ -49,6 +54,16 @@ class Api::UploadsController < Api::BaseController
       end
 
   private
+
+    def next_file_sequence(trx_id:, file_id:)
+      next_sequence_nbr = ApiTransactionFile.next_seq_nbr(trx_id: trx_id, file_id: file_id)
+      ApiTransactionFile.new(trx_id: trx_id, file_id: file_id, file_seq_nbr: next_sequence_nbr)
+      next_sequence_nbr
+    end
+
+    def update_status(trx_id:, status:)
+      ApiTransaction.update(trx_id, trx_status: ApiTransaction.set_status(status))
+    end
 
     def initial_file_metadata(file_name, file_pid)
       metadata_hash = {}
