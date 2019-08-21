@@ -90,6 +90,20 @@ class Api::UploadsController < Api::BaseController
     end
   end
 
+  # GET /api/uploads/:tid/status
+  # Return status of this transaction
+  def trx_status
+    #parse out trx_id
+    trx_id = params[:tid]
+
+    begin
+      status = ApiTransaction.find(trx_id).trx_status
+      render json: { trx_id: trx_id, status: status }, status: :ok
+    rescue ActiveRecord::RecordNotFound
+      render json: { trx_id: trx_id, status: "Transaction not found" }, status: :not_found
+    end
+  end
+
   private
 
     def next_file_sequence(trx_id:, file_id:)
