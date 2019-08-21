@@ -43,14 +43,29 @@ class Api::UploadsController < Api::BaseController
       # update trx status
       update_status(trx_id: trx_id, status: :update)
 
-      render json: { trx_id: trx_id, file_name: file_name, file_pid: file_pid, s3_bucket: ENV['S3_BUCKET'] }, status: :ok
+      render json: { trx_id: trx_id, file_name: file_name, file_pid: file_pid, sequence: next_sequence }, status: :ok
     else
       render json: { error: 'Token is required to authenticate user' }, status: :unauthorized
     end
   end
 
+  # POST /api/uploads/:tid/file/:fid
   def trx_append
-      render json: { error: 'Method trx_append not implemented' }, status: :ok
+    if @current_user
+      #parse out trx_id, file_id
+      trx_id = params[:tid]
+      file_id = params[:fid]
+      # s3 bucket connection
+      s3 = Aws::S3::Resource.new(region:'us-east-1')
+      next_sequence = next_file_sequence(trx_id: trx_id, file_id: file_pid)
+      content = s3.bucket(ENV['S3_BUCKET']).object("#{trx_id}/#{file_pid}-#{next_sequence}")
+      #copy body of message to bucket
+      content.put(body: request.body())
+
+      render json: { trx_id: trx_id, file_name: file_name, file_pid: file_pid, sequence: next_sequence }, status: :ok
+    else
+      render json: { error: 'Token is required to authenticate user' }, status: :unauthorized
+    end
   end
 
   def trx_commit
@@ -58,18 +73,18 @@ class Api::UploadsController < Api::BaseController
       #parse out trx_id
       trx_id = params[:tid]
 
-      test_it = next_file_sequence(trx_id: trx_id, file_id: '12345')
-
-      # write this file to S3 bucket!!
-      webhook_file_name = "WEBHOOK"
-      webhook_file_content = callback_url(trx_id: trx_id)
+      # s3 bucket connection
+      s3 = Aws::S3::Resource.new(region:'us-east-1')
+      content = s3.bucket(ENV['S3_BUCKET']).object("#{trx_id}/WEBHOOK")
+      #copy body of message to bucket
+      content.put(body: callback_url(trx_id: trx_id))
 
       # update trx status
       update_status(trx_id: trx_id, status: :commit)
 
       # submit for ingest
 
-      render json: { error: 'Method trx_commit not fully implemented' }, status: :ok
+      render json: { trx_id: trx_id }, status: :ok
     else
       render json: { error: 'Token is required to authenticate user' }, status: :unauthorized
     end
