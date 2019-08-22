@@ -9,9 +9,14 @@ class Api::UploadsController < Api::BaseController
   def trx_initiate
     if @current_user
       trx_id = ApiTransaction.new_trx_id
-      start_transaction = ApiTransaction.new(trx_id: trx_id, user_id: @current_user.id, trx_status: ApiTransaction.set_status(:new))
+      work_pid = Sufia::Noid.noidify(Sufia::IdService.mint)
+      start_transaction = ApiTransaction.new(trx_id: trx_id, user_id: @current_user.id, work_id: work_pid, trx_status: ApiTransaction.set_status(:new))
       if start_transaction.save
-        render json: { trx_id: trx_id }, status: :ok
+        # s3 bucket connection
+        s3 = Aws::S3::Resource.new(region:'us-east-1')
+        render json: { trx_id: trx_id, work_id: work_pid }, status: :ok
+        metadata = s3.bucket(ENV['S3_BUCKET']).object("#{trx_id}/metadata-work-#{work_pid}.json")
+        metadata.put(body: initial_work_metadata(work_pid, request.body()))
       else
         render json: { error: 'Transaction not initiated' }, status: :expectation_failed
       end
@@ -27,6 +32,9 @@ class Api::UploadsController < Api::BaseController
       #parse out trx_id
       trx_id = params[:tid]
 
+      trx_record = ApiTransaction.find_by( trx_id: trx_id)
+      work_pid = trx_record.work_id
+
       #parse out file_name
       file_name = request.query_parameters[:file_name]
       #get a pid for the file
@@ -37,8 +45,8 @@ class Api::UploadsController < Api::BaseController
       content = s3.bucket(ENV['S3_BUCKET']).object("#{trx_id}/#{file_pid}-#{next_sequence}")
       #copy body of message to bucket
       content.put(body: request.body())
-      metadata = s3.bucket(ENV['S3_BUCKET']).object("#{trx_id}/metadata-#{file_pid}.json")
-      metadata.put(body: initial_file_metadata(file_name, file_pid))
+      metadata = s3.bucket(ENV['S3_BUCKET']).object("#{trx_id}/metadata-file-#{file_pid}.json")
+      metadata.put(body: initial_file_metadata(file_name, file_pid, work_pid))
 
       # update trx status
       update_status(trx_id: trx_id, status: :update)
@@ -116,13 +124,21 @@ class Api::UploadsController < Api::BaseController
       ApiTransaction.update(trx_id, trx_status: ApiTransaction.set_status(status))
     end
 
-    def initial_file_metadata(file_name, file_pid)
+    def initial_work_metadata( work_pid, request_body)
       metadata_hash = {}
-      metadata_hash[:pid] = "und:#{file_pid}"
-      metadata_hash[:content_meta] = {}
-      metadata_hash[:metadata] = {}
-      metadata_hash[:content_meta][:label] = "#{file_name}"
-      metadata_hash[:metadata]['dc:title'] = "#{file_name}"
+      metadata_hash = request_body.to_s unless request_body.nil? || not_valid_json?(request_body.to_s)
+      metadata_hash['@context'] = {} if metadata_hash['@context'].nil?
+      metadata_hash['@context']['@id'] = "und:#{work_pid}"
+      JSON.dump(metadata_hash)
+    end
+
+    def initial_file_metadata(file_name, file_pid, work_pid)
+      metadata_hash = {}
+      meta_data_hash['@context'] = {}
+      metadata_hash['@context']['@id'] = "und:#{file_pid}"
+      metadata_hash['nd:filename'] = "#{file_name}"
+      metadata_hash['dc:title'] = "#{file_name}"
+      metadata_hash['frels:isPartOf'] = "und:#{work_pid}"
       JSON.dump(metadata_hash)
     end
 
@@ -141,5 +157,13 @@ class Api::UploadsController < Api::BaseController
       rescue ActiveRecord::RecordNotFound
         return 'user not found'
       end
+    end
+ 
+    # If there's way to pick up bad json w/o throwing an exception, I'm all about it
+    def not_valid_json?(json)
+      JSON.parse(json)
+       return false
+      rescue JSON::ParserError => e
+       return true
     end
 end
