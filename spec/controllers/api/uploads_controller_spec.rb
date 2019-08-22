@@ -8,6 +8,17 @@ describe Api::UploadsController do
 
   describe '#trx_initiate' do
     context 'with api token which grants access' do
+      let(:s3) { double }
+      let(:bucket) { double }
+      let(:bucket_object) { double }
+
+      before do
+        allow(Aws::S3::Resource).to receive(:new).and_return(s3)
+        allow(s3).to receive(:bucket).and_return(bucket)
+        allow(bucket).to receive(:object).and_return(bucket_object)
+        allow(bucket_object).to receive(:put)
+      end
+
       it 'returns 200 and json document' do
         request.headers['X-Api-Token'] = token.sha
         request.headers['HTTP_ACCEPT'] = "application/json"

@@ -143,22 +143,18 @@ class Api::UploadsController < Api::BaseController
     end
 
     def callback_url(trx_id:)
-      # note: we probably want to create a new key of some sort, store it in the
-      # ApiTransaction table, and not actually use the trx_id here
-      trx_basic_auth = "#{username_for(trx_id: trx_id)}:#{trx_id}"
-
-      # format is https://User Name:trx_authentication_key@localhost:3000/uploads/#{trx_id}/callback/ingest_completed.json
-      File.join("https://#{trx_basic_auth}@#{request.domain}","/uploads/#{trx_id}/callback/ingest_completed.json")
+      # format is https://user_id_hash:trx_id_hash@localhost:3000/uploads/#{trx_id}/callback/ingest_completed.json
+      File.join("#{request.protocol}#{trx_basic_auth}@#{request_domain}","/uploads/#{trx_id}/callback/ingest_completed.json")
     end
 
-    def username_for(trx_id:)
-      begin
-        return ApiTransaction.find(trx_id).user.username
-      rescue ActiveRecord::RecordNotFound
-        return 'user not found'
-      end
+    def trx_basic_auth
+      "#{Digest::MD5.hexdigest(@current_user.username)}:#{Digest::MD5.hexdigest(trx_id)}"
     end
- 
+
+    def request_domain
+      return request.url.sub!(request.protocol, '').sub!(request.path, '')
+    end
+
     # If there's way to pick up bad json w/o throwing an exception, I'm all about it
     def not_valid_json?(json)
       JSON.parse(json)

@@ -6,9 +6,9 @@ class ApiTransaction < ActiveRecord::Base
   has_many :api_transaction_files, foreign_key: :trx_id, dependent: :destroy
 
   def self.new_trx_id
-    # fill in whatever method is desired here to find trx id
+    # use whatever method is desired here to set a trx id
     loop do
-      trx_id = SecureRandom.hex(32)
+      trx_id = SecureRandom.hex(8)
       break trx_id unless ApiTransaction.where(trx_id: trx_id).exists?
     end
   end
