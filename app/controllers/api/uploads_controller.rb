@@ -14,9 +14,9 @@ class Api::UploadsController < Api::BaseController
       if start_transaction.save
         # s3 bucket connection
         s3 = Aws::S3::Resource.new(region:'us-east-1')
-        render json: { trx_id: trx_id, work_id: work_pid }, status: :ok
         metadata = s3.bucket(ENV['S3_BUCKET']).object("#{trx_id}/metadata-work-#{work_pid}.json")
         metadata.put(body: initial_work_metadata(work_pid, request.body()))
+        render json: { trx_id: trx_id, work_id: work_pid }, status: :ok
       else
         render json: { error: 'Transaction not initiated' }, status: :expectation_failed
       end
