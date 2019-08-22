@@ -3,7 +3,7 @@ require 'json'
 
 class Api::UploadsController < Api::BaseController
   include Sufia::IdService # for mint method
-  before_filter :set_current_user!, only: [:trx_initiate, :trx_new_file]
+  before_filter :set_current_user!, only: [:trx_initiate, :trx_new_file, :trx_append, :trx_commit]
 
   # GET /api/uploads/new
   def trx_initiate
@@ -62,7 +62,7 @@ class Api::UploadsController < Api::BaseController
     if @current_user
       #parse out trx_id, file_id
       trx_id = params[:tid]
-      file_id = params[:fid]
+      file_pid = params[:fid]
       # s3 bucket connection
       s3 = Aws::S3::Resource.new(region:'us-east-1')
       next_sequence = next_file_sequence(trx_id: trx_id, file_id: file_pid)
@@ -70,7 +70,7 @@ class Api::UploadsController < Api::BaseController
       #copy body of message to bucket
       content.put(body: request.body())
 
-      render json: { trx_id: trx_id, file_name: file_name, file_pid: file_pid, sequence: next_sequence }, status: :ok
+      render json: { trx_id: trx_id, file_pid: file_pid, sequence: next_sequence }, status: :ok
     else
       render json: { error: 'Token is required to authenticate user' }, status: :unauthorized
     end
@@ -134,7 +134,7 @@ class Api::UploadsController < Api::BaseController
 
     def initial_file_metadata(file_name, file_pid, work_pid)
       metadata_hash = {}
-      meta_data_hash['@context'] = {}
+      metadata_hash['@context'] = {}
       metadata_hash['@context']['@id'] = "und:#{file_pid}"
       metadata_hash['nd:filename'] = "#{file_name}"
       metadata_hash['dc:title'] = "#{file_name}"
