@@ -9,6 +9,7 @@ class ApiTransactionFile < ActiveRecord::Base
     rescue ActiveRecord::RecordNotFound
       return 1
     end
+    return 1 if find_file.nil?
     1 + find_file.file_seq_nbr
   end
 end
