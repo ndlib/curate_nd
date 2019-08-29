@@ -38,6 +38,8 @@ CurateNd::Application.configure do
   config.manifest_viewer = "https://viewer-iiif.library.nd.edu/universalviewer/index.html#?manifest="
   config.manifest_builder_url = "https://presentation-iiif.library.nd.edu/"
 
+  config.bucket_for_ingest = Api::MemoryBucket.new
+
   if ENV['FULL_STACK']
     require 'clamav'
     ClamAV.instance.loaddb
