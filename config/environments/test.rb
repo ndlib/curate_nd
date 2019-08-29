@@ -34,6 +34,8 @@ CurateNd::Application.configure do
 
   config.application_root_url = "http://localhost:3000"
 
+  config.bucket_for_ingest = Api::MemoryBucket.new
+
   if ENV['FULL_STACK']
     require 'clamav'
     ClamAV.instance.loaddb
