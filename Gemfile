@@ -31,8 +31,14 @@ group :default do
   gem 'decent_exposure'
   gem 'deprecation', '~>0.2.2'
   gem 'devise_masquerade'
+<<<<<<< HEAD
   gem 'devise-guests', '~> 0.7'
   gem 'devise', '~>4.7'
+=======
+  gem 'devise-guests', '~> 0.3'
+  gem 'devise-multi_auth', "0.3.2"
+  gem 'devise', '~>4.1.0'
+>>>>>>> Updating to newer version of Devise and Rails
   gem 'ezid-client', '~> 1.8'
   gem 'figaro'
   gem 'flipper'
