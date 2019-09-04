@@ -1,5 +1,5 @@
 module Admin
-  class CallbacksController < Api::BaseController
+  class CallbacksController < ApplicationController
   respond_to :jsonld
   before_filter :validate_authentication
   attr_reader :trx_id, :validated
