@@ -324,6 +324,6 @@ module CurateHelper
 
   # until such a time that the manifest is stored in the item itself, we need to construct it
   def manifest_url_for(id:)
-    'https://presentation-iiif.library.nd.edu/' + id.to_s + '/manifest'
+    Rails.configuration.manifest_url_generator.call(id: id)
   end
 end

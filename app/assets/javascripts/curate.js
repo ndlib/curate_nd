@@ -40,7 +40,7 @@
 //= require curate/content_submission
 //= require curate/visibility_embargo_date
 //= require curate/collection_details
-//= require curate/viewer_build
+//= require curate/image_viewer_build
 //= require handlebars
 //= require curate/img_dimensions_polyfill
 //= require curate/validate_doi

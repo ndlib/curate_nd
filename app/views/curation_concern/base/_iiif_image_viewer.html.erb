@@ -1,7 +1,5 @@
-<!-- @TEMP: we are temporarily forcing one specific manifest for testing -->
-<% manifest_url = manifest_url_for(id: 'und:2r36tx34c11') %>
-<%# manifest_url = manifest_url_for(id: curation_concern.id) %>
-<div class="image-viewer-integration" data-manifest-url="<%= manifest_url %>">
+<div class="image-viewer-integration" data-manifest-url="<%= manifest_url_for(id: work.pid) %>">
+  <div class="spinner"></div>
   <% begin %>
     <% if work.try(:generic_files) || work.class == GenericFile %>
         <% generic_file = GenericFile.load_instance_from_solr(work.representative) %>
