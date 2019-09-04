@@ -15,11 +15,12 @@ module Api
 
     private
     def default_bucket
-      if Rails.application.config.bucket_for_ingest
+      bucket = begin
         Rails.application.config.bucket_for_ingest
-      else
+      rescue
         Aws::S3::Resource.new(region: 'us-east-1').bucket(ENV['S3_BUCKET'])
       end
+      bucket
     end
   end
 end

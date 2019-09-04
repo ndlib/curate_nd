@@ -23,6 +23,8 @@ class ApiTransaction < ActiveRecord::Base
       'submitted_for_ingest'
     when :complete
       'ingest_complete'
+    when :error
+      'error_during_ingest'
     else
       nil
     end
