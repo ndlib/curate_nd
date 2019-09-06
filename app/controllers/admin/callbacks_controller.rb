@@ -13,12 +13,12 @@ module Admin
     # params: {"controller"=>"admin/callbacks", "action"=>"callback_response", "tid"=>"c7af186a8d75c44a", "response"=>"ingest_completed", "format"=>"json"}
 
     def callback_response
+      @trx_id = params[:tid]
       response = params[:response]
 
       if validated
         response_data = JSON.parse(request.body.read)
         update_transaction_status_based_on(trx_id: trx_id, ingest_status: response_data["job_state"])
-
         render json: { trx_id: trx_id, ingest_response: response_data["job_state"] }, status: :ok
       else
         render json: { trx_id: trx_id, callback_response: "unauthorized callback" }, status: :unauthorized
