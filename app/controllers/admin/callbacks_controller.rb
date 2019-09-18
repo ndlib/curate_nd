@@ -2,7 +2,7 @@ module Admin
   class CallbacksController < ApplicationController
   respond_to :jsonld
   before_filter :validate_authentication
-  attr_reader :trx_id, :validated
+  attr_reader :validated
 
     # The WEBHOOK posts the following JSON body:
     # ```json
@@ -13,13 +13,19 @@ module Admin
     # params: {"controller"=>"admin/callbacks", "action"=>"callback_response", "tid"=>"c7af186a8d75c44a", "response"=>"ingest_completed", "format"=>"json"}
 
     def callback_response
-      @trx_id = params[:tid]
+      trx_id = params[:tid]
       response = params[:response]
 
       if validated
         response_data = JSON.parse(request.body.read)
-        update_transaction_status_based_on(trx_id: trx_id, ingest_status: response_data["job_state"])
-        render json: { trx_id: trx_id, ingest_response: response_data["job_state"] }, status: :ok
+        updated = update_transaction_status_based_on(trx_id: trx_id, ingest_status: response_data["job_state"])
+
+        if updated
+          render json: { trx_id: trx_id, ingest_response: response_data["job_state"] }, status: :ok
+        else
+          render json: { trx_id: trx_id, ingest_response: response_data["job_state"], callback_response: "status update failed" }, status: :not_modified
+        end
+
       else
         render json: { trx_id: trx_id, callback_response: "unauthorized callback" }, status: :unauthorized
       end
@@ -29,36 +35,17 @@ module Admin
 
     def validate_authentication
       @validated = authenticate_with_http_basic do |user, pass|
-        authenticate_trx(user_name_hash: user, trx_id_hash: pass)
+        Api::CallbackTrxValidator.new(trx_id: params[:tid],
+                                      user_name_hash: user,
+                                      trx_id_hash: pass).validate
       end
       @validated
     end
 
     def update_transaction_status_based_on(trx_id:, ingest_status:)
-      case ingest_status
-      when "success"
-        ApiTransaction.update(trx_id, trx_status: ApiTransaction.set_status(:complete))
-      when "error"
-        ApiTransaction.update(trx_id, trx_status: ApiTransaction.set_status(:error))
-      when "processing"
-        # do nothing
-      else
-        # do nothing
-      end
-    end
-
-    def authenticate_trx(user_name_hash:, trx_id_hash:)
-      @trx_id = params[:tid]
-      return false unless trx_id
-      return false unless user_name_hash
-      return false unless trx_id_hash
-      begin
-        trx_user = ApiTransaction.find(trx_id).user.username
-      rescue ActiveRecord::RecordNotFound
-        return false
-      end
-      return true if (Digest::MD5.hexdigest(trx_id) == trx_id_hash && Digest::MD5.hexdigest(trx_user) == user_name_hash)
-      false
+      # "processing" is not recorded to database and not an error
+      return true if ingest_status == 'processing'
+      ApiTransaction.set_status_based_on(trx_id: trx_id, action: ingest_status.to_sym)
     end
   end
 end
