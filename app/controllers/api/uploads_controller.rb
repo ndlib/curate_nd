@@ -19,7 +19,7 @@ class Api::UploadsController < Api::BaseController
           trx_id: trx_id,
           user_id: @current_user.id,
           work_id: work_pid,
-          trx_status: ApiTransaction.set_status(:new)
+          trx_status: ApiTransaction.status_for(action: :new)
         )
         # save transaction
         if start_transaction.save
@@ -70,7 +70,7 @@ class Api::UploadsController < Api::BaseController
           body: metadata_formatter.initial_metadata
         )
         # update trx status
-        update_status(trx_id: trx_id, status: :update)
+        ApiTransaction.set_status_based_on(trx_id: trx_id, action: :update)
         # respond ok
         render json: { trx_id: trx_id,
                        file_name: file_name,
@@ -122,7 +122,8 @@ class Api::UploadsController < Api::BaseController
         body: callback_url(trx_id: trx_id)
       )
       # update trx status
-      update_status(trx_id: trx_id, status: :commit)
+      ApiTransaction.set_status_based_on(trx_id: trx_id, action: :commit)
+
       # respond ok
       render json: { trx_id: trx_id }, status: :ok
     else # unauthenticated user, error 401
@@ -164,10 +165,6 @@ class Api::UploadsController < Api::BaseController
       next_sequence_nbr = ApiTransactionFile.next_seq_nbr(trx_id: trx_id, file_id: file_id)
       ApiTransactionFile.new(trx_id: trx_id, file_id: file_id, file_seq_nbr: next_sequence_nbr).save
       next_sequence_nbr
-    end
-
-    def update_status(trx_id:, status:)
-      ApiTransaction.update(trx_id, trx_status: ApiTransaction.set_status(status))
     end
 
     def callback_url(trx_id:)
