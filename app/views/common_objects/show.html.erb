@@ -1,3 +1,6 @@
+<% has_read_rights = can?(:read, curation_concern) %>
+<% has_edit_rights = can?(:edit, curation_concern) %>
+
 <% content_for :page_title, construct_page_title(curation_concern.title) if curation_concern.title %>
 
 <% content_for :page_header do %>
@@ -13,7 +16,8 @@
   <% if display_citation_generation? %>
     <%= link_to 'Generate Citation', citation_path(curation_concern) , class: 'btn citation-modal-js' %>
   <% end %>
-  <% if can?(:edit, curation_concern) %>
+  <% if has_edit_rights %>
+    <%= link_to 'Usage Details', metrics_usage_path(id: curation_concern.noid) , class: 'btn btn-default' %>
     <%= link_to edit_polymorphic_path([:curation_concern, curation_concern]), class: 'btn btn-default' do %>
       <i class="icon icon-pencil"></i> Edit
     <% end %>
@@ -30,13 +34,13 @@
 
   <% case curation_concern %>
   <% when GenericFile %>
-    <% if can? :read, curation_concern %>
+    <% if has_read_rights %>
       <% bendo_datastream = Bendo::DatastreamPresenter.new(datastream: curation_concern.datastreams.fetch('content')) %>
       <%= render 'curation_concern/base/download_file_button', generic_file: curation_concern, bendo_datastream: bendo_datastream %>
     <% end %>
   <% when FindingAid %>
     <%# Only display file list of finding aids to editors. See DLTP-1304 %>
-    <% if can?(:edit, curation_concern) %>
+    <% if has_edit_rights %>
       <%= render 'curation_concern/base/related_files', curation_concern: curation_concern, with_actions: true %>
     <% else %>
       <h2>Files</h2>

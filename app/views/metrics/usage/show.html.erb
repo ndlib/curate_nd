@@ -1,0 +1,71 @@
+<% curation_concern = @curation_concern %>
+<% usage_details = @usage_details %>
+
+<% content_for :page_title, construct_page_title(curation_concern.title, "Usage Metrics") if curation_concern.title %>
+
+<% content_for :page_header do %>
+  <% if curation_concern.kind_of?(GenericFile) %>
+    <h1>Usage for "<%=curation_concern.filename %>"</h1>
+  <% else %>
+    <h1>Usage for "<%= richly_formatted_text(curation_concern.to_s, title: true) %>"</h1>
+  <% end %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <%= link_to "Export to CSV", metrics_usage_path(curation_concern, :csv), class: 'btn btn-success' %>
+  <%= link_to "Back", common_object_path(curation_concern), class: 'btn btn-default' %>
+<% end %>
+
+<% if current_user.can? :edit, curation_concern %>
+  <% if usage_details.count > 0 %>
+
+    <p>
+      A view is any display of the information page for this item in CurateND. A download is either the number of times this file has been downloaded (for files) or the total number of times any file belonging to this item has been downloaded (for works).
+    </p>
+    <p>
+      Collection of usage data started June 2016. To get the complete usage data for this item going back to June 2016, use the "Export to CSV" option.
+    </p>
+    <section id="usage-details">
+      <% usage_details.each do |usage_item| %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th class="span6">
+                <% if usage_item.label %>
+                  <%= link_to usage_item.label, common_object_path(usage_item.noid) %>
+                <% else %>
+                  Item: <%= usage_item.noid %>
+                <% end %>
+              </th>
+              <th>Past 30 Days</th>
+              <th>Past 365 Days</th>
+              <th>Since Deposit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% usage_item.events.each do |usage_event| %>
+              <tr class="attributes">
+                <td class="attribute attribute-event gray">
+                   <li><%= usage_event.event.pluralize.titleize %></li>
+                </td>
+                <td class="attribute attribute-usage-30">
+                   <%= usage_event.usage_30 %>
+                </td>
+                <td class="attribute attribute-usage-year">
+                  <%= usage_event.usage_year %>
+                </td>
+                <td class="attribute attribute-usage-all">
+                  <%= usage_event.usage_all %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    <% else %>
+      There are no usage metrics for this item.
+    <% end %>
+  </section>
+<% else %>
+  You are not authorized to view usage for this item.
+<% end %>

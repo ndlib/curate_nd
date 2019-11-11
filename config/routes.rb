@@ -149,6 +149,8 @@ CurateNd::Application.routes.draw do
 
   get '/show/citation/:id', to: 'citation#show', as: 'citation'
 
+  get'/usage/:id(.:format)', to: 'metrics/usage#show', as: 'metrics_usage'
+
   get 'get_started', to: redirect('deposit')
   get 'deposit', to: 'classify_concerns#new'
 

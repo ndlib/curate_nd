@@ -55,3 +55,13 @@ ci: &ci
 
 ci_remote_purl_database:
   <<: *ci
+
+metrics_db:
+  database: metrics_db_name
+  username: metrics_username
+  password: metrics_password
+  host:     metrics_host
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  timeout: 5000
