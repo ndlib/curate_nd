@@ -10,11 +10,22 @@ class Api::QueryBuilder
   AND_SEARCH_SEPARATOR = '^'
   OR_SEARCH_SEPARATOR = ','
   DATE_SEARCH_SEPARATOR = ':'
+  DATE_SEARCH_TERMS = ['before', 'after']
 
   attr_reader :current_user
 
   def initialize(current_user)
     @current_user = current_user
+  end
+
+  def valid_request?(user_parameters)
+    user_parameters.each do |term, value|
+      key = term.to_sym
+      if VALID_KEYS_AND_SEARCH_FIELDNAMES[key].present?
+        return false unless valid_value(key, value)
+      end
+    end
+    return true
   end
 
   def build_filter_queries(solr_parameters, user_parameters)
@@ -26,6 +37,20 @@ class Api::QueryBuilder
       end
     end
     solr_parameters
+  end
+
+    private
+
+  # perform validations of the value of a search term
+  def valid_value(key, value)
+    return false if value == "self" && @current_user.blank?
+    case key
+    when (:deposit_date || :modify_date)
+      return valid_date_format?(value)
+    else
+      # no value validation for key
+      return true
+    end
   end
 
   def filter_by_type(term)
@@ -59,9 +84,9 @@ class Api::QueryBuilder
   # allowed formats: "after:2019-01-01", "before:2019-01-01", "2019-01-01"
   def filter_by_date(term)
     search_data = term.split(DATE_SEARCH_SEPARATOR)
-    comparison_date = ActiveSupport::TimeZone.new('UTC').parse(search_data.last)
-    return "[#{comparison_date.xmlschema} TO *]" if search_data.first == 'after'
-    return "[* TO #{comparison_date.xmlschema}]" if search_data.first == 'before'
+    comparison_date = load_comparison_date(search_data.last)
+    return "[#{comparison_date.xmlschema} TO *]" if search_data.first == DATE_SEARCH_TERMS.last
+    return "[* TO #{comparison_date.xmlschema}]" if search_data.first == DATE_SEARCH_TERMS.first
     "[#{comparison_date.xmlschema.to_s} TO #{(comparison_date + 1.days).xmlschema}]"
   end
 
@@ -110,5 +135,33 @@ class Api::QueryBuilder
       search_term  += ("#{field}:#{this_term}" + join_if_more(x, num_elements, " OR "))
     end
     search_term
+  end
+
+  def load_comparison_date(input_date)
+    ActiveSupport::TimeZone.new('UTC').parse(input_date)
+  rescue ArgumentError
+    nil
+  end
+
+  def valid_date_format?(value)
+    # split search value at , or ^ between the and/or search values
+    date_terms = value.split(AND_SEARCH_SEPARATOR).map{ |x| x.split(OR_SEARCH_SEPARATOR) }.flatten
+    # validate each term, returning false when invalid term encountered
+    date_terms.each do |term|
+      # split at : to divide individual search term
+      split_term = term.split(DATE_SEARCH_SEPARATOR)
+      # return false if bad date format
+      regex = /\d{4}-([1-9]\d|0?[1-9])-([1-9]\d|0?[1-9])/
+      return false if (split_term.last =~ regex).nil?
+      # return false if date parsing error occurs
+      comparison_date = load_comparison_date(split_term.last)
+      return false if comparison_date.nil?
+      # return false if invalid 'before' or 'after' term
+      if split_term.count > 1
+        return false unless (DATE_SEARCH_TERMS.include?(split_term.first))
+      end
+    end
+    # return true if all terms validate
+    true
   end
 end

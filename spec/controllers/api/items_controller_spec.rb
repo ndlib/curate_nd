@@ -84,21 +84,53 @@ describe Api::ItemsController do
         expect(json['results'].first.keys).to include("type", "editor", "depositor")
         expect(json['query']['queryParameters'].keys).to include("type", "editor", "depositor")
       end
+
+      it 'disallows search for self if no token' do
+        request.headers['HTTP_ACCEPT'] = "application/json"
+        get :index, { type: 'Article', editor: "self", depositor: "self" }
+        expect(response).to be_bad_request
+      end
     end
 
     context 'with date filtering' do
-      let(:requested_date) { "after:2019-01-01" }
+      context 'when dates are formatted correctly' do
+        let(:requested_date) { "after:2019-01-01" }
 
-      it 'searches dates and includes dates in the search results list' do
-        request.headers['X-Api-Token'] = token.sha
-        request.headers['HTTP_ACCEPT'] = "application/json"
-        get :index, { deposit_date: requested_date, modify_date: requested_date }
-        expect(response).to be_successful
-        json = JSON.parse(response.body)
+        it 'searches dates and includes dates in the search results list' do
+          request.headers['X-Api-Token'] = token.sha
+          request.headers['HTTP_ACCEPT'] = "application/json"
+          get :index, { deposit_date: requested_date, modify_date: requested_date }
+          expect(response).to be_successful
+          json = JSON.parse(response.body)
 
-        expect(json['pagination']['totalResults']).to eq(3)
-        expect(json['results'].first.keys).to include("depositDate", "modifyDate")
-        expect(json['query']['queryParameters'].keys).to include("deposit_date", "modify_date")
+          expect(json['pagination']['totalResults']).to eq(3)
+          expect(json['results'].first.keys).to include("depositDate", "modifyDate")
+          expect(json['query']['queryParameters'].keys).to include("deposit_date", "modify_date")
+        end
+      end
+
+      context 'when date formatting is incorrect' do
+        context 'with bad date format' do
+          let(:requested_date) { "after:2019-01-01,before:2020-01-0" }
+
+          it 'returns a bad request' do
+            request.headers['X-Api-Token'] = token.sha
+            request.headers['HTTP_ACCEPT'] = "application/json"
+            get :index, { deposit_date: requested_date }
+            expect(response).to be_bad_request
+          end
+        end
+
+        context 'with bad before/after term' do
+          let(:requested_date) { "after:2019-01-01,befor:2020-01-01" }
+
+          it 'returns a bad request' do
+            request.headers['X-Api-Token'] = token.sha
+            request.headers['HTTP_ACCEPT'] = "application/json"
+            get :index, { deposit_date: requested_date }
+            expect(response).to be_bad_request
+          end
+        end
       end
     end
   end
