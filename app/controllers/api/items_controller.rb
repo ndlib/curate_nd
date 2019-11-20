@@ -17,8 +17,12 @@ class Api::ItemsController < Api::BaseController
 
   # GET /api/items
   def index
-    (@response, @document_list) = get_search_results
-    render json: Api::ItemsSearchPresenter.new(@response, request.url, request.query_parameters).to_json
+    if valid_search_request_syntax?
+      (@response, @document_list) = get_search_results
+      render json: Api::ItemsSearchPresenter.new(@response, request.url, request.query_parameters).to_json
+    else
+      render json: { error: 'Invalid search request format. Please consult API documentation.' }, status: :bad_request
+    end
   end
 
   # GET /api/items/1
@@ -27,6 +31,10 @@ class Api::ItemsController < Api::BaseController
   end
 
   private
+
+    def valid_search_request_syntax?
+      Api::QueryBuilder.new(@current_user).valid_request?(params)
+    end
 
     def item
       @this_item ||= ActiveFedora::Base.find(params[:id], cast: true)

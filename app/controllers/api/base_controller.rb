@@ -9,18 +9,16 @@ class Api::BaseController < CatalogController
     end
 
     def set_current_user!
+      @current_user = nil
       token_sha = request.headers['X-Api-Token']
 
       if token_sha
-        begin
-          api_access_token = ApiAccessToken.find(token_sha)
+        api_access_token = find_token(token_sha)
+        if api_access_token
           @current_user = api_access_token.user
-        rescue ActiveRecord::RecordNotFound
-          @current_user = nil
         end
-      else
-        @current_user = nil
       end
+      @current_user
     end
 
     def validate_permissions!
@@ -32,5 +30,13 @@ class Api::BaseController < CatalogController
       end
     rescue ActiveFedora::ObjectNotFoundError
       render json: { error: 'Item not found', user: user_name, item: item_id }, status: :not_found
+    end
+
+    def find_token(token_sha)
+      begin
+        ApiAccessToken.find(token_sha)
+      rescue ActiveRecord::RecordNotFound
+        nil
+      end
     end
 end
