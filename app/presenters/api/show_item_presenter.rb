@@ -177,7 +177,7 @@ class Api::ShowItemPresenter
         data[predicate] = []
         this_access.elements['machine'].elements.each do |access_via_element|
           next unless access_via_element.name == access_via
-          data[predicate] << access_via_element.text
+          data[predicate] << use_url_if_is_a_pid(access_via_element.text, url_type: :show)
         end
       end
     end
@@ -212,6 +212,7 @@ class Api::ShowItemPresenter
     data
   end
 
+  SINGLE_VALUE_KEYS = ['hasModel', 'hasProfile']
   def parse_rdfxml(stream)
     data = {}
     data['access'] = {}
@@ -219,11 +220,20 @@ class Api::ShowItemPresenter
       key = thing.predicate.to_s.split('#')[1]
       predicate = find_access_predicate_for(key)
       subject = thing.object.to_s.split('/')[1]
+      next if subject.nil?
       if subject.starts_with?('afmodel')
         subject = subject.sub('afmodel:', "")
       end
+
       if predicate.nil?
-        data[key] = use_url_if_is_a_pid(subject, url_type: :show)
+        singular_key = SINGLE_VALUE_KEYS.include?(key)
+        case singular_key
+        when true # keys with singular value
+          data[key] = use_url_if_is_a_pid(subject, url_type: :show)
+        else # default to multiple values
+          data[key] = [] unless data.keys.include?(key)
+          data[key] << use_url_if_is_a_pid(subject, url_type: :show)
+        end
       else
         data['access'][predicate] = Array.wrap(use_url_if_is_a_pid(subject, url_type: :show))
       end
