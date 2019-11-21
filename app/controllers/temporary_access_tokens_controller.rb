@@ -10,8 +10,8 @@ class TemporaryAccessTokensController < ApplicationController
   end
 
   def new
-    @temporary_access_token = TemporaryAccessToken.new(new_temporary_access_token_params)
     create if params.has_key? :temporary_access_token
+    @temporary_access_token = TemporaryAccessToken.new(new_temporary_access_token_params)
   end
 
   def edit
@@ -20,16 +20,14 @@ class TemporaryAccessTokensController < ApplicationController
 
   def create
     @limit_to_id ||= limit_to_id
-    @temporary_access_token = TemporaryAccessToken.new(temporary_access_token_params_with_current_user)
-    permitted = validate_create_token
-    if permitted[:valid] == true
-      if @temporary_access_token.save
-        redirect_to temporary_access_tokens_path(limit_to_id: @limit_to_id), notice: 'Temporary access token was successfully created.'
-      else
-        render action: 'new'
-      end
+    validated_request = TimeLimitedTokenCreateService.new(
+      noid: params[:temporary_access_token][:noid],
+      issued_by: current_user
+    ).make_token
+    if validated_request[:valid] == true
+      redirect_to temporary_access_tokens_path(limit_to_id: @limit_to_id), notice: validated_request[:notice]
     else
-      redirect_to temporary_access_tokens_path, notice: permitted[:notice]
+      redirect_to temporary_access_tokens_path(limit_to_id: @limit_to_id), notice: validated_request[:notice]
     end
   end
 

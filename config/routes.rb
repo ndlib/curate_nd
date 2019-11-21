@@ -125,7 +125,9 @@ CurateNd::Application.routes.draw do
     post 'uploads/:tid/file/:fid', as: 'trx_append', controller: 'uploads', action: 'trx_append'
     get 'uploads/:tid/status', controller: 'uploads', action: 'trx_status'
     post 'uploads/:tid/commit', as: 'trx_commit', controller: 'uploads', action: 'trx_commit'
+    post 'items/:id/token', as: 'token', controller: 'items', action: 'token'
   end
+
   # manage ingest callbacks: batch ingest responds with a post
   post 'uploads/:tid/callback/:response', controller: 'admin/callbacks', action: 'callback_response'
 

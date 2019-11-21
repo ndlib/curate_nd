@@ -1,8 +1,8 @@
 class Api::ItemsController < Api::BaseController
-  prepend_before_filter :normalize_identifier, only: [:show]
+  prepend_before_filter :normalize_identifier, only: [:show, :token]
   before_filter :validate_permissions!, only: [:show]
   before_filter :item, only: [:show]
-  before_filter :set_current_user!, only: [:index]
+  before_filter :set_current_user!, only: [:index, :token]
 
   self.solr_search_params_logic = [
     :default_solr_parameters,
@@ -28,6 +28,16 @@ class Api::ItemsController < Api::BaseController
   # GET /api/items/1
   def show
     render json: Api::ShowItemPresenter.new(item, request.url).to_json
+  end
+
+  # POST /api/items/1/token
+  def token
+    validated_request= TimeLimitedTokenCreateService.new(noid: params[:id], issued_by: @current_user).make_token
+    if validated_request[:valid] == true
+      render json: { notice: validated_request[:notice], access_url: File.join(download_url, "?token=#{validated_request[:token][:sha]}") }, status: :ok
+    else
+      render json: { error: validated_request[:notice] }, status: :bad_request
+    end
   end
 
   private

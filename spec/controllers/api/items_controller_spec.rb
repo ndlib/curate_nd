@@ -4,6 +4,7 @@ describe Api::ItemsController do
   let(:public_article) { FactoryGirl.create(:public_article, title: 'Fried Green Tomatoes',) }
   let(:private_article) { FactoryGirl.create(:article, title: 'All About Cats', user: user) }
   let(:private_work) { FactoryGirl.create(:private_generic_work, title: 'More About Cats', user: user) }
+  let(:generic_file) { FactoryGirl.create(:generic_file, user: user) }
   let(:user) { FactoryGirl.create(:user) }
   let(:token) { ApiAccessToken.create(issued_by: user.id, user: user) }
 
@@ -131,6 +132,25 @@ describe Api::ItemsController do
             expect(response).to be_bad_request
           end
         end
+      end
+    end
+  end
+
+  describe '#token' do
+    context 'with a valid request' do
+      it 'returns 200 and a json document' do
+        request.headers['X-Api-Token'] = token
+        request.headers['HTTP_ACCEPT'] = "application/json"
+        post :token, { id: generic_file.to_param }
+        expect(response).to be_successful
+      end
+    end
+    context 'with an invalid request' do
+      it 'returns 400 and a json document' do
+        request.headers['X-Api-Token'] = token
+        request.headers['HTTP_ACCEPT'] = "application/json"
+        post :token, { id: private_article.to_param }
+        expect(response).to be_bad_request
       end
     end
   end
