@@ -35,6 +35,7 @@ group :default do
   gem 'devise_masquerade'
   gem 'devise-guests', '~> 0.7'
   gem 'devise', '~>4.7'
+  gem 'dry-configurable', '~> 0.8.3'
   gem 'ezid-client', '~> 1.8'
   gem 'figaro'
   gem 'flipper'

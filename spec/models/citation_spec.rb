@@ -15,7 +15,7 @@ describe Citation do
   }
 
   let(:expected_citation){
-    "Smith, J. M., Lee, A., Sultan, M. A., &amp; Green, J. J. (2013). This is a test title for generating test citation. University of Notre Dame. https://doi.org/10.5072/FK2NS13CS"
+    "Smith, J. M., Lee, A., Sultan, M. A., &amp; Green, J. J. (2013). <i>This is a test title for generating test citation</i>. University of Notre Dame. https://doi.org/10.5072/FK2NS13CS"
   }
 
   let(:curation_concern_with_multiple_publisher){
@@ -32,7 +32,7 @@ describe Citation do
   }
 
   let(:expected_citation_with_multiple_publisher){
-    "Smith, J. M., Lee, A., Sultan, M. A., &amp; Green, J. J. (2013). This is a test title for generating test citation. University of Notre Dame, Indiana University. https://doi.org/10.5072/FK2NS13CS"
+    "Smith, J. M., Lee, A., Sultan, M. A., &amp; Green, J. J. (2013). <i>This is a test title for generating test citation</i>. University of Notre Dame, Indiana University. https://doi.org/10.5072/FK2NS13CS"
   }
 
   let(:curation_concern_with_one_author_and_adviser){
@@ -49,7 +49,7 @@ describe Citation do
   }
 
   let(:expected_citation_with_one_author_and_adviser){
-    "Smith, J. M., &amp; Sultan, M. A. (2013). This is a test title for generating test citation. University of Notre Dame. https://doi.org/10.5072/FK2NS13CS"
+    "Smith, J. M., &amp; Sultan, M. A. (2013). <i>This is a test title for generating test citation</i>. University of Notre Dame. https://doi.org/10.5072/FK2NS13CS"
   }
 
   let(:curation_concern_with_out_created_date){
@@ -83,7 +83,7 @@ describe Citation do
   }
 
   let(:expected_citation_with_no_doi){
-    "Smith, J. M., &amp; Sultan, M. A. This is a test title for generating test citation. University of Notre Dame. Retrieved from #{File.join(Rails.configuration.application_root_url, "/show/jq085h7459h")}"
+    "Smith, J. M., &amp; Sultan, M. A. <i>This is a test title for generating test citation</i>. University of Notre Dame. Retrieved from #{File.join(Rails.configuration.application_root_url, "/show/jq085h7459h")}"
   }
 
   describe "to_s" do
