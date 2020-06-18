@@ -1,5 +1,5 @@
 <% if curation_concern.with_empty_contents? %>
-  <div class="alert">
+  <div class="alert alert-warning">
     <strong>Hey!</strong> It looks like there is a problem with some of your files:
     <ul>
       <% curation_concern.generic_files.each do |generic_file| %>
@@ -14,7 +14,7 @@
 
 <% if curation_concern.persisted? && curation_concern.generic_files.present? %>
   <div class="row">
-    <div class="span12">
+    <div class="col-sm-12">
       <fieldset id="representative-image">
         <legend>
           Assign a Thumbnail

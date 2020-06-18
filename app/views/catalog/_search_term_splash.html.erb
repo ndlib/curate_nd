@@ -1,7 +1,7 @@
 <% splash = Catalog::SearchSplashPresenter.call(params) %>
 <% if splash.title %>
   <div class="row">
-    <div class="span9 offset3">
+    <div class="col-sm-9 offset-sm-3">
       <div class="search-term-splash">
         <h1>
           <%= splash.title %>
@@ -13,7 +13,7 @@
     <%= render partial: '/curation_concern/library_collections/splash', locals: { curation_concern: splash } %>
   <% end %>
   <div class="row">
-    <div class="span9 offset3">
+    <div class="col-sm-9 offset-sm-3">
       <div class="search-term-splash">
         <%= render partial: 'shared/site_search', locals: { placeholder: "Search #{splash.title}" } %>
       </div>
@@ -21,7 +21,7 @@
   </div>
 <% else %>
   <div class="row">
-    <div class="span9 offset3">
+    <div class="col-sm-9 offset-sm-3">
       <%= render 'shared/site_search' %>
     </div>
   </div>

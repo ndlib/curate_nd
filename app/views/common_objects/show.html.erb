@@ -56,7 +56,7 @@
   <% if curation_concern.is_a? LibraryCollection %>
     <% path = search_collection_pathbuilder(curation_concern) %>
     <% if path %>
-      <%= link_to path, class: 'btn btn-large' do %>
+      <%= link_to path, class: 'btn btn-default btn-lg' do %>
         <i class="icon icon-search"></i> Browse Objects in the Collection
       <% end %>
     <% end %>

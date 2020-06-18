@@ -9,7 +9,7 @@ describe 'shared/simple_form_input_test.html.erb' do
     render partial: 'simple_form_input_test'
   end
   it 'should have Cancel link which takes to root page' do
-    expect(rendered).to have_tag('.control-group.senior_thesis_title') do
+    expect(rendered).to have_tag('.form-group.senior_thesis_title') do
       with_tag('.control-label') do
         with_tag('label[for="senior_thesis_title"]') do
           with_tag('#senior_thesis_title_label', text: 'Title')

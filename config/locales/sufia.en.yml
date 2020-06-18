@@ -2,7 +2,7 @@ en:
   blacklight:
     search:
       pagination_info:
-        no_items_found: '<p class="no-items-found span9">No records match these criteria.<br /><a href="/catalog" class="new-search-from-no-results">Start a new search</a></p>'
+        no_items_found: '<p class="no-items-found col-sm-9">No records match these criteria.<br /><a href="/catalog" class="new-search-from-no-results">Start a new search</a></p>'
   sufia:
     product_name:        "CurateND"
     account_name:        "Notre Dame NetID"

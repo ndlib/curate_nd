@@ -16,7 +16,7 @@
       <%= select_tag(
         :per_page,
         options_for_select(
-          [['10 per page', '10'], ['20 per page', '20'], ['50 per page', '50'], ['100 per page', '100']],
+          [['12 per page', '12'], ['20 per page', '20'], ['50 per page', '50'], ['100 per page', '100']],
           h(params[:per_page])
         ),
         :title => "Number of results to display per page",

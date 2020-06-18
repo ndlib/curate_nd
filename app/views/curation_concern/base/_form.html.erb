@@ -1,9 +1,9 @@
 <%= simple_form_for [:curation_concern, curation_concern], :html => { :onsubmit => "return validateCurationConcernForm(this);", "data-model-name" => curation_concern.class.model_name.singular } do |f| %>
 
   <% if f.error_notification -%>
-    <div class="alert alert-error fade in">
+    <div class="alert alert-danger fade in">
       <strong>Wait don't go!</strong> There was a problem with your submission. Please review the errors below:
-      <a class="close" data-dismiss="alert" href="#">&times;</a>
+      <a class="close" data-dismiss="alert alert-warning" href="#">&times;</a>
     </div>
   <% end -%>
 
@@ -16,7 +16,7 @@
   <%= render 'form_contributor_agreement', curation_concern: curation_concern, contributor_agreement: contributor_agreement, f: f %>
 
   <div class="row">
-    <div class="span12 form-actions">
+    <div class="col-sm-12 form-actions">
       <%= f.submit class: 'btn btn-primary require-contributor-agreement', value: 'Save Changes' %>
       <%- if curation_concern.new_record? -%>
         <%= link_to 'Cancel', root_path, class: 'btn btn-link' %>

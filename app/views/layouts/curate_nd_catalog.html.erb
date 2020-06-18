@@ -14,17 +14,17 @@
   <div class="row">
   <% if content_for?(:sidebar) %>
 
-    <div class="span3 sidebar">
+    <div class="col-sm-3 sidebar">
       <%= yield(:sidebar) %>
     </div>
 
-    <div class="span9 <%= yield(:content_class) %>">
+    <div class="col-sm-9 <%= yield(:content_class) %>">
       <%= yield %>
     </div>
 
   <% else %>
 
-    <div class="span12">
+    <div class="col-sm-12">
       <%= yield %>
     </div>
 

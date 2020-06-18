@@ -6,8 +6,8 @@
 # GMAIL_USERNAME: Your_Gmail_Username
 # makes 'Your_Gmail_Username' available as ENV["GMAIL_USERNAME"]
 
-AD_API_URL: 'http://exampleurl.com?'
-AD_API_TOKEN: 'thisisyourtoken'
+AD_API_URL: 'https://api-prep.library.nd.edu/1.0/people/search/'
+AD_API_TOKEN: 'TY8HEtx5zsFVBS65-ZcU'
 
 BATCH_INGESTOR_URL: 'http://localhost:15000/'
 

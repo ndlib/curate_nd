@@ -17,7 +17,7 @@
     NOTE: We're just making it _look_ like we're using simple_form here. Refactor at will.
     ALSO: Title isn't _actually_ required. The form is lying (but it means well and is probably right).
   %>
-  <div class="control-group string required collection_title">
+  <div class="form-group string required collection_title">
     <span class="control-label">
       <label class="string required" for="collection_title">
         <abbr title="" data-original-title="required">*</abbr> Title
@@ -28,7 +28,7 @@
     </div>
   </div>
 
-  <div class="control-group string required collection_description">
+  <div class="form-group string required collection_description">
     <span class="control-label">
       <%= f.label :description, "About the Collection" %>
     </span>
@@ -41,7 +41,7 @@
   <%# There are 2 situations where this partial is rendered, 1) when the section is created 2) when the section is edited.      %>
   <%# We must check for both those situations: 1) is_a? and 2) include?, respectively.                                          %>
   <% if !@collection.is_a?(ProfileSection) && !ActiveFedora::ContentModel.known_models_for(@collection).include?(ProfileSection) %>
-    <div class="control-group string required collection_description">
+    <div class="form-group string required collection_description">
       <%= render :partial => 'catalog/_index_partials/thumbnail_display', locals: {document: @collection} %>
       <span class="control-label">
         <%= f.label :avatar %>
@@ -54,11 +54,11 @@
     <%= render partial: 'form_permission', locals: {f: f} %>
     <fieldset>
       <legend>Editors and Viewers</legend>
-      <div class="span7" id="additional-information">
+      <div class="col-sm-7" id="additional-information">
         <%= render "linked_record_viewers", curation_concern: @collection, f: f %>
       </div>
 
-      <div class="span7" id="additional-information">
+      <div class="col-sm-7" id="additional-information">
         <%= render "linked_record_viewer_groups", curation_concern: @collection, f: f %>
       </div>
     </fieldset>

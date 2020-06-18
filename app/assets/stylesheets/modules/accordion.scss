@@ -1,4 +1,4 @@
-.accordion {
+.panel-group {
   .accordion-toggle {
     color: $blue;
   }
@@ -8,7 +8,7 @@
   }
 }
 
-.js .accordion {
+.js .panel-group {
   .accordion-toggle:before {
     border-color: $blue transparent transparent;
     border-style: solid;

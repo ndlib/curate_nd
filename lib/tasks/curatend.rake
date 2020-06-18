@@ -4,7 +4,6 @@
 
 namespace :curatend do
   # don't define the ci stuff in production...since rspec is not available
-  if defined?(RSpec)
     def system_with_command_output(command)
       puts("\n$\t#{command}")
       system(command)
@@ -64,8 +63,10 @@ namespace :curatend do
       Rake::Task['db:schema:load'].invoke
     end
 
-    RSpec::Core::RakeTask.new(:ci_spec) do |t|
-      t.pattern = "./spec/**/*_spec.rb"
+    if defined?(RSpec)
+      RSpec::Core::RakeTask.new(:ci_spec) do |t|
+        t.pattern = "./spec/**/*_spec.rb"
+      end
     end
 
     desc "Lint ERB templates"
@@ -73,5 +74,4 @@ namespace :curatend do
       returning_value = system("cd #{Rails.root.join('app/views')} && bundle exec rails-erb-lint check")
       abort "There were linting errors in the ERB templates. See above message(s)." unless returning_value
     end
-  end
 end

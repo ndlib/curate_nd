@@ -27,7 +27,7 @@
     NOTE: We're just making it _look_ like we're using simple_form here. Refactor at will.
     ALSO: Title isn't _actually_ required. The form is lying (but it means well and is probably right).
   %>
-  <div class="control-group string required group_title">
+  <div class="form-group string required group_title">
     <span class="control-label">
       <label class="string required" for="group_title">
         <abbr title="" data-original-title="required">*</abbr>Group Name
@@ -38,7 +38,7 @@
     </div>
   </div>
 
-  <div class="control-group string required group_description">
+  <div class="form-group string required group_description">
     <span class="control-label">
       <%= f.label :description %>
     </span>
@@ -48,7 +48,7 @@
   </div>
 
     <div class="row">
-      <div class="span6" >
+      <div class="col-sm-6" >
         <fieldset >
           <%= render partial: 'linked_members', locals: {f: f} %>
         </fieldset>

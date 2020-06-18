@@ -12,16 +12,6 @@ require 'contributors_association'
 require 'rails_autolink'
 require 'select2-rails'
 require 'curate/migration_services'
-require 'rdf/bibo'
-require 'rdf/ebucore'
-require 'rdf/etd_ms'
-require 'rdf/image'
-require 'rdf/nd'
-require 'rdf/pav'
-require 'rdf/qualified_dc'
-require 'rdf/qualified_foaf'
-require 'rdf/relators'
-require 'rdf/vracore'
 
 module Curate
   extend ActiveSupport::Autoload

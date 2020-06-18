@@ -1,7 +1,7 @@
 <% label ||= 'Members' %>
-<div class="control-group required link-users" id="members">
+<div class="form-group required link-users" id="members">
   <div class="row">
-    <div class="span6">
+    <div class="col-sm-6">
       <span class="control-label">
         <label class="required" for="<%=f.object_name.downcase%>_members_attributes_0_name">
           <h2><%= label %></h2>
@@ -15,12 +15,12 @@
 
     <script id="entry-template" type="text/x-handlebars-template">
       <% mem_val = [['Member', '0'], ['Owner', "{{value}}"]] %>
-      <li class="field-wrapper input-append">
+      <li class="field-wrapper input-group">
         <div class="row">
-          <div class="span3 text-center">
+          <div class="col-sm-3 text-center">
             <%= select_tag "group_member[edit_users_ids][]", options_for_select(mem_val, ''), prompt: 'Make a Selection', class: 'input-xlarge' %>
           </div>
-          <div class="span3">
+          <div class="col-sm-3">
             <input class="input-xlarge autocomplete-users" id="<%=prefix %>_members_attributes_{{index}}_name" name="<%=prefix %>[members_attributes][{{index}}][name]" type="text" value="" />
             <span class="field-controls">
               <button class="btn btn-success add">
@@ -33,12 +33,12 @@
       </li>
     </script>
     <script id="existing-user-template" type="text/x-handlebars-template">
-      <li class="field-wrapper input-append">
+      <li class="field-wrapper input-group">
         <div class="row">
-          <div class="span3 text-center">
+          <div class="col-sm-3 text-center">
             <%= select_tag "group_member[edit_users_ids][]", options_for_select(mem_val, selected: @group.owner?("{{value}}")), prompt: 'Make a Selection', class: 'input-xlarge' %>
           </div>
-          <div class="span3">
+          <div class="col-sm-3">
             <span class="linked-user">
               {{label}}
             </span>
@@ -59,11 +59,11 @@
     <ul class="listing">
       <% if !@group.nil? && @group.members != [] %>
         <%= f.fields_for :members do |memberField| %>
-        <li class="field-wrapper input-append">
+        <li class="field-wrapper input-group">
           <div class="row">
             <%= memberField.hidden_field :id %>
             <%= memberField.hidden_field :_destroy, data: { "attribute-key" => "_destroy" }  %>
-            <div class="span3 text-center">
+            <div class="col-sm-3 text-center">
               <% mem_val = [['Member', '0'], ['Owner', memberField.object.pid]] %>
               <label class="checkbox inline-checkbox">
                 <% if memberField.object.persisted? %>
@@ -78,7 +78,7 @@
                 <% end %>
               </label>
             </div>
-            <div class="span3">
+            <div class="col-sm-3">
               <% if memberField.object.persisted? %>
                 <% nameLabel = memberField.object.name.present? ? memberField.object.name : memberField.object.user.username %>
                 <% if ( @group.edit_users.include?(memberField.object.user_key) && @group.edit_users.size == 1 ) %>

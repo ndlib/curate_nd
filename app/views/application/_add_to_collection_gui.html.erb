@@ -1,4 +1,4 @@
-<% button_class ||= "btn"                       %>
+<% button_class ||= "btn btn-default"           %>
 <% modal_id       = "#{collectible.noid}-modal" %>
 <% modal_title_id = "#{modal_id}-title"         %>
 <% use_text ||= false                           %>
@@ -21,4 +21,3 @@
 <%= link_to add_member_form_collections_path(collectible_id: collectible.pid), data: { toggle: "modal", target: ('#' + modal_id) }, method: :get, class: "add-to-collection #{button_class}", remote: true, title: "Add #{collectible.human_readable_type} to Collection"  do %>
   <span class="icon icon-folder-open"></span><% if use_text %> Add to Collection<% end %>
 <% end %>
-

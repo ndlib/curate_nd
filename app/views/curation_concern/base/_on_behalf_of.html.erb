@@ -2,7 +2,7 @@
   <% if curation_concern.new_record? %>
 
     <div class="row with-footroom">
-      <div class="span12">
+      <div class="col-sm-12">
 
         <fieldset id="set-owner">
 
@@ -25,7 +25,7 @@
     </div>
   <% elsif !(curation_concern.owner == current_user.user_key) %>
     <div class="row with-footroom">
-      <div class="span12">
+      <div class="col-sm-12">
         <fieldset>
           <legend>
             Ownership

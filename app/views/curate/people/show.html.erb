@@ -11,7 +11,7 @@
 
 <div class="row">
 
-  <div id="person-profile" class="person-profile span7">
+  <div id="person-profile" class="person-profile col-sm-7">
     <% if profile_has_contents?(@person) %>
       <section class="profile-title">
       <% if @person.profile.title == @person.name %>
@@ -36,7 +36,7 @@
 
   </div>
 
-  <div id="profile_details" class="span5 profile-details">
+  <div id="profile_details" class="col-sm-5 profile-details">
     <div class="profile-picture">
       <%= render partial: 'profile_image', locals: {person: @person} %>
     </div>

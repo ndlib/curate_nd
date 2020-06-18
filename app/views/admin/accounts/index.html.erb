@@ -71,9 +71,9 @@
         <td>
           <ul class="row-actions">
             <% if user != current_user %>
-              <li class="action"><%= link_to('Masquerade', user_masquerade_path(id: user.to_param), class: 'btn') %></li>
+              <li class="action"><%= link_to('Masquerade', user_masquerade_path(id: user.to_param), class: 'btn btn-default') %></li>
             <% end %>
-            <li class="action"><%= link_to('Disconnect Orcid Profile', disconnect_orcid_profile_admin_account_path(id: user.to_param), method: :delete, class: 'btn') %></li>
+            <li class="action"><%= link_to('Disconnect Orcid Profile', disconnect_orcid_profile_admin_account_path(id: user.to_param), method: :delete, class: 'btn btn-default') %></li>
           </ul>
         </td>
       </tr>

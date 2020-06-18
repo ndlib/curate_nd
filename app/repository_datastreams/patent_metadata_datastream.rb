@@ -1,110 +1,108 @@
-require File.expand_path('../../../lib/rdf/qualified_dc', __FILE__)
-require File.expand_path('../../../lib/rdf/nd', __FILE__)
+require File.expand_path('../../../lib/rdf/vocab/qualified_dc', __FILE__)
+require File.expand_path('../../../lib/rdf/vocab/nd', __FILE__)
+require "rdf/vocab"
 class PatentMetadataDatastream < ActiveFedora::NtriplesRDFDatastream
-  map_predicates do |map|
 
-    map.title(in: RDF::DC) do |index|
-      index.as :stored_searchable
-    end
-
-    map.language({in: RDF::DC}) do |index|
-      index.as :stored_searchable, :facetable
-    end
-
-    map.administrative_unit(to: 'creator#administrative_unit', in: RDF::QualifiedDC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-
-    map.date_issued(to: "issued", in: RDF::DC) do |index|
-      index.as :stored_searchable
-    end
-
-    map.description(in: RDF::DC) do |index|
-      index.as :stored_searchable
-    end
-
-    map.rights(in: RDF::DC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-
-    map.rights_holder(to: 'rightsHolder', in: RDF::DC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-
-    map.publisher({in: RDF::DC}) do |index|
-      index.as :stored_searchable, :displayable, :facetable
-    end
-
-    map.date_uploaded(to: "dateSubmitted", in: RDF::DC) do |index|
-      index.type :date
-      index.as :stored_searchable, :displayable, :sortable
-    end
-
-    map.date_modified(to: "modified", in: RDF::DC) do |index|
-      index.type :date
-      index.as :stored_sortable
-    end
-
-    map.creator(to: 'creator', in: RDF::DC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-
-
-    map.patent_number(to: 'identifier#patent', in: RDF::QualifiedDC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-
-    map.other_application(to: 'identifier#other_application', in: RDF::QualifiedDC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-
-    map.application_date(to: "date#application", in: RDF::QualifiedDC) do |index|
-      index.as :stored_sortable
-    end
-
-    map.prior_publication_date(to: "date#prior_publication", in: RDF::QualifiedDC) do |index|
-      index.as :stored_sortable
-    end
-
-    map.prior_publication(to: "identifier#prior_publication", in: RDF::QualifiedDC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-
-    map.number_of_claims(to: 'extent#claims', in: RDF::QualifiedDC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-
-    map.us_patent_classification_code(to: 'subject#uspc', in: RDF::QualifiedDC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-
-    map.cooperative_patent_classification_code(to: 'subject#cpc', in: RDF::QualifiedDC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-
-    map.international_patent_classification_code(to: 'subject#ipc', in: RDF::QualifiedDC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-
-    map.creators_from_local_institution(to: "creator#local", in: RDF::QualifiedDC) do |index|
-      index.as :stored_searchable
-    end
-
-    map.patent_office_link(to: 'source', in: RDF::DC) do |index|
-      index.as :stored_searchable
-    end
-
-    map.type(in: RDF::DC) do |index|
-      index.as :stored_searchable
-    end
-
-    map.relation(:in => RDF::DC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-
-    map.alephIdentifier(:in =>RDF::ND) do |index|
-      index.as :stored_searchable
-    end
-    map.permission({in: RDF::QualifiedDC, to: 'rights#permissions'})
+  property :title, predicate: ::RDF::Vocab::DC.title do |index|
+    index.as :stored_searchable
   end
+
+  property :language, predicate: ::RDF::Vocab::DC.language do |index|
+    index.as :stored_searchable, :facetable
+  end
+
+  property :administrative_unit, predicate: ::RDF::QualifiedDC['creator#administrative_unit'.to_sym] do |index|
+    index.as :stored_searchable, :facetable
+  end
+
+  property :date_issued, predicate: ::RDF::Vocab::DC.issued do |index|
+    index.as :stored_searchable
+  end
+
+  property :description, predicate: ::RDF::Vocab::DC.description do |index|
+    index.as :stored_searchable
+  end
+
+  property :rights, predicate: ::RDF::Vocab::DC.rights do |index|
+    index.as :stored_searchable, :facetable
+  end
+
+  property :rights_holder, predicate: ::RDF::Vocab::DC.rightsHolder do |index|
+    index.as :stored_searchable, :facetable
+  end
+
+  property :publisher, predicate: ::RDF::Vocab::DC.publisher do |index|
+    index.as :stored_searchable, :displayable, :facetable
+  end
+
+  property :date_uploaded, predicate: ::RDF::Vocab::DC.dateSubmitted do |index|
+    index.type :date
+    index.as :stored_searchable, :displayable, :sortable
+  end
+
+  property :date_modified, predicate: ::RDF::Vocab::DC.modified do |index|
+    index.type :date
+    index.as :stored_sortable
+  end
+
+  property :creator, predicate: ::RDF::Vocab::DC.creator do |index|
+    index.as :stored_searchable, :facetable
+  end
+
+  property :patent_number, predicate: ::RDF::QualifiedDC['identifier#patent'.to_sym] do |index|
+    index.as :stored_searchable, :facetable
+  end
+
+  property :other_application, predicate: ::RDF::QualifiedDC['identifier#other_application'.to_sym] do |index|
+    index.as :stored_searchable, :facetable
+  end
+
+  property :application_date, predicate: ::RDF::QualifiedDC['date#application'.to_sym] do |index|
+    index.as :stored_sortable
+  end
+
+  property :prior_publication_date, predicate: ::RDF::QualifiedDC['date#prior_publication'.to_sym] do |index|
+    index.as :stored_sortable
+  end
+
+  property :prior_publication, predicate: ::RDF::QualifiedDC['identifier#prior_publication'.to_sym] do |index|
+    index.as :stored_searchable, :facetable
+  end
+
+  property :number_of_claims, predicate: ::RDF::QualifiedDC['extent#claims'.to_sym] do |index|
+    index.as :stored_searchable, :facetable
+  end
+
+  property :us_patent_classification_code, predicate: ::RDF::QualifiedDC['subject#uspc'.to_sym] do |index|
+    index.as :stored_searchable, :facetable
+  end
+
+  property :cooperative_patent_classification_code, predicate: ::RDF::QualifiedDC['ubject#cpc'.to_sym] do |index|
+    index.as :stored_searchable, :facetable
+  end
+
+  property :international_patent_classification_code, predicate: ::RDF::QualifiedDC['subject#ipc'.to_sym] do |index|
+    index.as :stored_searchable, :facetable
+  end
+
+  property :creators_from_local_institution, predicate: ::RDF::QualifiedDC['creator#local'.to_sym] do |index|
+    index.as :stored_searchable
+  end
+
+  property :patent_office_link, predicate: ::RDF::Vocab::DC.source do |index|
+    index.as :stored_searchable
+  end
+
+  property :type, predicate: ::RDF::Vocab::DC.type do |index|
+    index.as :stored_searchable
+  end
+
+  property :relation, predicate: ::RDF::Vocab::DC.relation do |index|
+    index.as :stored_searchable, :facetable
+  end
+
+  property :alephIdentifier, predicate: ::RDF::ND.alephIdentifier do |index|
+    index.as :stored_searchable
+  end
+  property :permission, predicate: ::RDF::QualifiedDC['rights#permissions'.to_sym]
 end

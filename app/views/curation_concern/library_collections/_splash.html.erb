@@ -7,7 +7,7 @@
 <div class="collection-meta">
   <% if curation_concern.library_collections.any? %>
     <div class="row collection-parents">
-      <div class="span9 offset3">
+      <div class="col-sm-9 offset-sm-3">
         <dl>
           <dt class="collection-parents__heading">
             <%= (curation_concern.library_collections.count == 1) ? 'Parent Collection' : 'Parent Collections' %>
@@ -21,14 +21,14 @@
   <% end %>
   <div class="row">
     <% if curation_concern.representative.present? %>
-      <div class="span3 collection-meta-sidebar">
+      <div class="col-sm-3 collection-meta-sidebar">
         <a href="<%= download_path(curation_concern.representative) %>" target = "_blank">
           <%= image_tag download_path(curation_concern.representative,'thumbnail'), class: 'representative_image' %>
         </a>
       </div>
-      <div class="span9 collection-meta-content">
+      <div class="col-sm-9 collection-meta-content">
     <% else %>
-      <div class="span9 offset3 collection-meta-content">
+      <div class="col-sm-9 offset-sm-3 collection-meta-content">
     <% end %>
       <section class="collection-meta-description">
         <%= curation_concern_attribute_to_formatted_text(curation_concern, :description, 'Description') %>

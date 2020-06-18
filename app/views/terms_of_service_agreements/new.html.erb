@@ -11,9 +11,9 @@
   </div>
 
   <div class="terms-of-service-actions">
-    <a href="#full-terms-of-service" role="button" class="btn btn-large btn-link tos-read" data-toggle="modal">Show me the full Terms of Service</a>
-    <%= submit_tag controller.i_agree_text, id: 'tos-agree', class: 'btn btn-large btn-primary tos-agree' %>
-    <%= submit_tag controller.i_do_not_agree_text, id: 'tos-disagree', class: 'btn btn-large btn-link tos-disagree'  %>
+    <a href="#full-terms-of-service" role="button" class="btn btn-lg btn-link tos-read" data-toggle="modal">Show me the full Terms of Service</a>
+    <%= submit_tag controller.i_agree_text, id: 'tos-agree', class: 'btn btn-lg btn-primary tos-agree' %>
+    <%= submit_tag controller.i_do_not_agree_text, id: 'tos-disagree', class: 'btn btn-lg btn-link tos-disagree'  %>
   </div>
 <% end %>
 
@@ -21,15 +21,15 @@
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon icon-remove"></i></button>
     <h3 id="terms-of-service"><%= I18n.t('sufia.product_name')%> Terms of Service</h3>
-    <a href="javascript:window.print()" class="btn print"><i class="icon icon-print"></i> Print</a>
+    <a href="javascript:window.print()" class="btn btn-default print"><i class="icon icon-print"></i> Print</a>
   </div>
   <div class="modal-body">
     <%= render partial: '/terms_of_service_agreements/tos_content' %>
   </div>
   <div class="modal-footer centered">
     <%= form_tag terms_of_service_agreements_path, method: :post, class: "terms-of-service-form" do %>
-      <%= submit_tag controller.i_agree_text, class: 'btn btn-large btn-primary' %>
-      <%= submit_tag controller.i_do_not_agree_text, class: 'btn btn-large btn-link'  %>
+      <%= submit_tag controller.i_agree_text, class: 'btn btn-lg btn-primary' %>
+      <%= submit_tag controller.i_do_not_agree_text, class: 'btn btn-lg btn-link'  %>
     <% end %>
   </div>
 </div>

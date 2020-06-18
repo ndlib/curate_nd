@@ -1,6 +1,6 @@
 <div class="row">
 
-  <fieldset class="span6">
+  <fieldset class="col-sm-6">
     <legend>Personal Information</legend>
 
     <%= f.input :name %>
@@ -10,7 +10,7 @@
 
   </fieldset>
 
-  <fieldset class="span6">
+  <fieldset class="col-sm-6">
     <legend>Contact Information</legend>
 
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
@@ -25,7 +25,7 @@
 
   </fieldset>
 
-  <fieldset class="span12 research-ids">
+  <fieldset class="col-sm-12 research-ids">
     <legend>Researcher Identification Information</legend>
     <%= f.input :orcid_id, label: "ORCID", input_html: { maxlength: 20 } %>
     <%= f.input :researcher_id, label: "ResearcherID", input_html: { maxlength: 20 } %>
@@ -35,7 +35,7 @@
 </div>
 
 <div class="row with-headroom">
-  <div class="span12">
+  <div class="col-sm-12">
     <fieldset class="required">
       <legend>
         Attach <%= current_user.manager? ? "#{f.object.name}'s" : 'your' %> profile image

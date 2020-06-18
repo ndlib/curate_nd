@@ -13,12 +13,12 @@
                     id: group.id
                 },
                 data: {confirm: 'Are you sure you want to delete this group?'},
-                class: 'itemicon itemtrash btn pull-right',
+                class: 'itemicon itemtrash btn btn-primary pull-right',
 
                 method: :delete
             )%>
 
-      <%= link_to raw('<i class="icon-pencil icon-large"></i>'), edit_hydramata_group_path(group), class: 'btn pull-right' %>
+      <%= link_to raw('<i class="icon-pencil icon-large"></i>'), edit_hydramata_group_path(group), class: 'btn btn-default pull-right' %>
     <% end %>
   </td>
 </tr>

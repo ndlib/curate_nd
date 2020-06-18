@@ -2,7 +2,7 @@ require 'simple_form'
 
 # Render Something Like This
 #
-# <div class="control-group composite optional foo_bar">
+# <div class="form-group composite optional foo_bar">
 #   <span class="control-label">
 #     <label for="foo_bar_baz" class="string composite optional input-xlarge">Baz</label>
 #     <label for="foo_bar_bong" class="string composite optional input-xlarge">Bong</label>

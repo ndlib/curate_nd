@@ -18,5 +18,5 @@
     <% decorated_value = Catalog::ConstraintPresenter.call(value: value, options: options) %>
     <span class="filter-value"><%= options[:escape_value] ? h(decorated_value) : decorated_value %></span>
   <% end %>
-  </span><a class="btn" href="<%= options[:remove] %>"><span class="accessible-hidden">remove </span>×</a>
+  </span><a class="btn btn-default" href="<%= options[:remove] %>"><span class="accessible-hidden">remove </span>×</a>
 </span>

@@ -8,7 +8,7 @@
   <div class="manual-item-retrieval-processed-notice alert alert-success">
     <p class="lead">
       <%= t('curate.notification_messages.file_retrieval_tooltip') %><br/>
-      <%= link_to 'Download File', download_path(noid), class: 'btn btn-large' %>
+      <%= link_to 'Download File', download_path(noid), class: 'btn btn-default btn-lg' %>
     </p>
   </div>
 <% else %>
@@ -32,10 +32,10 @@
   </div>
 
   <noscript>
-    <div class="manual-item-retrieval-notice alert alert-block alert-error">
+    <div class="manual-item-retrieval-notice alert alert-block alert-danger">
       <p class="lead"><b>JavaScript is disabled.</b> You must request the file manually.</p>
       <%= form_for item, method: :post, url: request_bendo_cache_refresh_path(noid) do |f| %>
-        <%= f.submit 'Request File Retrieval', class: 'btn btn-large' %>
+        <%= f.submit 'Request File Retrieval', class: 'btn btn-default btn-lg' %>
       <% end %>
     </div>
   </noscript>

@@ -16,11 +16,6 @@
 //
 //= require blacklight/blacklight
 //
-//= require bootstrap-dropdown
-//= require bootstrap-button
-//= require bootstrap-collapse
-//= require bootstrap-tooltip
-//= require bootstrap-popover
 //= require bootstrap-datepicker/core
 //= require select2
 //
@@ -69,7 +64,7 @@ Blacklight.onLoad(function() {
       $removeControl.click();
     }
   });
-  $('.multi_value.control-group').manage_fields();
+  $('.multi_value.form-group').manage_fields();
   $('.table.etd.contributors').manage_sections({ worktype: 'etd' });
   $('.table.dissertation.contributors').manage_sections({ worktype: 'dissertation' });
   $('form.new_document, form.edit_document').formInputMask({

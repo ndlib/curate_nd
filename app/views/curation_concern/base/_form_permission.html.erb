@@ -17,7 +17,7 @@
 
   <% access_controls = AccessRenderer.new(curation_concern) %>
 
-  <div class="control-group" onchange="embargoDateRequired(event.target.id, '<%= f.object_name %>');">
+  <div class="form-group" onchange="embargoDateRequired(event.target.id, '<%= f.object_name %>');">
     <label class="radio">
       <input type="radio" id="visibility_open" name="<%= f.object_name %>[visibility]" value="<%= Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC %>" <% if (!curation_concern.persisted? && curation_concern.visibility == Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC) || (curation_concern.persisted? && access_controls.viewable? && access_controls.publically_viewable?) %> checked="true"<% end %>/>
       <span class="label label-success">Public</span> Visible to the world.

@@ -10,7 +10,7 @@
   <% bendo_file = updating_file ? Bendo::DatastreamPresenter.new(datastream: curation_concern.datastreams.fetch('content')).valid? : false %>
 
   <div class="row">
-    <div class="span6">
+    <div class="col-sm-6">
       <fieldset class="required">
         <legend>
           <%= updating_file ? "Update Your File" : "Attach Your File" %>
@@ -33,18 +33,18 @@
       <% if updating_file %>
         <fieldset class="optional prompt">
           <%= f.input :filename, input_html: { class: 'input-xlarge'} %>
-          <%= f.input :description, input_html: { class: 'span6'}  %>
+          <%= f.input :description, input_html: { class: 'col-sm-6'}  %>
         </fieldset>
       <% end %>
     </div>
 
-    <div class="span6">
+    <div class="col-sm-6">
       <%= render "form_permission", curation_concern: curation_concern, f: f %>
     </div>
   </div>
 
   <div class="row">
-    <div class="span12 form-actions">
+    <div class="col-sm-12 form-actions">
       <%= f.submit(
         (updating_file ? "Update Attached File" : %(Attach to #{parent.human_readable_type})),
         class: 'btn btn-primary'
