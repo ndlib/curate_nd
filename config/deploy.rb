@@ -28,7 +28,7 @@ require 'bundler/capistrano'
 #    set :bundle_dir,      File.join(fetch(:shared_path), 'bundle')
 #    set :bundle_flags,    "--deployment --quiet"
 #    set :bundle_without,  [:development, :test]
-#    set :bundle_cmd,      "bundle" # e.g. "bundle"
+#    set :bundle_cmd,      "/opt/rh/rh-ruby26/root/usr/local/bin/bundle" # e.g. "bundle"
 #    set :bundle_roles,    #{role_default} # e.g. [:app, :batch]
 #############################################################
 #  Settings
@@ -53,7 +53,7 @@ set :deploy_via, :remote_cache
 namespace :env do
   desc 'Set command paths'
   task :set_paths do
-    set :bundle_cmd, 'bundle'
+    set :bundle_cmd, '/opt/rh/rh-ruby26/root/usr/local/bin/bundle'
     set :rake, "#{bundle_cmd} exec rake"
   end
 end
