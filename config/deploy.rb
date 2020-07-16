@@ -7,7 +7,7 @@
 
 set :bundle_roles, %i[app work]
 set :bundle_flags, '--deployment'
-set :ruby_root '/opt/rh/rh-ruby26'
+set :ruby_root, '/opt/rh/rh-ruby26'
 require 'bundler/capistrano'
 # see http://gembundler.com/v1.3/deploying.html
 # copied from https://github.com/carlhuda/bundler/blob/master/lib/bundler/deployment.rb
