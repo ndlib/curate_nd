@@ -7,6 +7,7 @@
 
 set :bundle_roles, %i[app work]
 set :bundle_flags, '--deployment'
+set :ruby_root '/opt/rh/rh-ruby26'
 require 'bundler/capistrano'
 # see http://gembundler.com/v1.3/deploying.html
 # copied from https://github.com/carlhuda/bundler/blob/master/lib/bundler/deployment.rb
@@ -53,7 +54,7 @@ set :deploy_via, :remote_cache
 namespace :env do
   desc 'Set command paths'
   task :set_paths do
-    set :bundle_cmd, '/opt/rh/rh-ruby26/root/usr/local/bin/bundle'
+    set :bundle_cmd, "#{ruby_root}/root/usr/local/bin/bundle"
     set :rake, "#{bundle_cmd} exec rake"
   end
 end
@@ -283,7 +284,7 @@ task :staging do
   set :shared_directories, %w[log]
   set :shared_files, %w[]
 
-  default_environment['PATH'] = '/opt/ruby/current/bin:$PATH'
+  default_environment['PATH'] = "#{ruby_root}/root/usr/local/bin:$PATH"
   server "#{user}@#{domain}", :app, :work, :web, :db, primary: true
 
   after 'deploy:update_code', 'und:write_env_vars', 'und:write_build_identifier', 'und:update_secrets', 'deploy:symlink_update', 'deploy:migrate', 'db:seed', 'deploy:precompile'
@@ -306,7 +307,7 @@ task :pre_production do
   set :src_solr_confdir, 'solr_conf/conf'
   set :dest_solr_confdir, '/global/data/solr/pre_production/curate/conf'
 
-  default_environment['PATH'] = '/opt/ruby/current/bin:$PATH'
+  default_environment['PATH'] = "#{ruby_root}/root/usr/local/bin:$PATH"
   server 'app@curatesvrpprd.lc.nd.edu', :app, :web, :db, primary: true
   server 'app@curatewkrpprd.lc.nd.edu', :work, primary: true
 
@@ -332,7 +333,7 @@ task :production do
   set :src_solr_confdir, 'solr_conf/conf'
   set :dest_solr_confdir, '/global/data/solr/production/curate/conf'
 
-  default_environment['PATH'] = '/opt/ruby/current/bin:$PATH'
+  default_environment['PATH'] = "#{ruby_root}/root/usr/local/bin:$PATH"
   server 'app@curatesvrprod.lc.nd.edu', :app, :web, :db, primary: true
   server 'app@curatewkrprod.lc.nd.edu', :work, primary: true
 

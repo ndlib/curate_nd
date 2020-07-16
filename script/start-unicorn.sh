@@ -3,7 +3,7 @@
 # Starts the application server. It assumes
 # there is an nginx reverse proxy at port 80
 
-export PATH=/opt/ruby/current/bin:$PATH
+export PATH=/opt/rh/rh-ruby26/root/usr/local/bin:$PATH
 
 source /home/app/curatend/current/script/get-env.sh
 cd $RAILS_ROOT
