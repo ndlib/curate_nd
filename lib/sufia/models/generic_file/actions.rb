@@ -40,9 +40,9 @@ module Sufia::GenericFile
     end
 
     def self.virus_check(file)
-      if defined? ClamAV
-        stat = ClamAV.instance.scanfile(file.path)
-        logger.warn "Virus checking did not pass for #{file.inspect} status = #{stat}" unless stat == 0
+      if defined? Clamby
+        stat = Clamby.virus?(file.path)
+        logger.warn "Virus checking did not pass for #{file.inspect}" unless stat == false
         stat
       else
         logger.warn "Virus checking disabled for #{file.inspect}"

@@ -352,7 +352,6 @@ task :production do
   server 'app@curatewkrprod.lc.nd.edu', :work, primary: true
 
   before 'bundle:install', 'solr:configure'
-  before 'deploy:migrate', 'deploy:setup_db'
   after 'deploy:update_code', 'und:write_env_vars', 'und:write_build_identifier', 'und:update_secrets', 'deploy:symlink_update', 'deploy:migrate', 'db:seed', 'deploy:precompile'
   after 'deploy', 'deploy:cleanup'
   after 'deploy', 'deploy:kickstart'

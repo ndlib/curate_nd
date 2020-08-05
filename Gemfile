@@ -92,7 +92,7 @@ group :default do
 end
 
 group :headless do
-  gem 'clamav-client'
+  gem 'clamby'
 end
 
 group :orcid do
