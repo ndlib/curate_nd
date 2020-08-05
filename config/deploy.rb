@@ -113,6 +113,20 @@ namespace :deploy do
     # Do nothing.
   end
 
+  desc 'Cold deploy- set up DB first'
+  task :cold do
+    transaction do
+      update
+      setup_db  #replacing migrate in original
+      start
+     end
+  end
+
+  desc 'Setup DB'
+  task :setup_db, :roles => :app do
+    run "cd #{release_path}; bundle exec rake db:setup RAILS_ENV=#{rails_env}"
+  end
+
   desc 'Run the migrate rake task.'
   task :migrate, roles: :app do
     run "cd #{release_path}; #{rake} RAILS_ENV=#{rails_env} db:migrate"
@@ -338,6 +352,7 @@ task :production do
   server 'app@curatewkrprod.lc.nd.edu', :work, primary: true
 
   before 'bundle:install', 'solr:configure'
+  before 'deploy:migrate', 'deploy:setup_db'
   after 'deploy:update_code', 'und:write_env_vars', 'und:write_build_identifier', 'und:update_secrets', 'deploy:symlink_update', 'deploy:migrate', 'db:seed', 'deploy:precompile'
   after 'deploy', 'deploy:cleanup'
   after 'deploy', 'deploy:kickstart'
