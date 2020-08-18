@@ -33,7 +33,7 @@ describe OaiController do
       it 'returns 200 with ' do
         get :index, oai_params
         expect(response).to be_successful
-        expect(doc.css(key).text).to eq('OaiProvider')
+        expect(doc.css(key).text).to eq('CurateOaiProvider')
       end
     end
 
@@ -51,8 +51,21 @@ describe OaiController do
         end
       end
 
-      context 'with required params' do
+      context 'with required params and metadataPrefix oai_dc' do
         let(:oai_params) { { verb: 'GetRecord', identifier: collection.id, metadataPrefix: 'oai_dc' } }
+        let(:key) { 'request' }
+        let(:attribute) { 'identifier' }
+        let(:value) { doc.css(key).attr(attribute).value }
+
+        it 'returns 200 with item metadata' do
+          get :index, oai_params
+          expect(response).to be_successful
+          expect(value).to eq(collection.id)
+        end
+      end
+
+      context 'with required params and metadataPrefix dcterms' do
+        let(:oai_params) { { verb: 'GetRecord', identifier: collection.id, metadataPrefix: 'dcterms' } }
         let(:key) { 'request' }
         let(:attribute) { 'identifier' }
         let(:value) { doc.css(key).attr(attribute).value }
@@ -84,9 +97,10 @@ describe OaiController do
       let(:value) { doc.css(key).to_ary.map(&:text) }
       let(:model_sets) { Curate.configuration.registered_curation_concern_types.sort.collect(&:constantize).map(&:to_s) }
       let(:collection_sets) { ["Collection: #{collection.title}"] }
-      let(:all_sets) { model_sets + collection_sets }
+      let(:primo_set) { ['Primo'] }
+      let(:all_sets) { model_sets + collection_sets + primo_set }
 
-      it 'returns 200 with ' do
+      it 'returns 200 with all valid sets' do
         get :index, oai_params
         expect(response).to be_successful
         expect(value).to eq(all_sets)
@@ -243,11 +257,13 @@ describe OaiController do
       let(:oai_params) {{ verb: 'ListMetadataFormats' }}
       let(:key) { 'metadataPrefix' }
       let(:value) { doc.css('metadataPrefix').text }
+      let(:dc_format) { 'oai_dc' }
+      let(:dcterms_format) { 'dcterms' }
 
-      it 'returns 200 with ' do
+      it 'returns 200 and includes all registered metadata formats' do
         get :index, oai_params
         expect(response).to be_successful
-        expect(value).to eq('oai_dc')
+        expect(value).to eq(dc_format + dcterms_format)
       end
     end
   end

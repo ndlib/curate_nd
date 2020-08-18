@@ -3,11 +3,13 @@ class Oai::QueryBuilder
     from: "desc_metadata__date_modified_dtsi",
     until: "desc_metadata__date_modified_dtsi",
     collection: "library_collections_pathnames_tesim",
-    model: "active_fedora_model_ssi"
+    model: "active_fedora_model_ssi",
+    primo: "primo",
   }.freeze
   VALID_SET_TYPE_SEARCHES = {
     collection: "und:",
-    model: "type"
+    model: "type",
+    primo: ""
   }
 
   def valid_request?(user_parameters)
@@ -25,7 +27,9 @@ class Oai::QueryBuilder
     user_parameters.each do |term, value|
       (search_key, search_value) = search_terms_for(term, value)
       if VALID_KEYS_AND_SEARCH_FIELDNAMES[search_key].present?
-        solr_parameters[:fq] << do_search_for(search_key, search_value)
+        Array.wrap(do_search_for(search_key, search_value)).each do |filter|
+          solr_parameters[:fq] << filter
+        end
       end
     end
     solr_parameters
@@ -62,6 +66,10 @@ class Oai::QueryBuilder
     term
   end
 
+  def filter_by_primo(term)
+    term
+  end
+
   # allowed format: "2020-03-31T21:51:03Z"
   def filter_by_from(term)
     term.utc unless term.utc?
@@ -82,8 +90,22 @@ class Oai::QueryBuilder
 
   def prepare_search_term_for(key, term)
     field = VALID_KEYS_AND_SEARCH_FIELDNAMES[key]
-    this_term = field.ends_with?('dtsi') ? term : "\"#{term}\""
-    search_term  = "#{field}:#{this_term}"
+    case field
+    when "primo"
+      return build_primo_set_search
+    else
+      this_term = field.ends_with?('dtsi') ? term : "\"#{term}\""
+      return "#{field}:#{this_term}"
+    end
+  end
+
+  def build_primo_set_search
+    search_filter = []
+    search_filter << "-desc_metadata__local_identifier_tesim:[* TO *]"
+    search_filter << "-desc_metadata__alephIdentifier_tesim:[* TO *]"
+    search_filter << "-active_fedora_model_ssi:Etd"
+    search_filter << "-active_fedora_model_ssi:FindingAid"
+    search_filter
   end
 
   def valid_date_format?(value)
@@ -95,13 +117,16 @@ class Oai::QueryBuilder
     return false if value.nil?
     return true if key == :collection && value.start_with(VALID_SET_TYPE_SEARCHES[key])
     return true if key == :model && valid_worktypes.include?(value)
+    return true if key == :primo
     false
   end
 
   def split_set_search(value)
     (search_key, search_value) = value.split(':',2)
     new_value = begin
-      if search_value.start_with?("und:")
+      if search_key == "primo"
+        nil
+      elsif search_value.start_with?("und:")
         search_value
       elsif valid_worktypes.include?(search_value.constantize)
         search_value.constantize

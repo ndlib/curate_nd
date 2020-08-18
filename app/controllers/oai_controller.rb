@@ -15,7 +15,7 @@ class OaiController < CatalogController
   ]
 
   def index
-    provider = OaiProvider.new(controller: self)
+    provider = CurateOaiProvider.new(controller: self)
     response = provider.process_request(oai_params.to_h)
     render body: response, content_type: "text/xml"
   end

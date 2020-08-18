@@ -14,6 +14,7 @@ module CurationConcern
 
       include Solrizer::Common
       include CurationConcern::HumanReadableType
+      include CurationConcern::WithStandardizedMetadata
 
       include CurationConcern::WithCollaborators
       has_and_belongs_to_many :record_editors, class_name: "::Person", property: :has_editor

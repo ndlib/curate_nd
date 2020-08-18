@@ -1,4 +1,4 @@
-class OaiProvider
+class CurateOaiProvider
   class CurationConcernProvider < OAI::Provider::Model
     def initialize(controller: nil)
       @identifier_field = 'identifier'
@@ -73,14 +73,10 @@ class OaiProvider
     end
 
     def format_response_terms(record)
-      response_object = {}
-      response_object[:identifier] = record.pid
-      response_object[:timestamp] = record.date_modified.to_time
-      response_object[:worktype] = record.human_readable_type
-      record.terms_for_display.each do |term|
-        value = record.send(term)
-        response_object[term] = value unless value.blank?
-      end
+      # record.map_to(controller.params["metadataPrefix"])
+      response_object = record.standardize
+      response_object[:timestamp] = response_object[:date_modified].to_time
+      response_object[:source] = File.join(Rails.configuration.application_root_url, 'show', record.noid)
       Struct.new(*response_object.keys).new(*response_object.values)
     end
 
@@ -104,6 +100,9 @@ class OaiProvider
                        name: "Collection: #{collection.title}",
                        description: collection.description })
       end
+      sets_array.push({ spec: "primo",
+                     name: "Primo",
+                     description: "All items included in Primo import" })
       set_list = []
       sets_array.each do |values|
         set_list.push(OAI::Set.new(values))
@@ -111,30 +110,67 @@ class OaiProvider
       set_list
     end
 
-    class CurateFormat < ::OAI::Provider::Metadata::Format
+    # used by oai gem to override methods to load the response terms
+    # => response_term: :key_in_our_object
+    def map_oai_dc
+      # @fields = [ :title, :creator, :subject, :description, :publisher,
+      #         :contributor, :date, :type, :format, :identifier,
+      #         :source, :language, :relation, :coverage, :rights]
+      {
+        type: :worktype,
+        subject: :administrative_unit,
+        date: :date_deposited,
+      }
+    end
+    def map_dcterms
+      {
+        type: :worktype,
+        contributor: :administrative_unit,
+        dateSubmitted: :date_deposited,
+        created: :date_created,
+        modified: :date_modified,
+        description: :description,
+        isPartOf: :is_part_of,
+        bibliographicCitation: :doi
+      }
+    end
+
+    class Dcterms < ::OAI::Provider::Metadata::Format
       def initialize
-        @prefix = 'oai_dc' # This prefix is important for registered formats
-        @schema = 'http://www.openarchives.org/OAI/2.0/oai_dc.xsd'
-        @namespace = 'http://www.openarchives.org/OAI/2.0/oai_dc/'
-        @element_namespace = 'dc'
-        # class created to replace DublinCore in order to override fields included in response.
-        @fields = [:identifier, :worktype, :date_uploaded,
-                   :date_modified, :title, :subject,
-                   :description, :abstract,
-                   :creator, :publisher, :contributor,
-                   :format, :source, :language,
-                   :relation, :coverage, :rights,
-                   :administrative_unit]
+        @prefix = 'dcterms' # This prefix is important for registered formats
+        @schema = 'https://www.dublincore.org/schemas/xmls/qdc/2008/02/11/dcterms.xsd'
+        @namespace = 'http://purl.org/dc/terms/'
+        @element_namespace = 'dcterms'
+        @fields = [:identifier,
+                   :type,
+                   :dateSubmitted,
+                   :created,
+                   :modified,
+                   :title,
+                   :creator,
+                   :author,
+                   :subject,
+                   :description,
+                   :publisher,
+                   :contributor,
+                   :format,
+                   :source,
+                   :language,
+                   :relation,
+                   :coverage,
+                   :rights,
+                   :isPartOf,
+                   :bibliograpicCitation]
       end
 
       def header_specification
         {
-          'xmlns:oai_dc' => "http://www.openarchives.org/OAI/2.0/oai_dc/",
-          'xmlns:dc' => "http://purl.org/dc/elements/1.1/",
+          'xmlns:oai_dcterms' => "http://purl.org/dc/terms/",
+          'xmlns:dcterms' => "http://purl.org/dc/elements/1.1/",
           'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance",
           'xsi:schemaLocation' =>
-            %{http://www.openarchives.org/OAI/2.0/oai_dc/
-              http://www.openarchives.org/OAI/2.0/oai_dc.xsd}.gsub(/\s+/, ' ')
+            %{http://purl.org/dc/terms/
+              https://www.dublincore.org/schemas/xmls/qdc/2008/02/11/dcterms.xsd}.gsub(/\s+/, ' ')
         }
       end
     end
