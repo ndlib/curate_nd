@@ -118,18 +118,17 @@ class CurateOaiProvider
       #         :source, :language, :relation, :coverage, :rights]
       {
         type: :worktype,
-        subject: :administrative_unit,
-        date: :date_deposited,
+        publisher: :administrative_unit,
+        date: :date_modified
       }
     end
     def map_dcterms
       {
         type: :worktype,
-        contributor: :administrative_unit,
+        publisher: :administrative_unit,
         dateSubmitted: :date_deposited,
         created: :date_created,
         modified: :date_modified,
-        description: :description,
         isPartOf: :is_part_of,
         bibliographicCitation: :doi
       }
