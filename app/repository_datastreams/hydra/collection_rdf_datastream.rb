@@ -56,7 +56,7 @@ module Hydra
     property :identifier, predicate: ::RDF::Vocab::DC.identifier do |index|
       index.as :stored_searchable
     end
-    property :based_near, predicate: ::RDF::Vocab::FOAF.based_near do |index|
+    property :based_near, predicate: ::RDF::FOAF.based_near do |index|
       index.as :stored_searchable, :facetable
     end
     property :relation, predicate: ::RDF::Vocab::DC.relation do |index|

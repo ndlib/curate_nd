@@ -3,11 +3,11 @@ require "rdf/vocab"
 
 class PersonMetadataDatastream < ActiveFedora::NtriplesRDFDatastream
 
-  property :name, predicate: ::RDF::Vocab::FOAF.name do |index|
+  property :name, predicate: ::RDF::FOAF.name do |index|
     index.as :stored_searchable
   end
 
-  property :title, predicate: ::RDF::Vocab::FOAF.title do |index|
+  property :title, predicate: ::RDF::FOAF.title do |index|
     index.as :stored_searchable
   end
 
@@ -19,23 +19,23 @@ class PersonMetadataDatastream < ActiveFedora::NtriplesRDFDatastream
     index.as :stored_searchable
   end
 
-  property :date_of_birth, predicate: ::RDF::Vocab::FOAF.birthday do |index|
+  property :date_of_birth, predicate: ::RDF::FOAF.birthday do |index|
     index.as :stored_searchable
   end
 
-  property :personal_webpage, predicate: ::RDF::Vocab::FOAF.homepage do |index|
+  property :personal_webpage, predicate: ::RDF::FOAF.homepage do |index|
     index.as :stored_searchable
   end
 
-  property :blog, predicate: ::RDF::Vocab::FOAF.weblog do |index|
+  property :blog, predicate: ::RDF::FOAF.weblog do |index|
     index.as :stored_searchable
   end
 
-  property :gender, predicate: ::RDF::Vocab::FOAF.gender do |index|
+  property :gender, predicate: ::RDF::FOAF.gender do |index|
     index.as :stored_searchable
   end
 
-  property :based_near, predicate: ::RDF::Vocab::FOAF.based_near do |index|
+  property :based_near, predicate: ::RDF::FOAF.based_near do |index|
     index.as :stored_searchable
   end
 
