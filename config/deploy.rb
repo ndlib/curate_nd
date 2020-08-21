@@ -78,6 +78,15 @@ namespace :db do
   end
 end
 
+namespace :db do
+  desc "Create the database, load the schema, and add the db:seeds (NOTE: This will only working in staging, because it will destroy DB data)"
+  task :bootstrap, roles: :app do
+    if rails_env == 'staging'
+      run "cd #{release_path}; #{rake} RAILS_ENV=#{rails_env} db:create db:schema:load db:seed"
+    end
+  end
+end
+
 #############################################################
 #  Deploy
 #############################################################
