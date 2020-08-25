@@ -308,7 +308,7 @@ task :staging do
   set :shared_files, %w[]
 
   default_environment['PATH'] = "#{ruby_root}/root/usr/local/bin:$PATH"
-  default_environment['LD_LIBRARY_PATH'] = "#{ruby_root}/root/usr/local/lib64:$PATH"
+  default_environment['LD_LIBRARY_PATH'] = "#{ruby_root}/root/lib64:$LD_LIBRARY_PATH"
   server "#{user}@#{domain}", :app, :work, :web, :db, primary: true
 
   after 'deploy:update_code', 'und:write_env_vars', 'und:write_build_identifier', 'und:update_secrets', 'deploy:symlink_update', 'deploy:migrate', 'db:seed', 'deploy:precompile'
