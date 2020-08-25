@@ -302,12 +302,13 @@ task :staging do
   set :rails_env, 'staging'
   set :deploy_to, '/home/app/curatend'
   set :user,      'app'
-  set :domain,    fetch(:host, 'libvirt6.library.nd.edu')
+  set :domain,    fetch(:host, 'curate-test1.lc.nd.edu')
   set :bundle_without, %i[development test debug]
   set :shared_directories, %w[log]
   set :shared_files, %w[]
 
   default_environment['PATH'] = "#{ruby_root}/root/usr/local/bin:$PATH"
+  default_environment['LD_LIBRARY_PATH'] = "#{ruby_root}/root/usr/local/lib64:$PATH"
   server "#{user}@#{domain}", :app, :work, :web, :db, primary: true
 
   after 'deploy:update_code', 'und:write_env_vars', 'und:write_build_identifier', 'und:update_secrets', 'deploy:symlink_update', 'deploy:migrate', 'db:seed', 'deploy:precompile'
