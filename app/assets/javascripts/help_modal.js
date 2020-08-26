@@ -27,10 +27,8 @@ $(function(){
     event.preventDefault();
     var target = $(this).attr('href');
 
-    $('body').modalmanager('loading');
     setTimeout(function(){
       $modal.load(target + ' #new_help_request', function(){
-        $('body').modalmanager('loading');
         $modal.modal();
         populateHelpForm();
       });

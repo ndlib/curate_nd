@@ -10,7 +10,6 @@ $(function(){
 
     setTimeout(function(){
       $modal.load(target + ' #citations', function(){
-        $('body').modalmanager('loading');
         $modal.modal();
       });
     }, 1000);

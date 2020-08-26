@@ -30,7 +30,6 @@ class CitationController < ApplicationController
 
   def show
     @result = {}
-require 'byebug'; debugger; true
     citation = Citation.new(curation_concern)
 
     STYLES.keys.each do |style|
