@@ -65,7 +65,7 @@ end
 
 desc 'Restart Application'
 task :restart_unicorn, roles: :app do
-  run "#{current_path}/script/reload-unicorn.sh"
+  run '/usr/sbin/sv restart unicorn'
 end
 
 #############################################################
@@ -108,12 +108,12 @@ namespace :deploy do
     run 'which git'
   end
 
-  desc 'Start application in Passenger'
+  desc 'Start Unicorn Rails Server'
   task :start, roles: :app do
     restart_unicorn
   end
 
-  desc 'Restart application in Passenger'
+  desc 'Restart Unicorn Rails Server'
   task :restart, roles: :app do
     restart_unicorn
   end
@@ -174,21 +174,7 @@ end
 
 namespace :worker do
   task :start, roles: :work do
-    # TODO: this file contains the same information as the env-vars file created in und:write_env_vars
-    # make a distinction here until we remove the old cluster stuff
-    target_file =
-      if %w[staging pre_production production].include?(rails_env)
-        '/home/app/curatend/resque-pool-info'
-      else
-        '/home/curatend/resque-pool-info'
-      end
-    # the file this writes is essentially the same as the one created
-    # by und:write_env_vars
-    run [
-      "echo \"RESQUE_POOL_ROOT=#{current_path}\" > #{target_file}",
-      "echo \"RESQUE_POOL_ENV=#{fetch(:rails_env)}\" >> #{target_file}",
-      'sudo /sbin/service resque-poold restart'
-    ].join(' && ')
+    run '/usr/sbin/sv restart resque-pool'
   end
 end
 
