@@ -64,7 +64,6 @@ group :default do
   gem 'nokogiri', '~> 1.10'
   gem "oai"
   gem 'omniauth-oktaoauth'
-  gem 'qa', github: 'ndlib/questioning_authority', branch: 'stable_0_8'
   gem 'rails_autolink'
   gem 'rails-observers'
   gem 'rails', '~> 4.2.11.0'
