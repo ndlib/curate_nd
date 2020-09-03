@@ -5,7 +5,7 @@
 rails_root = ENV["RAILS_ROOT"]
 working_directory rails_root
 worker_processes 3
-listen "/tmp/curatend.sock.0", backlog: 1024
+listen 8081
 timeout 30
 
 pid "#{rails_root}/tmp/pids/unicorn.pid"
