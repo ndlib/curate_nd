@@ -31,7 +31,7 @@
         </tbody>
       </table>
       <div class="pager">
-        <%= paginate_rsolr_response files_solr_response, :outer_window => 2, :theme => 'blacklight', param_name: :files_page, solr_response: files_solr_response %>
+        <%= paginate files_solr_response, :outer_window => 2, :theme => 'blacklight', param_name: :files_page, solr_response: files_solr_response %>
       </div>
       <% elsif editor %>
         <h2>Files</h2>
