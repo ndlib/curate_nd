@@ -1,4 +1,6 @@
 require File.expand_path('../../../../lib/rdf/vocab/nd', __FILE__)
+require File.expand_path('../../../../lib/rdf/vocab/qualified_dc', __FILE__)
+
 module Sufia
   class GenericFileRdfDatastream < ActiveFedora::NtriplesRDFDatastream
     property :part_of, predicate: ::RDF::Vocab::DC.isPartOf
