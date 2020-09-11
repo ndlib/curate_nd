@@ -1,9 +1,7 @@
-<%
-  paginator = Blacklight::Solr::FacetPaginator.new(
-    display_facet.items,
-    limit: facet_limit_for(solr_field)
-  )
- %>
+ <%
+   paginator = facet_paginator(facet_configuration_for_field(solr_field), display_facet)
+  %>
+
 <ul>
   <% paginator.items.each do |item| -%>
   <li>

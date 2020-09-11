@@ -5,7 +5,7 @@
 </h2>
 <br/>
 <% if @response.response["numFound"] > 0 %>
-  <%= render_pagination_info @response, :entry_name=>'item' %>
+  <%= paginate @response, :entry_name=>'item', :outer_window => 2, :theme => 'blacklight' %>
   <%= render_document_index %>
 <% else %>
   <div class="col-sm-12 main-header">

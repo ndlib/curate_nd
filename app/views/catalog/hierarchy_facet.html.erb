@@ -27,6 +27,6 @@
   <% end %>
 
   <ul class="facet-hierarchy <%= behavior_class %>">
-    <%= render_hierarchy(facet_configuration_for_field(params[:id])) %>
+    <%= render facet_configuration_for_field(params[:id]) %>
   </ul>
 </div>

@@ -1,5 +1,7 @@
 .facets {
   margin: 0;
+  padding-left: 0;
+  padding-right: 0;
 
   li {
     list-style-type: none;
@@ -19,7 +21,7 @@
       border: 1px solid $gray-lightest;
       display: block;
       margin: 0 0 2px;
-      padding:4px 5px 4px 8px;
+      padding: 4px 5px 4px 8px;
       position: relative;
     }
 
