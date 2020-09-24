@@ -68,7 +68,7 @@ group :default do
   gem 'rails_autolink'
   gem 'rails-observers'
   gem 'rails', '~> 4.2.11.0'
-  gem 'rake', '~> 11.0'
+  gem 'rake', '~> 12.3'
   gem 'rdf'
   gem 'redcarpet'
   gem 'redis', '~> 3.3.3' # Necessary as part of upgrade to Rails 4.1.0; added for ruby versioning
