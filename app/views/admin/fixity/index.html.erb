@@ -1,12 +1,12 @@
 <div id="fixity_body" class="fixity-body">
-  <form action="/admin/fixity" method="get" class="control-group">
+  <form action="/admin/fixity" method="get" class="form-group">
     <legend>Filters</legend>
-    <div class="span5">
-      <div class="control-group string">
+    <div class="col-sm-5">
+      <div class="form-group string">
         <span class="control-label">Item:</span>
         <input name="item" class="controls string input-xlarge" v-model="filters.item" placeholder="id00000x">
       </div>
-      <div class="control-group string">
+      <div class="form-group string">
         <span class="control-label">Status:</span>
         <select name="status" v-model="filters.status.selected">
           <option v-for="option in filters.status.options" v-bind:value="option.value">
@@ -15,21 +15,21 @@
         </select>
       </div>
     </div>
-    <div class="span5">
-      <div class="control-group string">
+    <div class="col-sm-5">
+      <div class="form-group string">
         <span class="control-label">Start Date:</span>
         <input name="scheduled_time_start" class="controls string input-xlarge" v-model="filters.scheduled_time_start">
       </div>
-      <div class="control-group string">
+      <div class="form-group string">
         <span class="control-label">End Date:</span>
         <input name="scheduled_time_end" class="controls string input-xlarge" v-model="filters.scheduled_time_end">
       </div>
     </div>
-    <div class="span10">
-      <button type="submit" class="control-group btn btn-primary">Update</button>
+    <div class="col-sm-10">
+      <button type="submit" class="form-group btn btn-primary">Update</button>
     </div>
   </form>
-  <div class="control-group string">
+  <div class="form-group string">
     <legend>Fixity Checks</legend>
     <span class="control-label">Limit to:</span>
     <select name="limit" v-model="limits.selected">
@@ -38,7 +38,7 @@
       </option>
     </select>
   </div>
-  <div class="control-group string">
+  <div class="form-group string">
     <span v-if="limitedEntries.length < sortedEntries.length">{{ sortedEntries.length - limitedEntries.length }} results are not being displayed.</span>
   </div>
   <table class="table table-striped table-sortable">

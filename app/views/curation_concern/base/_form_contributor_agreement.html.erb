@@ -1,12 +1,12 @@
 <% if((can? :edit, ContentLicense) || (!curation_concern.persisted?)) %>
   <fieldset class="row contributor-agreement with-headroom" id="contributor-agreement">
-    <div class="span12">
+    <div class="col-sm-12">
       <legend>
         <%= t('sufia.product_name') %> Content Submission Terms
       </legend>
     </div>
 
-    <div class="span12">
+    <div class="col-sm-12">
       <% if can? :edit, ContentLicense %>
         <div>
           <%= f.select :type_of_license, options_for_select(['Self Deposit', 'Independently Licensed'], selected: curation_concern.type_of_license) %>
@@ -25,7 +25,7 @@
     </div>
 
     <% if !curation_concern.persisted? %>
-      <div class="span12 accept-contributor-agreement">
+      <div class="col-sm-12 accept-contributor-agreement">
         <%= label_tag contributor_agreement.param_key, class: 'checkbox', for:  'accept_contributor_agreement' do %>
           <%= check_box_tag(
               contributor_agreement.param_key,

@@ -13,7 +13,7 @@ module GenericFileHelper
   end
 
   def alert_class(gf)
-    "alert" if gf.with_empty_content?
+    "alert alert-warning" if gf.with_empty_content?
   end
 
   def actions_for_edit_button(gf)

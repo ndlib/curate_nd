@@ -15,11 +15,11 @@
 
     _create: function() {
       this.element.addClass('managed');
-      $('.repeat', this.element).addClass('input-append');
+      $('.repeat', this.element).addClass('input-group');
       this.adder = $('<button class="btn btn-success add" id="section_add_button"><i class="icon-white icon-plus"></i><span>Add</span>\</button>.');
       this.remover = $('<button class="btn btn-danger remove"><i class="icon-white icon-minus"></i><span>Remove</span></button>');
       this.tableControls = $('.table-controls', this.element);
-      this.cannotAddNotification = $('<div class="alert alert-warning warning">You cannot add multiple empty entries.</div>');
+      this.cannotAddNotification = $('<div class="alert alert-warning">You cannot add multiple empty entries.</div>');
       this.fieldIndex = $('.repeat', this.element).length;
 
       $('.repeat:not(:last-child) .row-controls', this.element).append(this.remover);
@@ -106,7 +106,7 @@
 
     _destroy: function() {
       this.actions.remove();
-      $('.repeat', this.element).removeClass('input-append');
+      $('.repeat', this.element).removeClass('input-group');
       this.element.removeClass('managed');
     }
   });

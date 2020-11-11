@@ -28,20 +28,20 @@ Blacklight.onLoad(function() {
               $this.addClass('alert-success').removeClass('alert-info');
               message
                 .removeClass('pulse-opacity')
-                .html('Success!<br/><a href="' + redirect.uri + '" class="btn btn-large">Manual Download</a>');
+                .html('Success!<br/><a href="' + redirect.uri + '" class="btn btn-default btn-lg">Manual Download</a>');
               $('.retrieval-delay-notice').remove();
               window.location.href = window.location.origin + redirect.uri;
             } else if (value === 'never') {
-              $this.addClass('alert-error').removeClass('alert-info');
+              $this.addClass('alert-danger').removeClass('alert-info');
               message
                 .removeClass('pulse-opacity')
-                .html('The file you requested is too big to process.<br/><a class="request-help btn btn-large" href="/help_requests/new">Request Assistance</a>');
+                .html('The file you requested is too big to process.<br/><a class="request-help btn btn-lg" href="/help_requests/new">Request Assistance</a>');
               $('.retrieval-delay-notice').remove();
             } else if (value === 'error') {
-              $this.addClass('alert-error').removeClass('alert-info');
+              $this.addClass('alert-danger').removeClass('alert-info');
               message
                 .removeClass('pulse-opacity')
-                .html('There was an error retrieving the file you requested.<br/><a class="request-help btn btn-large" href="/help_requests/new">Request Assistance</a>');
+                .html('There was an error retrieving the file you requested.<br/><a class="request-help btn btn-default btn-lg" href="/help_requests/new">Request Assistance</a>');
               $('.retrieval-delay-notice').remove();
             } else {
               retry();
@@ -51,9 +51,9 @@ Blacklight.onLoad(function() {
       });
     }).fail( function(data) {
       var failureMessage = 'File retrieval failed: ' + data.status + ' ' + data.statusText + '<br/>' +
-                           '<a class="request-help btn btn-large" href="/help_requests/new">Request Assistance</a>';
+                           '<a class="request-help btn btn-default btn-lg" href="/help_requests/new">Request Assistance</a>';
       $this
-        .addClass('alert-error')
+        .addClass('alert-danger')
         .removeClass('alert-info');
       message
         .html(failureMessage);

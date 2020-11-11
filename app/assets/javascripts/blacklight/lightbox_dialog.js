@@ -70,7 +70,7 @@ Blacklight.launch_modal_callback = function() {
         $countElement = $this.next('.count'),
         countNumber = $countElement.text(),
         targetPath = $this.attr('href'),
-        seeAllBtn = '<a href="'+ targetPath +'" class="btn btn-small see-all">See all '+ countNumber +'</a>',
+        seeAllBtn = '<a href="'+ targetPath +'" class="btn btn-default btn-sm see-all">See all '+ countNumber +'</a>',
         hasNoneSelected = ($('.remove', $parentElement).length === 0);
 
       $parentElement.append(seeAllBtn);

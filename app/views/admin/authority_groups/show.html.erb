@@ -33,12 +33,12 @@
   <% associated_group = @admin_authority_group.associated_group %>
   <% if associated_group %>
     <dd>Group ID: <%= associated_group.pid %></dd>
-    <dd><%= link_to 'Edit Associated Group', edit_hydramata_group_path(associated_group), class: 'btn btn-success btn-small'%><%= link_to 'Authorize All Users Below', admin_refresh_path(@admin_authority_group), class: 'btn btn-warning btn-small', data: {confirm: 'Are you sure you want to use this group to authorize users?'}  %></dd>
+    <dd><%= link_to 'Edit Associated Group', edit_hydramata_group_path(associated_group), class: 'btn btn-success btn-sm'%><%= link_to 'Authorize All Users Below', admin_refresh_path(@admin_authority_group), class: 'btn btn-warning btn-sm', data: {confirm: 'Are you sure you want to use this group to authorize users?'}  %></dd>
     <dd>Name: <%= associated_group.title %></dd>
     <dd>Description: <%= associated_group.description %></dd>
     <%= render partial: 'associated_group_members' %>
   <% else %>
-    <dd><%= link_to 'Create Associated Group', new_hydramata_group_path(title: @admin_authority_group.auth_group_name, description: @admin_authority_group.description), class: 'btn btn-primary btn-small' %></dd>
+    <dd><%= link_to 'Create Associated Group', new_hydramata_group_path(title: @admin_authority_group.auth_group_name, description: @admin_authority_group.description), class: 'btn btn-primary btn-sm' %></dd>
   <% end %>
 
   <br />
@@ -51,5 +51,5 @@
     <% else %>
       <dd>No users found</dd>
     <% end %>
-    <dd><%= link_to 'Re-Initialize', admin_reinitialize_path(@admin_authority_group), class: 'btn btn-danger btn-small', data: {confirm: 'Are you sure you want to reset to the initial authorized users data?'} %></dd>
+    <dd><%= link_to 'Re-Initialize', admin_reinitialize_path(@admin_authority_group), class: 'btn btn-danger btn-sm', data: {confirm: 'Are you sure you want to reset to the initial authorized users data?'} %></dd>
 </dl>

@@ -11,77 +11,74 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-require 'active_fedora'
-require File.expand_path('../../../lib/rdf/qualified_dc', __FILE__)
-
+require File.expand_path('../../../lib/rdf/vocab/qualified_dc', __FILE__)
+require "rdf/vocab"
 class LibraryCollectionRdfDatastream < ActiveFedora::NtriplesRDFDatastream
-  map_predicates do |map|
-    map.part_of(:to => "isPartOf", :in => RDF::DC)
-    map.contributor(:in => RDF::DC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-    map.creator(:in => RDF::DC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-    map.title(:in => RDF::DC) do |index|
-      index.as :stored_searchable
-    end
-    map.description(:in => RDF::DC) do |index|
-      index.type :text
-      index.as :stored_searchable
-    end
-    map.publisher(:in => RDF::DC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-    map.date_created(:to => "created", :in => RDF::DC) do |index|
-      index.as :stored_searchable
-    end
-    map.date_uploaded(:to => "dateSubmitted", :in => RDF::DC) do |index|
-      index.type :date
-      index.as :stored_sortable
-    end
-    map.date_modified(:to => "modified", :in => RDF::DC) do |index|
-      index.type :date
-      index.as :stored_sortable
-    end
-    map.subject(:in => RDF::DC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-    map.language(:in => RDF::DC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-    map.rights(:in => RDF::DC) do |index|
-      index.as :stored_searchable
-    end
-    map.resource_type(:to => "type", :in => RDF::DC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-    map.identifier(:in => RDF::DC) do |index|
-      index.as :stored_searchable
-    end
-    map.temporal(:in => RDF::DC) do |index|
-      index.as :stored_searchable
-    end
-    map.spatial(:in => RDF::DC) do |index|
-      index.as :stored_searchable
-    end
-    map.based_near(:in => RDF::FOAF) do |index|
-      index.as :stored_searchable, :facetable
-    end
-    map.relation(:in => RDF::DC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-    map.related_url(:to => "seeAlso", :in => RDF::RDFS)
-    map.administrative_unit(to: 'creator#administrative_unit', in: RDF::QualifiedDC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-    map.source({in: RDF::DC})
-    map.curator(to: 'contributor#curator', in: RDF::QualifiedDC) do |index|
-      index.as :stored_searchable, :facetable
-    end
-    map.date(:in => RDF::DC) do |index|
-      index.as :stored_searchable
-    end
-    map.permission({in: RDF::QualifiedDC, to: 'rights#permissions'})
+  property :part_of, predicate: ::RDF::Vocab::DC.isPartOf
+  property :contributor, predicate: ::RDF::Vocab::DC.contributor do |index|
+    index.as :stored_searchable, :facetable
   end
+  property :creator, predicate: ::RDF::Vocab::DC.creator do |index|
+    index.as :stored_searchable, :facetable
+  end
+  property :title, predicate: ::RDF::Vocab::DC.title do |index|
+    index.as :stored_searchable
+  end
+  property :description, predicate: ::RDF::Vocab::DC.description do |index|
+    index.type :text
+    index.as :stored_searchable
+  end
+  property :publisher, predicate: ::RDF::Vocab::DC.publisher do |index|
+    index.as :stored_searchable, :facetable
+  end
+  property :date_created, predicate: ::RDF::Vocab::DC.created do |index|
+    index.as :stored_searchable
+  end
+  property :date_uploaded, predicate: ::RDF::Vocab::DC.dateSubmitted do |index|
+    index.type :date
+    index.as :stored_sortable
+  end
+  property :date_modified, predicate: ::RDF::Vocab::DC.modified do |index|
+    index.type :date
+    index.as :stored_sortable
+  end
+  property :subject, predicate: ::RDF::Vocab::DC.subject do |index|
+    index.as :stored_searchable, :facetable
+  end
+  property :language, predicate: ::RDF::Vocab::DC.language do |index|
+    index.as :stored_searchable, :facetable
+  end
+  property :rights, predicate: ::RDF::Vocab::DC.publisher do |index|
+    index.as :stored_searchable
+  end
+  property :resource_type, predicate: ::RDF::Vocab::DC.type do |index|
+    index.as :stored_searchable, :facetable
+  end
+  property :identifier, predicate: ::RDF::Vocab::DC.identifier do |index|
+    index.as :stored_searchable
+  end
+  property :temporal, predicate: ::RDF::Vocab::DC.temporal do |index|
+    index.as :stored_searchable
+  end
+  property :spatial, predicate: ::RDF::Vocab::DC.spatial do |index|
+    index.as :stored_searchable
+  end
+  property :based_near, predicate: ::RDF::Vocab::FOAF.based_near do |index|
+    index.as :stored_searchable, :facetable
+  end
+  property :relation, predicate: ::RDF::Vocab::DC.relation do |index|
+    index.as :stored_searchable, :facetable
+  end
+  property :related_url, predicate: ::RDF::RDFS.seeAlso
+  property :administrative_unit, predicate: ::RDF::QualifiedDC['creator#administrative_unit'] do |index|
+    index.as :stored_searchable, :facetable
+  end
+  property :source, predicate: ::RDF::Vocab::DC.source
+  property :curator, predicate: ::RDF::QualifiedDC['contributor#curator'] do |index|
+    index.as :stored_searchable, :facetable
+  end
+  property :date, predicate: ::RDF::Vocab::DC.date do |index|
+    index.as :stored_searchable
+  end
+  property :permission, predicate: ::RDF::QualifiedDC['rights#permissions']
 end

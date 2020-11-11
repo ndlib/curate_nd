@@ -17,7 +17,7 @@
   <%- end -%>
 
   <div class="row">
-    <div class="span12 form-actions">
+    <div class="col-sm-12 form-actions">
       <%= f.submit(
         (curation_concern.persisted? ? "Rollback to selected File" : %(Attach to #{parent.human_readable_type})),
         class: 'btn btn-primary'

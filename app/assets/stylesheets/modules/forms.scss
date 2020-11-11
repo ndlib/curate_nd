@@ -12,9 +12,9 @@ legend small {
   padding-left: 1.2em;
 }
 
-.control-group.error input,
-.control-group.error option,
-.control-group.error textarea {
+.form-group.has-error input,
+.form-group.has-error option,
+.form-group.has-error textarea {
   color: $gray-dark;
 }
 
@@ -48,7 +48,7 @@ legend small {
   }
 }
 
-.control-group .inline {
+.form-group .inline {
   display: inline-block;
 }
 

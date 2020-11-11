@@ -4,7 +4,7 @@
     <% v.each do |selected_value| %>
       <% link_options = remove_facet_params(field, selected_value, params).merge!Hash["controller" => "catalog", :action=> "index"] %>
       <div class="alert alert-warning">
-        <%= link_to 'X', url_for(link_options), {:class=>'close', :'data-dismiss' => "alert" } %>
+        <%= link_to 'X', url_for(link_options), {:class=>'close', :'data-dismiss' => "alert alert-warning" } %>
         <i class="icon-ok icon-large"></i> <strong><%= facet_display_value(field, selected_value) %></strong>
       </div>
     <% end %>

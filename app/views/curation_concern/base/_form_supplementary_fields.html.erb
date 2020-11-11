@@ -3,7 +3,7 @@
 <%= render "form_representative_image", curation_concern: curation_concern, f: f %>
 
 <div class="row with-headroom">
-  <div class="span12">
+  <div class="col-sm-12">
     <% if curation_concern.respond_to?(:doi) %>
       <%= render "form_doi", curation_concern: curation_concern, f: f %>
       <% if curation_concern.respond_to?(:doi) && curation_concern.doi.present? %>
@@ -14,37 +14,37 @@
 </div>
 
 <div class="row with-headroom">
-  <div class="span12">
+  <div class="col-sm-12">
     <%= render "form_permission", curation_concern: curation_concern, f: f %>
   </div>
 </div>
 
 <div class="row with-headroom">
   <fieldset id="content-editor">
-    <legend class="span12">
+    <legend class="col-sm-12">
       <%=t('sufia.work.collaborator.legend') %>
       <small><%=t('sufia.work.collaborator.caption') %></small>
     </legend>
-    <div class="span7" id="required-information">
+    <div class="col-sm-7" id="required-information">
       <%= render "linked_record_editors", curation_concern: curation_concern, f: f %>
     </div>
 
-    <div class="span7" id="additional-information">
+    <div class="col-sm-7" id="additional-information">
       <%= render "linked_record_editor_groups", curation_concern: curation_concern, f: f %>
     </div>
 
-    <div class="span7" id="additional-information">
+    <div class="col-sm-7" id="additional-information">
       <%= render "linked_record_viewers", curation_concern: curation_concern, f: f %>
     </div>
 
-    <div class="span7" id="additional-information">
+    <div class="col-sm-7" id="additional-information">
       <%= render "linked_record_viewer_groups", curation_concern: curation_concern, f: f %>
     </div>
   </fieldset>
 </div>
 
 <div class="row with-headroom">
-  <div class="span12">
+  <div class="col-sm-12">
     <%= render "form_content_license", curation_concern: curation_concern, f: f %>
   </div>
 </div>

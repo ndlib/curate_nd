@@ -19,7 +19,13 @@ module CurationConcern
         self.related_work_ids.join(", ")
       end
 
+      def related_works_for_data_load
+        data = []
+        related_works.each do |rw|
+          data << { pid: rw.pid, title: rw.title, model: rw.class.to_s, curation_concern_type: rw.human_readable_type }
+        end
+        data
+      end
     end
-
   end
 end

@@ -2,6 +2,7 @@
   form_legend = 'CurateND: Technical Support'
   request_label = 'How can we help you?'
 %>
+
 <%= simple_form_for(help_request) do |f| %>
 
 <fieldset class="hidden">
@@ -31,11 +32,11 @@
       <%= help_request.browser_name %>
     </dd>
     <dt>Platform</dt>
-    <dd id="help-platfrom">
+    <dd id="help-platform">
       <%= help_request.platform %>
     </dd>
     <dt><%= t('sufia.product_name') %> Version</dt>
-    <dd id="help-platfrom">
+    <dd id="help-platform">
       <%= Curate.configuration.build_identifier %>
     </dd>
     <dt>Current URL</dt>
@@ -44,6 +45,7 @@
     </dd>
   </dl>
 </fieldset>
+
 <fieldset class="required with-side-padding">
   <legend><%= form_legend %></legend>
   <%= f.input :view_port, as: 'hidden' %>

@@ -1,7 +1,7 @@
 <div class="page-footer-wrapper">
   <footer class="page-footer container">
     <div class="row">
-      <div class="span8 footer-left">
+      <div class="col-sm-8 footer-left">
         <p>
           CurateND is a service of the <a href="http://library.nd.edu">Hesburgh Libraries of Notre Dame</a>.
         </p>
@@ -18,7 +18,7 @@
         <!-- Build: <%= Rails.configuration.build_identifier %> -->
       </div>
 
-      <div class="span4 footer-right">
+      <div class="col-sm-4 footer-right">
         <div>
           <% image_to_use = (controller_name == "static_pages" && action_name == "home") ? "hesburgh-mark-white.png" : "hesburgh-mark-blue.png" %>
           <%= link_to image_tag(image_to_use, alt: "University of Notre Dame Hesburgh Libraries", class: "hesburgh-mark"), "http://library.nd.edu" %>

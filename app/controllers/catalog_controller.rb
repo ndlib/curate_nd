@@ -55,17 +55,17 @@ module BlacklightFacetExtras
       # Does NOT remove request keys and otherwise ensure that the hash
       # is suitable for a redirect. See
       # add_facet_params_and_redirect
-      def add_facet_params(field, value, source_params = params)
-        if blacklight_config.facet_fields[field] && blacklight_config.facet_fields[field].multiple
-          p = params.dup
-          p[:f_inclusive] = (p[:f_inclusive] || {}).dup # the command above is not deep in rails3, !@#$!@#$
-          p[:f_inclusive][field] = (p[:f_inclusive][field] || []).dup
-          p[:f_inclusive][field].push(value)
-          p
-        else
-          super
-        end
-      end
+      # def add_facet_params(field, value, source_params = params)
+      #   if blacklight_config.facet_fields[field] && blacklight_config.facet_fields[field].multiple
+      #     p = params.dup
+      #     p[:f_inclusive] = (p[:f_inclusive] || {}).dup # the command above is not deep in rails3, !@#$!@#$
+      #     p[:f_inclusive][field] = (p[:f_inclusive][field] || []).dup
+      #     p[:f_inclusive][field].push(value)
+      #     p
+      #   else
+      #     super
+      #   end
+      # end
 
       # Renders the "My X" and "All X" links in the Views sidebar
       def render_view_filters(user_params = params)
@@ -167,13 +167,13 @@ module BlacklightFacetExtras
 end
 
 class CatalogController < ApplicationController
-  include Blacklight::Catalog
-  # Extend Blacklight::Catalog with Hydra behaviors (primarily editing).
+    # Extend Blacklight::Catalog with Hydra behaviors (primarily editing).
   include Hydra::Controller::ControllerBehavior
   include BreadcrumbsOnRails::ActionController
   include Curate::ThemedLayoutController
   include Curate::FieldsForAddToCollection
   include Hydramata::SolrHelper
+  include Blacklight::Catalog
   # Order matters for this; It should be after the various blacklight and solr modules
   include BlacklightFacetExtras::Multiple::ControllerExtension
 
@@ -201,8 +201,8 @@ class CatalogController < ApplicationController
 
     respond_to do |format|
       format.html {
-        extra_head_content << view_context.auto_discovery_link_tag(:rss, url_for(params.merge(:format => 'rss')), :title => t('blacklight.search.rss_feed') )
-        extra_head_content << view_context.auto_discovery_link_tag(:atom, url_for(params.merge(:format => 'atom')), :title => t('blacklight.search.atom_feed') )
+        # extra_head_content << view_context.auto_discovery_link_tag(:rss, url_for(params.merge(:format => 'rss')), :title => t('blacklight.search.rss_feed') )
+        # extra_head_content << view_context.auto_discovery_link_tag(:atom, url_for(params.merge(:format => 'atom')), :title => t('blacklight.search.atom_feed') )
       }
       format.rss  { render :layout => false }
       format.atom { render :layout => false }
@@ -685,7 +685,6 @@ class CatalogController < ApplicationController
     # @param solr_parameters the current solr parameters
     # @param user_parameters the current user-subitted parameters
     def exclude_unwanted_models(solr_parameters, user_parameters)
-      super
       solr_parameters[:fq] ||= []
       [GenericFile, Profile, ProfileSection, LinkedResource,
        Hydramata::Group].each do |klass|
@@ -715,5 +714,10 @@ class CatalogController < ApplicationController
     def exclude_class_filter(klass)
       '-' + ActiveFedora::SolrService.construct_query_for_rel(has_model:
                                                         klass.to_class_uri)
+    end
+
+    # override Blacklight::Catalog to include f_inclusive
+    def has_search_parameters?
+      !params[:q].blank? || !params[:f].blank? || !params[:f_inclusive].blank?
     end
 end

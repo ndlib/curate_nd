@@ -58,7 +58,7 @@ shared_examples 'is_a_curation_concern_controller' do |curation_concern_class, o
           get :new
           expect(response).to be_success
 
-          expect(response.body).to have_tag('.promote-doi .control-group') do
+          expect(response.body).to have_tag('.promote-doi .form-group') do
             input_name = "#{curation_concern_class.model_name.singular}[doi_assignment_strategy]"
             if curation_concern_class.ancestors.include?(CurationConcern::RemotelyIdentifiedByDoi::Attributes)
               with_tag('input', with: { name: input_name, type: 'radio', value: CurationConcern::RemotelyIdentifiedByDoi::GET_ONE })

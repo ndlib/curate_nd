@@ -21,7 +21,7 @@
             <% if can?(:edit, link) %>
               <%= link_to(
                 edit_polymorphic_path([:curation_concern, link]),
-                { class: 'btn', title: "Edit #{link}" }
+                { class: 'btn btn-default', title: "Edit #{link}" }
               ) do %>
               <i class="icon icon-pencil"></i> Edit
               <% end %>
@@ -36,7 +36,7 @@
 
   <% if editor %>
     <div class="section-actions">
-      <%= link_to new_curation_concern_linked_resource_path(curation_concern), class: 'btn' do %>
+      <%= link_to new_curation_concern_linked_resource_path(curation_concern), class: 'btn btn-default' do %>
         <i class="icon icon-plus"></i> Add a Link
       <% end %>
     </div>

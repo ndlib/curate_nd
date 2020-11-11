@@ -2,28 +2,28 @@
 <label><strong>Contributor(s)</strong></label>
   <table class="table expandible <%= dom_class(curation_concern) %> contributors negative-left-margin">
     <thead>
-      <tr class='span12'>
-        <th class="span4">Name</th>
-        <th class="span4">Role</th>
+      <tr class='col-sm-12'>
+        <th class="col-sm-4">Name</th>
+        <th class="col-sm-4">Role</th>
         <th class="row-controls"></th>
       </tr>
     </thead>
     <tfoot>
-      <tr class="span12">
-        <td colspan="5" class="table-controls span12">
+      <tr class="col-sm-12">
+        <td colspan="5" class="table-controls col-sm-12">
         </td>
       </tr>
     </tfoot>
     <tbody>
       <%= f.simple_fields_for :contributor do |cf| %>
-        <tr class='repeat span12'>
-          <td class="name span4">
+        <tr class='repeat col-sm-12'>
+          <td class="name col-sm-4">
             <%= cf.input :contributor, label: false, required: false, wrapper: false, hint: false, input_html: { value: cf.object.contributor.first } %>
           </td>
-          <td class="role span4">
+          <td class="role col-sm-4">
             <%= cf.input :role, label: false, required: false, wrapper: false, input_html: { value: cf.object.role.first } %>
           </td>
-          <td class="row-controls span4">
+          <td class="row-controls col-sm-4">
           </td>
         </tr>
       <% end %>

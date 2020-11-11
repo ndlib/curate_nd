@@ -4,13 +4,13 @@
 
   <%= render :partial => 'catalog/_index_partials/identifier_and_action', locals: {document: document, counter: document_counter, solr_doc: solr_doc} %>
 
-  <div class="row-fluid">
+  <div class="row">
 
-    <div class="span2">
+    <div class="col-sm-2">
       <%= render :partial => 'catalog/_index_partials/thumbnail_display', locals: {document: document} %>
     </div>
 
-    <div class="span10">
+    <div class="col-sm-10">
       <dl class="attribute-list">
         <%# Because Book and other Document types store primary creator information in different places. %>
         <% if solr_doc.has?('desc_metadata__type_tesim') && Array.wrap(solr_doc['desc_metadata__type_tesim']).detect { |type| type == 'Book' || type == 'Book Chapter' } %>

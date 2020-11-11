@@ -14,7 +14,7 @@
 
     _create: function() {
       this.element.addClass('managed');
-      $('.field-wrapper', this.element).addClass('input-append');
+      $('.field-wrapper', this.element).addClass('input-group');
 
       this.controls = $('<span class="field-controls">');
       this.remover  = $('<button class="btn btn-danger remove"><i class="icon-white icon-minus"></i><span>Remove</span></button>');
@@ -76,7 +76,7 @@
 
     _destroy: function() {
       this.actions.remove();
-      $('.field-wrapper', this.element).removeClass('input-append');
+      $('.field-wrapper', this.element).removeClass('input-group');
       this.element.removeClass( 'managed' );
     }
   });

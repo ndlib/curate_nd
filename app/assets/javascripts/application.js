@@ -19,6 +19,7 @@
 //= require csrf_token
 //
 //= require blacklight/blacklight
+//= require bootstrap-sprockets
 //= require curate
 //= require citation_modal
 //= require jquery.sticky

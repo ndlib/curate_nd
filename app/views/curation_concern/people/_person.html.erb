@@ -5,13 +5,13 @@
 
   <%= render :partial => 'catalog/_index_partials/identifier_and_action', locals: { document: person, counter: person_counter, title_link_target: person, title_link_text: person.name, edit_path: '' } %>
 
-  <div class="row-fluid">
+  <div class="row">
 
-    <div class="span2">
+    <div class="col-sm-2">
       <%= render :partial => 'catalog/_index_partials/thumbnail_display', locals: {document: person} %>
     </div>
 
-    <div class="span10">
+    <div class="col-sm-10">
       <dl class="attribute-list">
       </dl>
     </div>

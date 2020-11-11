@@ -1,7 +1,6 @@
 CurateNd::Application.routes.draw do
   mount_roboto
   Blacklight.add_routes(self)
-  HydraHead.add_routes(self)
 
   root 'static_pages#home'
 

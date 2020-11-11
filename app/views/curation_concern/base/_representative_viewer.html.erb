@@ -6,10 +6,10 @@
 
     <!-- if representative file is audio, regardless of class, use audio player -->
     <% if gf_read_permission && generic_file.audio? %>
-      <div class="row work-representation span12">
+      <div class="row work-representation col-sm-12">
         <%= render partial: 'curation_concern/base/audio_player', locals: { generic_file: generic_file } %>
       </div>
-      <div class="row work-attributes span12">
+      <div class="row work-attributes col-sm-12">
         <%= details %>
       </div>
 
@@ -18,12 +18,12 @@
       <div class="image-viewer-integration" data-manifest-url="<%= manifest_url_for(id: work.pid) %>" data-manifest-viewer="<%= Rails.configuration.manifest_viewer %>">
         <div class="row">
           <div class="spinner"></div>
-          <div class="iiif-work-representation span3">
+          <div class="iiif-work-representation col-sm-3">
             <a href="/image_viewer/<%= generic_file.noid %>">
               <%= image_tag download_path(work.representative,'thumbnail'), class: 'representative_image' %>
               <p>Click to Expand</p></a>
           </div>
-          <div class="work-attributes span9">
+          <div class="work-attributes col-sm-9">
             <%= details %>
           </div>
         </div>
@@ -32,7 +32,7 @@
     <!-- else use basic logic to display representative -->
     <% else %>
       <div class="row">
-        <div class="work-representation span3">
+        <div class="work-representation col-sm-3">
           <% if gf_read_permission %>
             <% if generic_file.pdf? || generic_file.video? %>
               <a href="<%=download_path(work.representative) %>" target = "_blank">
@@ -48,7 +48,7 @@
             <%= image_tag download_path(work.representative,'thumbnail'), class: 'representative_image' %>
           <% end %>
         </div>
-        <div class="work-attributes span9">
+        <div class="work-attributes col-sm-9">
           <%= details %>
         </div>
       </div>
@@ -58,12 +58,12 @@
   <!-- Note: library collections go through here -->
   <% else %>
     <div class="row">
-      <div class="work-representation span3">
+      <div class="work-representation col-sm-3">
         <a href="<%= download_path(work.representative) %>" target = "_blank">
           <%= image_tag download_path(work.representative,'thumbnail'), class: 'representative_image' %>
         </a>
       </div>
-      <div class="work-attributes span9">
+      <div class="work-attributes col-sm-9">
         <%= details %>
       </div>
     </div>
@@ -75,10 +75,10 @@
   <% Raven.capture_exception(exception, extra: { curation_concern: work.pid } ) %>
   <!-- error, no representative -->
   <div class="row">
-    <div class="work-representation span3">
+    <div class="work-representation col-sm-3">
       <%= image_tag('curate/default.png', class: "canonical-image") %>
     </div>
-    <div class="work-attributes span9">
+    <div class="work-attributes col-sm-9">
       <%= details %>
     </div>
   </div>

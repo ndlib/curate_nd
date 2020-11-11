@@ -7,7 +7,7 @@
   <% if content_for?(:page_header) %>
     <div class="row">
     <% if content_for?(:page_actions) %>
-      <div class="span12 main-header-with-actions">
+      <div class="col-sm-12 main-header-with-actions">
         <div class="main-header">
           <%= yield(:page_header) %>
         </div>
@@ -16,7 +16,7 @@
         </div>
       </div>
     <% else %>
-      <div class="span12 main-header ">
+      <div class="col-sm-12 main-header ">
         <%= yield(:page_header) %>
       </div>
     <% end %>

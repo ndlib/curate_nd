@@ -1,25 +1,23 @@
-require File.expand_path('../../../lib/rdf/qualified_dc', __FILE__)
+require "rdf/vocab"
+
 class GroupMetadataDatastream < ActiveFedora::NtriplesRDFDatastream
-  map_predicates do |map|
-
-    map.title(in: RDF::DC) do |index|
-      index.as :stored_searchable
-    end
-
-    map.description(:in => RDF::DC) do |index|
-      index.type :text
-      index.as :stored_searchable
-    end
-
-    map.date_uploaded(:to => "dateSubmitted", :in => RDF::DC) do |index|
-      index.type :date
-      index.as :stored_sortable
-    end
-
-    map.date_modified(:to => "modified", :in => RDF::DC) do |index|
-      index.type :date
-      index.as :stored_sortable
-    end
-
+  property :title, predicate: ::RDF::Vocab::DC.title do |index|
+    index.as :stored_searchable
   end
+
+  property :description, predicate: ::RDF::Vocab::DC.description do |index|
+    index.type :text
+    index.as :stored_searchable
+  end
+
+  property :date_uploaded, predicate: ::RDF::Vocab::DC.dateSubmitted do |index|
+    index.type :date
+    index.as :stored_sortable
+  end
+
+  property :date_modified, predicate: ::RDF::Vocab::DC.modified do |index|
+    index.type :date
+    index.as :stored_sortable
+  end
+
 end

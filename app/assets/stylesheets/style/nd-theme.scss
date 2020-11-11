@@ -157,7 +157,7 @@ $logo-height: 48;
 }
 
 // Accordion Overrides
-.accordion-heading {
+.panel-heading {
   background-color: $table-background-accent;
 
   h3 {
@@ -167,7 +167,7 @@ $logo-height: 48;
 
 
 // Custom required field indicator
-.control-group {
+.form-group {
   margin-left: .7em;
   position: relative;
 }
@@ -183,19 +183,12 @@ $logo-height: 48;
 
 // Fix all icon buttons
 .btn-primary {
-  [class^="icon-"],
-  [class*=" icon-"] {
-    background-image: url($iconWhiteSpritePath);
-  }
-
   .icon-folder-open {
     background-image: none;
     padding-left: 16px;
     width: auto;
 
     &:before {
-      background-image: url($iconWhiteSpritePath);
-      background-position: -408px -120px;
       content: ' ';
       height: 16px;
       width: 16px;
@@ -209,7 +202,7 @@ $logo-height: 48;
 }
 
 .research-ids {
-  .control-group.string.optional {
+  .form-group.string.optional {
     display: inline-block;
   }
 }

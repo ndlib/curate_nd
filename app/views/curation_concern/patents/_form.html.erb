@@ -1,7 +1,7 @@
 <%= simple_form_for [:curation_concern, curation_concern], :html => { :onsubmit => "return validateCurationConcernForm(this);", "data-model-name" => curation_concern.class.model_name.singular } do |f| %>
 
   <% if f.error_notification -%>
-    <div class="alert alert-error fade in">
+    <div class="alert alert-danger fade in">
       <strong>Wait don't go!</strong> There was a problem with your submission. Please review the errors below:
       <a class="close" data-dismiss="alert" href="#">&times;</a>
     </div>
@@ -14,37 +14,37 @@
   <%= render "form_representative_image", curation_concern: curation_concern, f: f %>
 
   <div class="row with-headroom">
-    <div class="span12">
+    <div class="col-sm-12">
       <%= render "form_permission", curation_concern: curation_concern, f: f %>
     </div>
   </div>
 
   <div class="row with-headroom">
     <fieldset id="content-editor">
-      <legend class="span12">
+      <legend class="col-sm-12">
         <%=t('sufia.work.collaborator.legend') %>
         <small><%=t('sufia.work.collaborator.caption') %></small>
       </legend>
-      <div class="span7" id="required-information">
+      <div class="col-sm-7" id="required-information">
         <%= render "linked_record_editors", curation_concern: curation_concern, f: f %>
       </div>
 
-      <div class="span7" id="additional-information">
+      <div class="col-sm-7" id="additional-information">
         <%= render "linked_record_editor_groups", curation_concern: curation_concern, f: f %>
       </div>
 
-      <div class="span7" id="additional-information">
+      <div class="col-sm-7" id="additional-information">
         <%= render "linked_record_viewers", curation_concern: curation_concern, f: f %>
       </div>
 
-      <div class="span7" id="additional-information">
+      <div class="col-sm-7" id="additional-information">
         <%= render "linked_record_viewer_groups", curation_concern: curation_concern, f: f %>
       </div>
     </fieldset>
   </div>
 
   <div class="row with-headroom">
-    <div class="span12">
+    <div class="col-sm-12">
       <%= render "form_content_license", curation_concern: curation_concern, f: f %>
     </div>
   </div>
@@ -52,7 +52,7 @@
   <%= render 'form_contributor_agreement', curation_concern: curation_concern, contributor_agreement: contributor_agreement, f: f %>
 
   <div class="row">
-    <div class="span12 form-actions">
+    <div class="col-sm-12 form-actions">
       <%= f.submit class: 'btn btn-primary require-contributor-agreement' %>
       <%- if curation_concern.new_record? -%>
         <%= link_to 'Cancel', root_path, class: 'btn btn-link' %>

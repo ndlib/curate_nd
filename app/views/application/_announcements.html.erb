@@ -1,7 +1,7 @@
 <%- if Admin::Announcement.for(current_user).any? -%>
   <div id="announcements" class="container">
     <div class="row">
-      <div class="span12 announcement-listing">
+      <div class="col-sm-12 announcement-listing">
         <% Admin::Announcement.for(current_user).each do |announcement| %>
           <div class="announcement alert alert-info">
             <span class="announcement-text">

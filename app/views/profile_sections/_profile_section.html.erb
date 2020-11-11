@@ -2,27 +2,27 @@
 <% noid = profile_section.noid %>
 <li id="document_<%= noid %>" class="search-result">
 
-  <div class="row-fluid">
+  <div class="row">
 
-    <div class="span2 list-number">
+    <div class="col-sm-2 list-number">
       <%= document_counter_with_offset( profile_section_counter ) %>
       <%= render :partial => 'catalog/_index_partials/type_display', locals: {document: profile_section} %>
     </div>
 
-    <div class="span6">
+    <div class="col-sm-6">
       <% solr_doc = profile_section.inner_object.solr_doc %>
       <%# Minimize Fedora hits by using solr_doc rather than document %>
       <%= link_to render_index_field_value(document: solr_doc, field: 'desc_metadata__title_tesim'), profile_section, :id => "src_copy_link_#{noid}" %>
     </div>
 
-    <div class="span4">
+    <div class="col-sm-4">
       <% if current_user %>
         <%= render partial: 'add_to_collection_gui', locals: { document: profile_section } %>
 
         <%= link_to(
           raw('<i class="icon-pencil icon-large"></i>'),
           edit_collection_path(profile_section),
-            :class=> 'itemicon itemedit btn pull-right',
+            :class=> 'itemicon itemedit btn btn-default pull-right',
             :title => 'Edit Profile'
           ) if can? :edit, profile_section %>
       <% end -%>
@@ -30,13 +30,13 @@
 
   </div>
 
-  <div class="row-fluid">
+  <div class="row">
 
-    <div class="span2">
+    <div class="col-sm-2">
       <%= render :partial => 'catalog/_index_partials/thumbnail_display', locals: {document: profile_section} %>
     </div>
 
-    <div class="span10">
+    <div class="col-sm-10">
       <dl class="attribute-list">
         <% if solr_doc.has?('desc_metadata__description_tesim') %>
           <dt>Description:</dt>

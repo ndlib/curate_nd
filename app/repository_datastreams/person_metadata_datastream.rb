@@ -1,48 +1,49 @@
-require File.expand_path('../../../lib/rdf/qualified_foaf', __FILE__)
+require File.expand_path('../../../lib/rdf/vocab/qualified_foaf', __FILE__)
+require "rdf/vocab"
+
 class PersonMetadataDatastream < ActiveFedora::NtriplesRDFDatastream
-  map_predicates do |map|
-    map.name(to: "name", in: RDF::FOAF) do |index|
-      index.as :stored_searchable
-    end
 
-    map.title(to: "title", in: RDF::FOAF) do |index|
-      index.as :stored_searchable
-    end
+  property :name, predicate: ::RDF::Vocab::FOAF.name do |index|
+    index.as :stored_searchable
+  end
 
-    map.campus_phone_number(to: "phone#campus_phone_number", in: RDF::QualifiedFOAF) do |index|
-      index.as :stored_searchable
-    end
+  property :title, predicate: ::RDF::Vocab::FOAF.title do |index|
+    index.as :stored_searchable
+  end
 
-    map.alternate_phone_number(to: "phone#alternate_phone_number", in: RDF::QualifiedFOAF) do |index|
-      index.as :stored_searchable
-    end
+  property :campus_phone_number, predicate: ::RDF::QualifiedFOAF['phone#campus_phone_number'.to_sym] do |index|
+    index.as :stored_searchable
+  end
 
-    map.date_of_birth(to: "birthday", in: RDF::FOAF) do |index|
-      index.as :stored_searchable
-    end
+  property :alternate_phone_number, predicate: ::RDF::QualifiedFOAF['phone#alternate_phone_number'.to_sym] do |index|
+    index.as :stored_searchable
+  end
 
-    map.personal_webpage(to: "homepage", in: RDF::FOAF) do |index|
-      index.as :stored_searchable
-    end
+  property :date_of_birth, predicate: ::RDF::Vocab::FOAF.birthday do |index|
+    index.as :stored_searchable
+  end
 
-    map.blog(to: "weblog", in: RDF::FOAF) do |index|
-      index.as :stored_searchable
-    end
+  property :personal_webpage, predicate: ::RDF::Vocab::FOAF.homepage do |index|
+    index.as :stored_searchable
+  end
 
-    map.gender(to: "gender", in: RDF::FOAF) do |index|
-      index.as :stored_searchable
-    end
+  property :blog, predicate: ::RDF::Vocab::FOAF.weblog do |index|
+    index.as :stored_searchable
+  end
 
-    map.based_near(to: "based_near", in: RDF::FOAF) do |index|
-      index.as :stored_searchable
-    end
+  property :gender, predicate: ::RDF::Vocab::FOAF.gender do |index|
+    index.as :stored_searchable
+  end
 
-    map.alternate_email(to: "account#alternate_email", in: RDF::QualifiedFOAF) do |index|
-      index.as :stored_searchable
-    end
+  property :based_near, predicate: ::RDF::Vocab::FOAF.based_near do |index|
+    index.as :stored_searchable
+  end
 
-    map.email(to: "account#preferred_email", in: RDF::QualifiedFOAF) do |index|
-      index.as :stored_searchable
-    end
+  property :alternate_email, predicate: ::RDF::QualifiedFOAF['account#alternate_email'.to_sym] do |index|
+    index.as :stored_searchable
+  end
+
+  property :email, predicate:  ::RDF::QualifiedFOAF['account#preferred_email'.to_sym] do |index|
+    index.as :stored_searchable
   end
 end

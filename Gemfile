@@ -12,13 +12,20 @@ group :default do
   gem 'meta_request'
   gem 'active_attr'
   gem 'active_fedora-registered_attributes', '~> 0.2.0'
-  gem 'active-fedora', '~> 6.7.0'
+  gem 'active-fedora', '7.1.2'
   gem 'activerecord-import'
   gem 'activeresource'
   gem 'acts_as_follower', '>= 0.1.1', '< 0.3'
   gem 'aws-sdk-s3'
-  gem 'blacklight-hierarchy', github: 'ndlib/blacklight-hierarchy', branch: 'master'
-  gem 'blacklight', "> 4.5.0", '< 7.0'
+
+  # We are aiming for 1.1.0
+  # gem 'blacklight-hierarchy', github: 'ndlib/blacklight-hierarchy', branch: 'master'
+
+  # Blacklight 4.9.0 depends ~> 2.3.0
+  # - bootstrap-sass 3.3.7 and 3.4.0 we go from sass to sassc.
+  gem 'blacklight', "~> 5.3.0 "
+  # pin bootstrap-sass per https://github.com/sass/sass/issues/1656
+  gem 'bootstrap-sass', "3.3.4.1"
   gem 'bootstrap-datepicker-rails'
   gem 'breach-mitigation-rails'
   gem 'breadcrumbs_on_rails'
@@ -40,14 +47,16 @@ group :default do
   gem 'figaro'
   gem 'flipper'
   gem 'httparty'
-  gem 'hydra-collections', '~> 1.3.0'
+  gem 'hydra-collections', '~> 2.0.0'
   gem 'hydra-derivatives', '~> 0.0.7'
   gem 'hydra-file_characterization', "~> 0.3.3"
-  gem 'hydra-head', "~> 6.4.0"
+  # To update blacklight, we need to go to 7.0.2
+  # This then requires blacklight ~> 5.3, and ActiveFedora ~> 7.0.0
+  gem 'hydra-head', "~> 7.0"
   gem 'jettywrapper'
   gem 'jquery-rails'
   gem 'jshintrb'
-  gem 'json-ld'
+  gem 'json-ld', '~> 1.99.0'
   gem 'kaminari'
   gem 'locabulary', github: 'ndlib/locabulary', ref: 'b86dfc02c343b91b673e23c3562ea834cc1aebb3'
   gem 'lograge'
@@ -68,12 +77,12 @@ group :default do
   gem 'rails-observers'
   gem 'rails', '~> 4.2.11.0'
   gem 'rake', '~> 11.0'
-  gem 'rdf'
+  gem 'rdf', '~> 1.99.0'
   gem 'redcarpet'
   gem 'redis', '~> 3.3.3' # Necessary as part of upgrade to Rails 4.1.0; added for ruby versioning
   gem 'resque-pool', github: 'ndlib/resque-pool', branch: 'master'
   gem 'roboto'
-  gem 'rubydora', '~> 1.7.4'
+  gem 'rubydora', '~> 1'
   gem 'sanitize'
   gem 'sass', '3.4.1' # Maybe necessary as part of upgrade to Rails 4.1.0; added for ruby versioning; at 3.4.25, I encountered "undefined method `log_level' for #<ActiveSupport::Logger:0x0000000a736388>"
   gem 'select2-rails'
@@ -150,6 +159,5 @@ group :development do
   gem 'binding_of_caller', :platforms => [:mri_19, :mri_20, :rbx]
   gem 'rubocop', '~> 0.48.1', require: false # Necessary as part of upgrade to Rails 4.1.0; added for ruby versioning
   gem 'rails-erb-lint', require: false
-  gem 'scss-lint', require: false
   gem 'brakeman'
 end

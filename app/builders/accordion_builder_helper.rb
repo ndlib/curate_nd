@@ -1,9 +1,9 @@
 module AccordionBuilderHelper
   def accordion(opts = {})
-    opts[:accordion_id] ||= 'accordion'
+    opts[:accordion_id] ||= 'panel-group'
     opts[:open] = true unless opts.has_key?(:open)
     builder = AccordionBuilder.new(opts, self)
-    content_tag(:div, :class => 'accordion', :id => opts[:accordion_id]) do
+    content_tag(:div, :class => 'panel-group', :id => opts[:accordion_id]) do
       yield builder
     end
   end
@@ -20,7 +20,7 @@ module AccordionBuilderHelper
     end
 
     def pane(title, fieldset_opts = {}, &block)
-      content_tag(:div, :class => 'accordion-group') do
+      content_tag(:div, :class => 'panel panel-default') do
         heading(title, fieldset_opts) + body(title, fieldset_opts, &block)
       end
     end
@@ -28,12 +28,12 @@ module AccordionBuilderHelper
     private
 
     def heading(title, fieldset_opts)
-      content_tag(:div, :class => 'accordion-heading') do
+      content_tag(:div, :class => 'panel-heading') do
         content_tag(:h3) do
           link_to(
             title,
             "##{fieldset_id_for_index(fieldset_rendered_counter)}",
-            :class => 'accordion-toggle', :'data-toggle' => 'collapse',
+            :class => 'panel-collapse', :'data-toggle' => 'collapse',
             :'data-parent' => "##{opts[:accordion_id]}"
           )
         end
@@ -41,8 +41,8 @@ module AccordionBuilderHelper
     end
 
     def body(title, fieldset_opts, &block)
-      content_tag(:div, :class => "accordion-body collapse in", :id => fieldset_id_for_index(fieldset_rendered_counter)) do
-        content_tag(:div, :class => 'accordion-inner') do
+      content_tag(:div, :class => "panel-collapse in", :id => fieldset_id_for_index(fieldset_rendered_counter)) do
+        content_tag(:div, :class => 'panel-body') do
           content_tag(:div) do
             capture(&block)
           end + pane_actions(fieldset_opts)

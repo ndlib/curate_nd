@@ -3,7 +3,7 @@
 <% upload_title = nbr_files == 0 ? "Upload Files" : "Upload Additional Files" %>
 
 <div class="row with-headroom">
-  <div class="span12">
+  <div class="col-sm-12">
     <h2 id="attachments">
       Attachments
     </h2>
@@ -29,7 +29,7 @@
   <% end %>
 <% else %>
   <div class="row">
-    <fieldset class="span5">
+    <fieldset class="col-sm-5">
       <legend>Upload Files</legend>
       <%= f.input :files, as: :file, input_html: {multiple: true} %>
     </fieldset>
