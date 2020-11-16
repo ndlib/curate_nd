@@ -110,6 +110,7 @@ end
 # Explicitly require it here.
 gem 'addressable', '~> 2.3.5'
 gem 'sass-rails'
+gem 'coffee-rails', '~> 4.0' # needed by sprockets & not included there
 gem 'uglifier', '>= 1.0.3'
 
 gem 'rails-assets-leaflet', source: 'https://rails-assets.org'

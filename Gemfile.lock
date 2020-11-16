@@ -188,6 +188,13 @@ GEM
     coderay (1.1.3)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
+    coffee-rails (4.2.2)
+      coffee-script (>= 2.2.0)
+      railties (>= 4.0.0)
+    coffee-script (2.4.1)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.12.2)
     concurrent-ruby (1.1.7)
     crack (0.4.4)
     crass (1.0.6)
@@ -674,6 +681,7 @@ DEPENDENCIES
   citeproc
   citeproc-ruby (~> 1.1.0)
   clamby
+  coffee-rails (~> 4.0)
   csl-styles
   curate-indexer
   custom_configuration
