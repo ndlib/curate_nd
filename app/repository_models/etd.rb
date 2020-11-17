@@ -137,8 +137,7 @@ class Etd < ActiveFedora::Base
     ds.attribute :date,
       default: lambda { Date.today.to_s("%Y-%m-%d") },
       multiple: false,
-      label: "Defense Date",
-      validates: { presence: { message: "Your #{etd_label} must have a defense date." } }
+      label: "Defense Date"
     ds.attribute :date_approved,
       multiple: false,
       label: "Approval Date"
