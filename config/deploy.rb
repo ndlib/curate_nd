@@ -314,7 +314,7 @@ task :production do
   set :rails_env, 'production'
   set :deploy_to, '/home/app/curatend'
   set :user,      'app'
-  set :domain,    fetch(:host, 'curatesvrprod')
+  set :domain,    fetch(:host, 'curatesvr-prod')
   set :bundle_without, %i[development test debug]
 
   set :shared_directories, %w[log]
