@@ -75,7 +75,7 @@ class Citation
   end
 
   def date_created
-    val = try_fields([:date_created, :created])
+    val = try_fields([:date_created, :created, :publication_date])
     return nil if val.blank?
     return val if val.is_a? Date
     # In collections, the date is an array
@@ -89,7 +89,7 @@ class Citation
   end
 
   def creator
-    val = try_fields([:creator])
+    val = try_fields([:creator, :author])
     return nil if val.nil?
     val.join(" and ")
   end
