@@ -8,9 +8,9 @@ class Citation
   STYLES = {
     apa: "apa",
     mla: "modern-language-association-7th-edition-underline",
-    chicago: "chicago-fullnote-bibliography",
+    chicago: "chicago-author-date-16th-edition",
     harvard: "harvard-cite-them-right",
-    vancouver: "vancouver"
+    bibtex: "bibtex"
   }
 
   attr_reader :curation_concern, :item

@@ -22,7 +22,7 @@ class CitationController < ApplicationController
     mla: 'MLA',
     chicago: 'Chicago',
     harvard: 'Harvard',
-    vancouver: 'Vancouver'
+    bibtex: 'BibTex'
   }
 
   helper_method :result
