@@ -9,8 +9,8 @@ GIT
 
 GIT
   remote: https://github.com/ndlib/locabulary.git
-  revision: 445f5d095122f806734de9fd3bfb9746ed8787ca
-  ref: 445f5d095122f806734de9fd3bfb9746ed8787ca
+  revision: 6dc83adc8cc6bebd41c3e9ca4e75a6a088ea8ad0
+  ref: 6dc83adc8cc6bebd41c3e9ca4e75a6a088ea8ad0
   specs:
     locabulary (0.8.1)
       activesupport (>= 4.0, < 6.0)

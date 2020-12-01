@@ -49,7 +49,7 @@ group :default do
   gem 'jshintrb'
   gem 'json-ld'
   gem 'kaminari'
-  gem 'locabulary', github: 'ndlib/locabulary', ref: '445f5d095122f806734de9fd3bfb9746ed8787ca'
+  gem 'locabulary', github: 'ndlib/locabulary', ref: '6dc83adc8cc6bebd41c3e9ca4e75a6a088ea8ad0'
   gem 'lograge'
   gem 'logstash-event'
   gem 'logstash-logger'
