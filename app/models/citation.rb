@@ -8,9 +8,9 @@ class Citation
   STYLES = {
     apa: "apa",
     mla: "modern-language-association-7th-edition-underline",
-    chicago: "chicago-fullnote-bibliography",
+    chicago: "chicago-author-date-16th-edition",
     harvard: "harvard-cite-them-right",
-    vancouver: "vancouver"
+    bibtex: "bibtex"
   }
 
   attr_reader :curation_concern, :item
@@ -48,6 +48,7 @@ class Citation
         source: show_page,
         title: curation_concern.title,
       }
+      # see https://github.com/inukshuk/citeproc/blob/master/lib/citeproc/variable.rb for valid variables in item
       val = date_created
       md[:issued] = val if val.present?
       val = creator
@@ -56,11 +57,44 @@ class Citation
       md[:publisher] = val if val.present?
       val = doi
       md[:DOI] = val if val.present?
+      val = item_type
+      md[:type] = val if val.present?
       CiteProc::Item.new(md)
     rescue TypeError => e
       Raven.capture_exception(e, extra: { id: curation_concern.pid })
       nil
     end
+  end
+
+  # map to valid item types from https://github.com/inukshuk/citeproc/blob/master/lib/citeproc/item.rb
+  ITEM_TYPE_MAP = {
+    "Article": :article,
+    "Doctoral Dissertation": :thesis,
+    "Master's Thesis": :thesis,
+    "Senior Thesis": :thesis,
+    "Patent": :patent,
+    "Manuscript": :manuscript,
+    "Pamphlet": :pamphlet,
+    "Book Chapter": :chapter,
+    "Book": :book,
+    "Image": :graphic,
+    "Capstone Project": :thesis,
+    "Master of Architecture": :thesis
+
+        # Valid types:
+        # :article, :'article-journal', :'article-magazine', :'article-newspaper',
+        # :bill, :book, :broadcast, :chapter, :entry, :'entry-dictionary',
+        # :'entry-encyclopedia', :figure, :graphic, :interview, :legal_case,
+        # :legislation, :manuscript, :map, :motion_picture, :musical_score,
+        # :pamphlet, :'paper-conference', :patent, :personal_communication, :post,
+        # :'post-weblog', :report, :review, :'review-book', :song, :speech,
+        # :thesis, :treaty, :webpage
+  }.freeze
+  def item_type
+    val = try_fields([:human_readable_type])
+    return nil if val.blank?
+    # will be nil if val not found
+    ITEM_TYPE_MAP[val.to_sym]
   end
 
   def doi
@@ -75,7 +109,7 @@ class Citation
   end
 
   def date_created
-    val = try_fields([:date_created, :created])
+    val = try_fields([:date_created, :created, :publication_date])
     return nil if val.blank?
     return val if val.is_a? Date
     # In collections, the date is an array
@@ -89,7 +123,7 @@ class Citation
   end
 
   def creator
-    val = try_fields([:creator])
+    val = try_fields([:creator, :author])
     return nil if val.nil?
     val.join(" and ")
   end
