@@ -23,6 +23,9 @@
         <% if solr_doc.has?('desc_metadata__date_ssi') %>
           <dt>Defense Date:</dt>
           <dd><%= render_index_field_value(document: solr_doc, field: 'desc_metadata__date_ssi') %></dd>
+        <% elsif solr_doc.has?('desc_metadata__date_created_tesim') %>
+          <dt>Date Created:</dt>
+            <dd><%= render_index_field_value(document: solr_doc, field: 'desc_metadata__date_created_tesim') %></dd>
         <% end %>
         <dt>Record Visibility: </dt>
         <dd><%= AccessRenderer.new(nil, solr_doc).badge(show_date: false) %></dd>
