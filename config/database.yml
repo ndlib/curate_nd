@@ -52,6 +52,7 @@ test_remote_purl_database:
 
 ci: &ci
   <<: *test
+  host: 0.0.0.0
 
 ci_remote_purl_database:
   <<: *ci
