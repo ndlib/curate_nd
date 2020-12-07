@@ -28,10 +28,10 @@ jobs:
       run: docker ps -a
 
     - name: check jetty logs
-      run: docker log curate_nd_jetty_1
+      run: docker logs curate_nd_jetty_1
 
     - name: check mariadb logs
-      run: docker log curate_nd_mysql_1
+      run: docker logs curate_nd_mysql_1
 
     - name: Run CI Tests 
       env:
