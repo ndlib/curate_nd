@@ -27,7 +27,13 @@ jobs:
     - name: Check on our containers
       run: docker ps -a
 
+    - name: check jetty logs
+      run: docker log curate_nd_jetty_1
+
+    - name: check mariadb logs
+      run: docker log curate_nd_mysql_1
+
     - name: Run CI Tests 
       env:
         RAILS_ENV: ci
-      run: bundle exec rake curatend:ci_prep && bundle exec rake spec curatend:lint_erb SPEC_OPTS="--tag ~js:true"
+      run: bundle exec rake curatend:ci_prep
