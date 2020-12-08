@@ -33,7 +33,7 @@ CurateNd::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
-  config.application_root_url = "http://0.0.0.0:3000"
+  config.application_root_url = "http://localhost:3000"
   config.default_oai_limit = 1
 
   # for iiif image viewer
