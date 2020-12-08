@@ -33,7 +33,8 @@ jobs:
     - name: check mariadb logs
       run: docker logs curate_nd_mysql_1
 
+    - name: Run CI_PREP
+      run: RAILS_ENV=ci bundle exec rake curatend:ci_prep
+
     - name: Run CI Tests 
-      env:
-        RAILS_ENV: ci
-      run: bundle exec rake curatend:ci_prep && bundle exec rake spec curatend:lint_erb SPEC_OPTS="--tag ~js:true"
+      run:  bundle exec rake spec RAILS_ENV=ci
