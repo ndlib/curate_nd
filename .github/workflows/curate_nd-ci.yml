@@ -24,13 +24,13 @@ jobs:
       matrix: 
         ruby: [ '2.6', '2.7' ]
 
-    name: Testing Ruby {{ matrix.ruby }}
+    name: Testing Ruby ${{ matrix.ruby }}
     steps:
     - uses: actions/checkout@v2
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: {{ matrix.ruby }}
+        ruby-version: ${{ matrix.ruby }}
 
     - name: Install bundler
       run: gem install bundler -v 1.17.3
