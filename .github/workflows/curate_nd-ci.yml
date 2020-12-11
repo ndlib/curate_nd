@@ -5,6 +5,21 @@ jobs:
   test-curate_nd:
     runs-on: ubuntu-18.04
 
+    # use github hubs to manage service containers
+    services:
+      mariadb:
+        image: mariadb
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: curate_nd_test
+        ports:
+          - 3306:3306
+
+      jetty:
+        image: ndlib/curate-jetty
+        ports:
+          - 8593:8593
+
     steps:
     - uses: actions/checkout@v2
     - name: Set up Ruby
@@ -20,18 +35,6 @@ jobs:
 
     - name: stop local  mysql
       run: sudo service mysql stop
-
-    - name: Start CI DB & Jetty via Docker Compose
-      run: docker-compose -f docker-compose-test.yml up -d
-
-    - name: Check on our containers
-      run: docker ps -a
-
-    - name: check jetty logs
-      run: docker logs curate_nd_jetty_1
-
-    - name: check mariadb logs
-      run: docker logs curate_nd_mysql_1
 
     - name: Run CI_PREP
       run: RAILS_ENV=ci bundle exec rake curatend:ci_prep
