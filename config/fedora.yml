@@ -17,6 +17,7 @@ test: &TEST
   url: <%= "http://#{host}:#{port}/fedora-test" %>
 ci:
   <<: *TEST
+  url: http://127.0.0.1:8983/fedora-test" %>
 production:
   user: fedoraAdmin
   password: fedoraAdmin

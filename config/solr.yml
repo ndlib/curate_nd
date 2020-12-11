@@ -17,6 +17,6 @@ test: &TEST
 cucumber:
   <<: *TEST
 ci:
-  url: http://0.0.0.0:8983/solr/test
+  url: http://127.0.0.1:8983/solr/test
 production:
   url: http://your.production.server:8080/bl_solr/core0
