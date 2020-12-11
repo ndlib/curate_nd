@@ -18,7 +18,7 @@ jobs:
       jetty:
         image: ndlib/curate-jetty
         ports:
-          - 8593:8593
+          - 8983:8983
 
     steps:
     - uses: actions/checkout@v2
