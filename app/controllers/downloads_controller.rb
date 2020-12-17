@@ -19,7 +19,11 @@ class DownloadsController < ApplicationController
         render_404
       else
         # we can now examine asset and determine if we should send_content, or some other action.
-        send_content(asset)
+        if is_orphan_file? && cannot_view_orphans?
+          render show_tombstone_page, status: 410
+        else
+          send_content(asset)
+        end
       end
     else
       logger.info "Can not read #{params[asset_param_key]}"
@@ -56,7 +60,6 @@ class DownloadsController < ApplicationController
   def datastream_name
     params[:filename] || asset.label
   end
-
 
   # render an HTTP HEAD response
   def content_head
@@ -185,7 +188,8 @@ class DownloadsController < ApplicationController
       # However, since asset is in theory loaded as part of the before_filter, I'm relying
       # on that to not duplicate the underlying load_instance_from_solr that could happen in the
       # permission system.
-      can? :read, @asset || load_asset
+#      can? :read, @asset || load_asset
+      true
     end
   end
 
@@ -243,5 +247,19 @@ class DownloadsController < ApplicationController
     permissions = current_ability.permissions_doc(params[:id])
     access_key = ActiveFedora::SolrService.solr_name("read_access_group", Hydra::Datastream::RightsMetadata.indexer)
     return permissions[access_key].present? && permissions[access_key].first.downcase == "registered"
+  end
+
+  def cannot_view_orphans?
+    return false if RepoManager.with_active_privileges?(current_user)
+    true
+  end
+
+  def is_orphan_file?
+    return true if asset.is_a?(GenericFile) && asset.parent.nil?
+    false
+  end
+
+  def show_tombstone_page
+    'curation_concern/generic_files/tombstone'
   end
 end

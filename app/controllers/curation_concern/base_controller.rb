@@ -37,7 +37,11 @@ module CurationConcern
           false
         end
       else
-        authorize!(action_name_for_authorization, curation_concern) || true
+        if is_orphan_file? && cannot_view_orphans?
+          render show_tombstone_page, status: 410
+        else
+          authorize!(action_name_for_authorization, curation_concern) || true
+        end
       end
     end
 
@@ -89,7 +93,19 @@ module CurationConcern
       end
     end
 
+    def cannot_view_orphans?
+      return false if RepoManager.with_active_privileges?(current_user)
+      true
+    end
 
+    def is_orphan_file?
+      return true if curation_concern.is_a?(GenericFile) && curation_concern.parent.nil?
+      false
+    end
+
+    def show_tombstone_page
+      'curation_concern/base/tombstone'
+    end
 
   end
 end

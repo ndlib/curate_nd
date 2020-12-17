@@ -4,7 +4,7 @@ class CurationConcern::GenericFilesController < CurationConcern::BaseController
   respond_to(:html)
 
   def attach_action_breadcrumb
-    add_breadcrumb "#{parent.human_readable_type}", common_object_path(parent)
+    add_breadcrumb "#{parent.human_readable_type}", common_object_path(parent) unless parent.nil?
     super
   end
 
@@ -52,13 +52,18 @@ class CurationConcern::GenericFilesController < CurationConcern::BaseController
     end
   end
 
-
   def show
     respond_with(curation_concern)
   end
 
   def edit
-    respond_with(curation_concern)
+    if is_orphan_file?
+      respond_with(:curation_concern, curation_concern) { |wants|
+        wants.html { render show_tombstone_page, status: 410 }
+      }
+    else
+      respond_with(curation_concern)
+    end
   end
 
   def update
