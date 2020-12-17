@@ -188,8 +188,7 @@ class DownloadsController < ApplicationController
       # However, since asset is in theory loaded as part of the before_filter, I'm relying
       # on that to not duplicate the underlying load_instance_from_solr that could happen in the
       # permission system.
-#      can? :read, @asset || load_asset
-      true
+     can? :read, @asset || load_asset
     end
   end
 

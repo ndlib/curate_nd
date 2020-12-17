@@ -21,9 +21,13 @@ class CommonObjectsController < ApplicationController
   before_filter :enforce_show_permissions, only: [:show]
   rescue_from Hydra::AccessDenied do |exception|
     respond_with curation_concern do |format|
-      format.html { render show_tombstone_page, status: 410 } if is_orphan_file? && cannot_view_orphans?
-      format.html { render unauthorized_template, status: 401 }
-      format.jsonld { render json: { error: 'Unauthorized' }, status: 401 }
+      if is_orphan_file? && cannot_view_orphans?
+        format.html { render show_tombstone_page, status: 410 }
+        format.jsonld { render json: { error: 'tombstone file', pid: curation_concern.pid, filename: curation_concern.title  }, status: 410 }
+      else
+        format.html { render unauthorized_template, status: 401 }
+        format.jsonld { render json: { error: 'Unauthorized' }, status: 401 }
+      end
     end
   end
 
