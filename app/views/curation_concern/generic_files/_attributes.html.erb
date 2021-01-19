@@ -11,8 +11,13 @@
     <tr>
       <th>Parent Work</th>
       <td>
+        <%# Bug fix as per CURATE-233, link to parent throws 500 error for orphan files %>
+        <% if controller.is_orphan_file? %>
+          <b>This file has no parent.<b>
+        <% else %>
         <%# Bug fix as per DLTP-749, link to parent throws 500 error for collections %>
-        <%= link_to curation_concern.parent, common_object_path(curation_concern.parent.noid) %>
+          <%= link_to curation_concern.parent, common_object_path(curation_concern.parent.noid) %>
+        <% end %>
       </td>
     </tr>
     <tr>

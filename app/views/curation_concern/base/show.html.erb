@@ -6,16 +6,19 @@
 <% end %>
 
 <% content_for :page_actions do %>
-  <% if display_citation_generation? %>
-    <%= link_to 'Generate Citation', citation_path(curation_concern) , class: 'btn citation-modal-js' %>
-  <% end %>
-  <% if can?(:edit, curation_concern) %>
-    <%= link_to edit_polymorphic_path([:curation_concern, curation_concern]), class: 'btn' do %>
-      <i class="icon icon-pencil"></i> Edit
+  <% unless controller.is_orphan_file? %>
+    <% if display_citation_generation? %>
+      <%= link_to 'Generate Citation', citation_path(curation_concern) , class: 'btn citation-modal-js' %>
     <% end %>
-  <% end %>
-  <% if RepoManager.with_active_privileges?(current_user) %>
-    <%= link_to 'Reindex this Item', admin_reindex_pid_path(curation_concern.id) , class: 'btn btn-primary' %>
+    <% require 'byebug'; debugger; true %>
+    <% if can?(:edit, curation_concern) %>
+      <%= link_to edit_polymorphic_path([:curation_concern, curation_concern]), class: 'btn' do %>
+        <i class="icon icon-pencil"></i> Edit
+      <% end %>
+    <% end %>
+    <% if RepoManager.with_active_privileges?(current_user) %>
+      <%= link_to 'Reindex this Item', admin_reindex_pid_path(curation_concern.id) , class: 'btn btn-primary' %>
+    <% end %>
   <% end %>
 <% end %>
 

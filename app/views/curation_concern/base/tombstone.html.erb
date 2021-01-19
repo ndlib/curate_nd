@@ -1,0 +1,8 @@
+<% content_for :page_title, construct_page_title("#{response.status} - Page Is Gone") %>
+<% content_for :page_header do %>
+  <h1>This file has been removed</h1>
+<% end %>
+
+<p>
+  The requested file <%= curation_concern.pid %> (<%= curation_concern.filename %>) has been removed.
+</p>
