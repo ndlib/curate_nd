@@ -4,3 +4,6 @@
 User-Agent: *
 Disallow: /downloads/
 Disallow: /help_requests/
+# Google Scholar indexing
+User-agent: Googlebot
+Allow: /
