@@ -1,0 +1,43 @@
+<% work_item = curation_concern.standardize %>
+
+<!-- metadata tags for Google Scholar, altmetrics, etc -->
+  <meta name="DC.title" content="<%= work_item[:title] %>" />
+<% unless work_item[:doi].blank? %>
+  <meta name="citation_doi" content="<%= curation_concern.doi %>" />
+<% end %>
+<% unless work_item[:creator].blank? %>
+  <% curation_concern.creator.each do |name| %>
+    <meta name="DC.creator" content="<%= name %>" />
+  <% end %>
+<% end %>
+<% unless work_item[:date_published].blank? %>
+  <meta name="prism.publicationDate" content="<%= work_item[:date_published] %>" />
+  <meta name="citation_online_date" content="<%= work_item[:date_published] %>" />
+<% end %>
+<% unless work_item[:issn].blank? %>
+  <meta name="prism.issn" content="<%= work_item[:issn] %>" />
+  <meta name="citation_issn" content="<%= work_item[:issn] %>" />
+<% end %>
+<% unless work_item[:eissn].blank? %>
+  <meta name="prism.eIssn" content="<%= work_item[:eissn] %>" />
+<% end %>
+<% unless work_item[:isbn].blank? %>
+  <meta name="prism.isbn" content="<%= work_item[:isbn] %>" />
+  <meta name="citation_isbn" content="<%= work_item[:isbn] %>" />
+<% end %>
+<% unless work_item[:journal_title].blank? %>
+  <meta name="citation_journal_title" content="<%= work_item[:journal_title] %>" />
+<% end %>
+<% unless work_item[:volume].blank? %>
+  <meta name="citation_volume" content="<%= work_item[:volume] %>" />
+<% end %>
+<% unless work_item[:issue].blank? %>
+  <meta name="citation_issue" content="<%= work_item[:issue] %>" />
+<% end %>
+<% if curation_concern.generic_files.present? %>
+  <% curation_concern.generic_files.each do |file| %>
+    <% if file.filename.include?('pdf') %>
+      <meta name="citation_pdf_url" content="<%= download_url(file).to_s %>" />
+    <% end %>
+  <% end %>
+<% end %>

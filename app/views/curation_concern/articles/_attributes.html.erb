@@ -1,42 +1,10 @@
 <% content_for :google_scholar_metadata_tags do %>
-  <!-- metadata tags for Google Scholar -->
-  <meta name="DC.title" content="<%= curation_concern.title %>">
-  <% curation_concern.creator.each do |name| %>
-    <meta name="DC.creator" content="<%= name %>">
-  <% end %>
-  <% if curation_concern.publication_date.present? %>
-    <meta name="prism.publicationDate" content="<%= curation_concern.publication_date %>">
-  <% end %>
-  <% if curation_concern.is_part_of.present? %>
-    <meta name="citation_journal_title" content="<%= curation_concern.is_part_of %>">
-  <% end %>
-  <% if curation_concern.issn.present? %>
-    <meta name="prism.issn" content="<%= curation_concern.issn %>">
-  <% end %>
-  <% if curation_concern.eIssn.present? %>
-    <meta name="prism.eIssn" content="<%= curation_concern.eIssn %>">
-  <% end %>
-  <% if curation_concern.isbn.present? %>
-    <meta name="prism.isbn" content="<%= curation_concern.isbn %>">
-  <% end %>
-  <% if curation_concern.volume.present? %>
-    <meta name="citation_volume" content="<%= curation_concern.volume %>">
-  <% end %>
-  <% if curation_concern.issue.present? %>
-    <meta name="citation_issue" content="<%= curation_concern.issue %>">
-  <% end %>
+  <%= render partial: 'curation_concern/base/meta_tags', locals: { curation_concern: curation_concern } %>
   <% if curation_concern.page_start.present? %>
-    <meta name="prism.startingPage" content="<%= curation_concern.page_start %>">
+    <meta name="prism.startingPage" content="<%= curation_concern.page_start %>" />
   <% end %>
   <% if curation_concern.page_end.present? %>
-    <meta name="prism.endingPage" content="<%= curation_concern.page_end %>">
-  <% end %>
-  <% if curation_concern.generic_files.present? %>
-    <% curation_concern.generic_files.each do |file| %>
-      <% if file.filename.include?('pdf') %>
-        <meta name="citation_pdf_url" content="<%= download_url(file).to_s %>">
-      <% end %>
-    <% end %>
+    <meta name="prism.endingPage" content="<%= curation_concern.page_end %>" />
   <% end %>
 <% end %>
 

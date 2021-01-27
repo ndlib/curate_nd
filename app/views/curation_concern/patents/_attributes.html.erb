@@ -1,3 +1,7 @@
+<% content_for :google_scholar_metadata_tags do %>
+  <%= render partial: 'curation_concern/base/meta_tags', locals: { curation_concern: curation_concern } %>
+<% end %>
+
 <%= curation_concern_attribute_to_formatted_text(curation_concern, :description, 'Description') %>
 
 <table class="table table-striped <%= dom_class(curation_concern) %> attributes">

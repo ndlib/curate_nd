@@ -1,19 +1,9 @@
 <% content_for :google_scholar_metadata_tags do %>
-  <!-- metadata tags for Google Scholar -->
-  <meta name="DC.title" content="<%= curation_concern.title %>">
-  <% curation_concern.creator.each do |name| %>
-    <meta name="DC.creator" content="<%= name %>">
-  <% end %>
+  <%= render partial: 'curation_concern/base/meta_tags', locals: { curation_concern: curation_concern } %>
+  <meta name="citation_dissertation_institution" content="University Of Notre Dame" />
   <% if curation_concern.date.present? %>
-    <meta name="prism.publicationDate" content="<%= curation_concern.date %>">
-  <% end %>
-  <meta name="citation_dissertation_institution" content="University Of Notre Dame">
-  <% if curation_concern.generic_files.present? %>
-    <% curation_concern.generic_files.each do |file| %>
-      <% if file.filename.include?('pdf') %>
-        <meta name="citation_pdf_url" content="<%= download_url(file).to_s %>">
-      <% end %>
-    <% end %>
+    <meta name="prism.publicationDate" content="<%= curation_concern.date %>" />
+    <meta name="citation_online_date" content="<%= curation_concern.date %>" />
   <% end %>
 <% end %>
 
