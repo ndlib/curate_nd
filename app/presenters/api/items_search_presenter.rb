@@ -10,6 +10,7 @@ class Api::ItemsSearchPresenter
     depositor: ["depositor_tesim"],
     deposit_date: ["system_create_dtsi"],
     modify_date: ["system_modified_dtsi"],
+    upload_date: ["desc_metadata__date_uploaded_dtsi"],
     part_of: ["library_collections_pathnames_tesim"],
     admin_unit: ["desc_metadata__administrative_unit_tesim"]
   }.freeze
@@ -83,6 +84,10 @@ class Api::ItemsSearchPresenter
       @params = params
       @request_url = request_url
       @fields = (params[:fl].nil? ? nil : params[:fl].split(","))
+      # include sort value in results field list
+      if params[:sort].present?
+        @fields = @fields.nil? ? Array.wrap(params[:sort].split(" ").first) : (@fields.push(params[:sort].split(" ").first))
+      end
     end
 
     attr_reader :item, :fields, :params, :request_url
@@ -157,8 +162,16 @@ class Api::ItemsSearchPresenter
       @item.fetch('system_modified_dtsi', "")
     end
 
+    def include_upload_date
+      @item.fetch('desc_metadata__date_uploaded_dtsi', "")
+    end
+
     def include_part_of
       @item.fetch('library_collections_pathnames_tesim', "")
+    end
+
+    def include_admin_unit
+      @item.fetch("desc_metadata__administrative_unit_tesim", "")
     end
   end
 
