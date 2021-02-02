@@ -3,10 +3,10 @@
 <!-- metadata tags for Google Scholar, altmetrics, etc -->
   <meta name="DC.title" content="<%= work_item[:title] %>" />
 <% unless work_item[:doi].blank? %>
-  <meta name="citation_doi" content="<%= curation_concern.doi %>" />
+  <meta name="citation_doi" content="<%= work_item[:doi] %>" />
 <% end %>
 <% unless work_item[:creator].blank? %>
-  <% curation_concern.creator.each do |name| %>
+  <% work_item[:creator].each do |name| %>
     <meta name="DC.creator" content="<%= name %>" />
   <% end %>
 <% end %>
@@ -15,18 +15,24 @@
   <meta name="citation_online_date" content="<%= work_item[:date_published] %>" />
 <% end %>
 <% unless work_item[:issn].blank? %>
-  <meta name="prism.issn" content="<%= work_item[:issn] %>" />
-  <meta name="citation_issn" content="<%= work_item[:issn] %>" />
+  <% Array.wrap(work_item[:issn]).each do |issn| %>
+    <meta name="prism.issn" content="<%= issn %>" />
+    <meta name="citation_issn" content="<%= issn %>" />
+  <% end %>
 <% end %>
 <% unless work_item[:eissn].blank? %>
   <meta name="prism.eIssn" content="<%= work_item[:eissn] %>" />
 <% end %>
 <% unless work_item[:isbn].blank? %>
-  <meta name="prism.isbn" content="<%= work_item[:isbn] %>" />
-  <meta name="citation_isbn" content="<%= work_item[:isbn] %>" />
+  <% Array.wrap(work_item[:isbn]).each do |isbn| %>
+    <meta name="prism.isbn" content="<%= isbn %>" />
+    <meta name="citation_isbn" content="<%= isbn %>" />
+  <% end %>
 <% end %>
 <% unless work_item[:journal_title].blank? %>
-  <meta name="citation_journal_title" content="<%= work_item[:journal_title] %>" />
+  <% Array.wrap(work_item[:journal_title]).each do |journal| %>
+    <meta name="citation_journal_title" content="<%= journal %>" />
+  <% end %>
 <% end %>
 <% unless work_item[:volume].blank? %>
   <meta name="citation_volume" content="<%= work_item[:volume] %>" />
