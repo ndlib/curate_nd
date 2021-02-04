@@ -24,7 +24,7 @@
         <% if solr_doc.has?('desc_metadata__publication_date_tesim') %>
           <dt>Date Published:</dt>
           <dd><%= render_index_field_value(document: solr_doc, field: 'desc_metadata__publication_date_tesim') %></dd>
-        <% elsif solr_doc.has?('desc_metadata__date_created_tesim') %> %>
+        <% elsif solr_doc.has?('desc_metadata__date_created_tesim') %>
           <dt>Date Created:</dt>
             <dd><%= render_index_field_value(document: solr_doc, field: 'desc_metadata__date_created_tesim') %></dd>
         <% end %>
