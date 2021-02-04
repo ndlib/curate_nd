@@ -4,15 +4,57 @@ class Api::ItemsSearchPresenter
   include Sufia::Noid
   attr_reader :raw_response, :request_url, :documents, :pager, :query_parameters
 
-  VALID_KEYS_AND_SEARCH_FIELDNAMES = {
-    type: ["active_fedora_model_ssi", "desc_metadata__type_tesim"],
-    editor: ["edit_access_person_ssim"],
-    depositor: ["depositor_tesim"],
-    deposit_date: ["system_create_dtsi"],
-    modify_date: ["system_modified_dtsi"],
-    upload_date: ["desc_metadata__date_uploaded_dtsi"],
-    part_of: ["library_collections_pathnames_tesim"],
-    admin_unit: ["desc_metadata__administrative_unit_tesim"]
+  # This hash controls the data used to build results list:
+    # key: a valid search, sort, or fl value. Converted to camel case in response.
+    #
+    # hash: {
+    # => fields:  Array, required (0-n elements)
+    #             solr field names to retrieve from item and combine into value for key
+    # => method:  Symbol, optional - a valid method to call on item's field data.
+    #             use :first for single-value fields to prevent display as array
+    #             Define new methods in Array class below.
+    # => default: String, optional
+    #             value to return in case of null value in item
+    # => with:    Symbol, optional (recursive limit to 3)
+    #             another field to include every time given field is returned
+    # }
+  RESULT_DATA = {
+    admin_unit:
+      { fields: ["desc_metadata__administrative_unit_tesim"] },
+    author:
+      { fields: ["desc_metadata__author_tesim"] },
+    creator:
+      { fields: ["desc_metadata__creator_tesim"],
+        with: :author },
+    deposit_date:
+      { fields: ["system_create_dtsi"],
+        method: :first },
+    depositor:
+      { fields: ["depositor_tesim"],
+        method: :first },
+    doi:
+      { fields: ["desc_metadata__identifier_tesim"],
+        method: :first },
+    editor:
+      { fields: ["edit_access_person_ssim"] },
+    language:
+      { fields: ["desc_metadata__language_tesim"] },
+    modify_date:
+      { fields: ["system_modified_dtsi"],
+        method: :first },
+    part_of:
+      { fields: ["library_collections_pathnames_tesim"] },
+    representative:
+      { fields: ["representative_tesim"] },
+    title:
+      { fields: ["desc_metadata__title_tesim"],
+        method: :first,
+        default: "title-not-found" },
+    upload_date:
+      { fields: ["desc_metadata__date_uploaded_dtsi"] },
+    visibility:
+      { fields: ["read_access_group_ssim"],
+        method: :screen_visibility }
   }.freeze
 
   def initialize(raw_response, request_url, query_parameters)
@@ -83,11 +125,7 @@ class Api::ItemsSearchPresenter
       @item = item
       @params = params
       @request_url = request_url
-      @fields = (params[:fl].nil? ? nil : params[:fl].split(","))
-      # include sort value in results field list
-      if params[:sort].present?
-        @fields = @fields.nil? ? Array.wrap(params[:sort].split(" ").first) : (@fields.push(params[:sort].split(" ").first))
-      end
+      @fields = build_field_list
     end
 
     attr_reader :item, :fields, :params, :request_url
@@ -96,44 +134,48 @@ class Api::ItemsSearchPresenter
       # always include standard list of fields
       results_hash = {
         "id" => item_id,
-        "title" => dc_title,
+        "title" =>  include_data_for("title"),
         "type" => dc_type,
-        "itemUrl" => File.join(request_url.root.to_s,  Rails.application.routes.url_helpers.api_item_path(item_id))
+        "itemUrl" => item_url
       }
-      # always include any fields which were part of query.
-      results_hash = results_hash.merge(load_query_fields)
-      # return any additional requested fields
-      if fields.present?
-        fields.each do |field|
-          begin
-             next unless respond_to?("include_#{field}")
-            results_hash[field.camelize(:lower)] = self.send("include_#{field}")
+      # load results hash for all search, sort, and requested fields
+      fields.each do |field|
+        begin
+          results_hash[field.camelize(:lower)] = include_data_for(field)
+          # return related field if one exists
+          count = 0
+          next_field = RESULT_DATA[field.to_sym] && RESULT_DATA[field.to_sym][:with]
+          while next_field && count < 3 do
+            results_hash[next_field.to_s.camelize(:lower)] = include_data_for(next_field)
+            # continue if the field is valid and has a :with field
+            next_field = RESULT_DATA[next_field.to_sym] && RESULT_DATA[next_field.to_sym][:with]
+            count += 1
           end
         end
       end
       results_hash
     end
 
-    def load_query_fields
-      hash = {}
-      params.keys.each do |key|
-        fields = VALID_KEYS_AND_SEARCH_FIELDNAMES[key.to_sym]
-        if fields.present?
-          fields.each do |field|
-            value = @item.fetch(field, [])
-            hash[key.to_s.camelize(:lower)] = value unless value.empty?
-          end
-        end
-      end
-      hash
+    def build_field_list
+      field_list = []
+      # first include anything in :fl
+      field_list += (params[:fl].split(",")) if params[:fl].present?
+
+      # next add any sort terms
+      field_list += Array.wrap((params[:sort].split(" ")).first) if params[:sort].present?
+
+      # next include any valid queried terms
+      field_list += (params.keys.map(&:to_s) & Api::QueryBuilder::VALID_KEYS_AND_SEARCH_FIELDNAMES.keys.map(&:to_s))
+
+      # and finally, remove the fields we automatically include, to prevent overwriting with error
+      field_list -= ["id", "title", "type", "itemUrl"]
+
+      # return compiled list of fields to include in results list
+      field_list
     end
 
     def item_id
       @item_id ||= Sufia::Noid.noidify(@item.fetch('id'))
-    end
-
-    def dc_title
-      Array.wrap(@item.fetch('desc_metadata__title_tesim', 'title-not-found' )).first
     end
 
     def dc_type
@@ -142,36 +184,20 @@ class Api::ItemsSearchPresenter
       Array.wrap(dc_type).first
     end
 
-    def include_language
-      @item.fetch('desc_metadata__language_tesim', []).first
+    def item_url
+      File.join(request_url.root.to_s,  Rails.application.routes.url_helpers.api_item_path(item_id))
     end
 
-    def include_creator
-      @item.fetch('desc_metadata__creator_tesim', []).first
-    end
-
-    def include_depositor
-      @item.fetch('depositor_tesim', []).first
-    end
-
-    def include_deposit_date
-      @item.fetch('system_create_dtsi', "")
-    end
-
-    def include_modify_date
-      @item.fetch('system_modified_dtsi', "")
-    end
-
-    def include_upload_date
-      @item.fetch('desc_metadata__date_uploaded_dtsi', "")
-    end
-
-    def include_part_of
-      @item.fetch('library_collections_pathnames_tesim', "")
-    end
-
-    def include_admin_unit
-      @item.fetch("desc_metadata__administrative_unit_tesim", "")
+    def include_data_for(field)
+      field_data = []
+      load_method = RESULT_DATA[field.to_sym]
+      return 'term not valid' unless load_method
+      default_value = load_method[:default] || []
+      load_method[:fields].each do |field|
+        field_data += Array.wrap(@item.fetch(field, default_value))
+      end
+      return field_data.send(load_method[:method]) if load_method[:method]
+      field_data
     end
   end
 
@@ -247,5 +273,14 @@ class Api::ItemsSearchPresenter
       return request_url_without_params if query_parameters.empty?
       "#{request_url_without_params}?#{query_parameters.to_query}"
     end
+  end
+end
+
+class Array
+  # This class exists to add methods to be used by the RESULT_DATA hash.
+  def screen_visibility
+    return "public" if self.include?("public")
+    return "registered" if self.include?("registered")
+    "private"
   end
 end
