@@ -13,6 +13,14 @@ class Api::QueryBuilder
   CONFIGURATION_KEY_MAX_VALUE = {
     rows: Api::ItemsController.blacklight_config.max_per_page
   }.freeze
+  SORT_OPTIONS = {
+    sort: {
+      'modify_date asc'=>'system_modified_dtsi asc',
+      'deposit_date asc'=>'system_create_dtsi asc',
+      'modify_date desc'=>'system_modified_dtsi desc',
+      'deposit_date desc'=>'system_create_dtsi desc'
+    }
+  }.freeze
 
   AND_SEARCH_SEPARATOR = '^'
   OR_SEARCH_SEPARATOR = ','
@@ -34,6 +42,9 @@ class Api::QueryBuilder
       if CONFIGURATION_KEY_MAX_VALUE[key].present?
         return false  if value.to_i > CONFIGURATION_KEY_MAX_VALUE[key].to_i
       end
+      if SORT_OPTIONS[key].present?
+        return false unless SORT_OPTIONS[key][value].present?
+      end
     end
     return true
   end
@@ -44,6 +55,10 @@ class Api::QueryBuilder
       key = term.to_sym
       if VALID_KEYS_AND_SEARCH_FIELDNAMES[key].present?
         solr_parameters[:fq] << do_search_for(key, value)
+      elsif SORT_OPTIONS[key].present?
+        # remove sort from solr_parameters & replace with new sort
+        solr_parameters.delete(key)
+        solr_parameters[key] = SORT_OPTIONS[key][value]
       end
     end
     solr_parameters

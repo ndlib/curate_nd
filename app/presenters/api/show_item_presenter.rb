@@ -132,7 +132,12 @@ class Api::ShowItemPresenter
     data['downloadUrl'] = url_for(pid: ds.pid, url_type: :download)
     data['label'] = ds.label
     data['mimeType'] = ds.mimeType
-    bendo_url = bendo_location(ds.datastream_content)
+    begin
+      bendo_url = bendo_location(ds.datastream_content)
+    rescue SocketError => e
+      Raven.capture_exception(e)
+      bendo_url = ""
+    end
     data['bendoUrl'] = bendo_url unless bendo_url.blank?
     data
   end
