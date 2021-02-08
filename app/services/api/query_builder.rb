@@ -15,6 +15,8 @@ class Api::QueryBuilder
   }.freeze
   SORT_OPTIONS = {
     sort: {
+      'modify_date'=>'system_modified_dtsi asc',
+      'deposit_date'=>'system_create_dtsi asc',
       'modify_date asc'=>'system_modified_dtsi asc',
       'deposit_date asc'=>'system_create_dtsi asc',
       'modify_date desc'=>'system_modified_dtsi desc',
