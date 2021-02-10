@@ -2,7 +2,7 @@
   <div class="alert alert-warn">
     <p>Your single-use URL has expired or is no longer valid.</p>
     <% if access_renewal_request_allowed?(params[:token]) %>
-      <% build_renewal_request(params[:token]).html_safe %>
+      <% build_access_renewal_request(params[:token]).html_safe %>
     <% end %>
   </div>
 <% end %>
