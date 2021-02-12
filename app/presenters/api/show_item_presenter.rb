@@ -14,15 +14,21 @@ class Api::ShowItemPresenter
            'http://id.loc.gov/vocabulary/relators/',
            'http://purl.org/vra/'].freeze
 
-  def initialize(item, request_url)
+  def initialize(item, request_url, format)
     @item = item
     @request_url = RDF::URI.new(request_url)
+    @format = format
     build_json!
   end
 
   # @return [String] the JSON document
   def to_json
     JSON.dump(@json)
+  end
+
+  # @return [String] the XML document
+  def to_xml
+    @json.to_xml
   end
 
   private
@@ -210,6 +216,7 @@ class Api::ShowItemPresenter
       begin
         reader.each_statement do |statement|
           predicate = delete_prefix(string: statement.predicate.to_s)
+          predicate = strip_predicate_character(string: predicate)
           subject = statement.object.to_s
           if !subject.blank?
             new_subject = use_url_if_is_a_pid(subject, url_type: :show)
@@ -269,6 +276,12 @@ class Api::ShowItemPresenter
         return string.sub(prefix, "")
       end
     end
+    string
+  end
+
+  def strip_predicate_character(string:, character: "#")
+    # to_xml can't handle # in the predicate name
+    string[character] = "_" if (@format.xml? && string.include?(character))
     string
   end
 

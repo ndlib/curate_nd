@@ -77,6 +77,11 @@ class Api::ItemsSearchPresenter
     @json
   end
 
+  # @return [String] the XML document
+  def to_xml
+    @json.to_xml
+  end
+
   private
 
   def build_json!

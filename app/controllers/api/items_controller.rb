@@ -19,15 +19,27 @@ class Api::ItemsController < Api::BaseController
   def index
     if valid_search_request_syntax?
       (@response, @document_list) = get_search_results
-      render json: Api::ItemsSearchPresenter.new(@response, request.url, request.query_parameters).to_json
+      response_data = Api::ItemsSearchPresenter.new(@response, request.url, request.query_parameters)
+      respond_to do |format|
+        format.xml { render xml: response_data.to_xml }
+        format.json { render json: response_data.to_json }
+      end
     else
-      render json: { error: 'Invalid search request format. Please consult API documentation.' }, status: :bad_request
+      error_data = { error: 'Invalid search request format. Please consult API documentation.' }
+      respond_to do |format|
+        format.xml { render xml: error_data.to_xml, status: :bad_request }
+        format.json { render json: error_data.to_json, status: :bad_request }
+      end
     end
   end
 
   # GET /api/items/1
   def show
-    render json: Api::ShowItemPresenter.new(item, request.url).to_json
+    show_data = Api::ShowItemPresenter.new(item, request.url, request.format)
+    respond_to do |format|
+      format.xml {render xml: show_data.to_xml }
+      format.json { render json: show_data.to_json }
+    end
   end
 
   # POST /api/items/1/token
