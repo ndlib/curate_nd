@@ -2,13 +2,17 @@ class Api::QueryBuilder
   include Sufia::Noid
 
   VALID_KEYS_AND_SEARCH_FIELDNAMES = {
-    type: ["active_fedora_model_ssi", "desc_metadata__type_tesim"],
-    editor: ["edit_access_person_ssim"],
+    admin_unit: ["admin_unit_hierarchy_sim"],
+    creator: ["desc_metadata__creator_sim", "desc_metadata__author_sim"],
     depositor: ["depositor_tesim"],
     deposit_date: ["system_create_dtsi"],
+    doi: ["desc_metadata__identifier_tesim"],
+    editor: ["edit_access_person_ssim"],
     modify_date: ["system_modified_dtsi"],
     part_of: ["library_collections_pathnames_tesim"],
-    admin_unit: ["admin_unit_hierarchy_sim"]
+    title: ["desc_metadata__title_tesim"],
+    type: ["active_fedora_model_ssi", "desc_metadata__type_tesim"],
+    representative: ['representative_tesim']
   }.freeze
   CONFIGURATION_KEY_MAX_VALUE = {
     rows: Api::ItemsController.blacklight_config.max_per_page
@@ -82,6 +86,23 @@ class Api::QueryBuilder
 
   def filter_by_type(term)
     term
+  end
+
+  def filter_by_title(term)
+    term
+  end
+
+  def filter_by_creator(term)
+    term
+  end
+
+  def filter_by_doi(term)
+    term
+  end
+
+  def filter_by_representative(term)
+    return term if term == '*'
+    term.start_with?('und:') ? term : 'und:' + term
   end
 
   def filter_by_editor(term)
@@ -166,10 +187,17 @@ class Api::QueryBuilder
     num_elements = VALID_KEYS_AND_SEARCH_FIELDNAMES[key].size
     search_term = ""
     VALID_KEYS_AND_SEARCH_FIELDNAMES[key].each_with_index do |field, x|
-      this_term = field.ends_with?('dtsi') ? term : "\"#{term}\""
-      search_term  += ("#{field}:#{this_term}" + join_if_more(x, num_elements, " OR "))
+      this_search_term = "#{field}:#{format_term(term, field)}"
+      search_term  += (this_search_term + join_if_more(x, num_elements, " OR "))
     end
     search_term
+  end
+
+  def format_term(term, field)
+    return term if field.ends_with?('dtsi')
+    return "[* TO *]" if term == '*'
+    return "\"#{term}\"" if !term.html_safe?
+    "#{term}"
   end
 
   def load_comparison_date(input_date)
