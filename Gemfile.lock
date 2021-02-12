@@ -26,15 +26,6 @@ GIT
       rest-client (~> 1.6)
 
 GIT
-  remote: https://github.com/ndlib/resque-pool.git
-  revision: bf7a283fa3b3b84237ced38ebac3bfd4e6885166
-  branch: master
-  specs:
-    resque-pool (0.7.0.dev)
-      rake
-      resque (>= 1.22, < 3)
-
-GIT
   remote: https://github.com/samvera-labs/share_notify.git
   revision: dc46fa446612afd8074a63cff980ddfa4c04064f
   specs:
@@ -490,7 +481,7 @@ GEM
       rdf (~> 1.1)
     redcarpet (3.5.0)
     redis (3.3.5)
-    redis-namespace (1.6.0)
+    redis-namespace (1.8.1)
       redis (>= 3.0.4)
     request_store (1.5.0)
       rack (>= 1.4)
@@ -504,6 +495,9 @@ GEM
       redis-namespace (~> 1.6)
       sinatra (>= 0.9.2)
       vegas (~> 0.1.2)
+    resque-pool (0.7.1)
+      rake (>= 10.0, < 14.0)
+      resque (>= 1.22, < 3)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     roboto (1.0.1)
@@ -747,7 +741,7 @@ DEPENDENCIES
   rdf
   redcarpet
   redis (~> 3.3.3)
-  resque-pool!
+  resque-pool (~> 0.7.1)
   roboto
   rspec-html-matchers (~> 0.6.1)
   rspec-its (~> 1.0.1)
