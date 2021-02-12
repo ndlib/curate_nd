@@ -12,7 +12,7 @@ class Api::ItemsSearchPresenter
     #             solr field names to retrieve from item and combine into value for key
     # => method:  Symbol, optional - a valid method to call on item's field data.
     #             use :first for single-value fields to prevent display as array
-    #             Define new methods in Array class below.
+    #             Define new methods in Transformer module below.
     # => default: String, optional
     #             value to return in case of null value in item
     # => with:    Symbol, optional (recursive limit to 3)
@@ -196,8 +196,7 @@ class Api::ItemsSearchPresenter
       load_method[:fields].each do |field|
         field_data += Array.wrap(@item.fetch(field, default_value))
       end
-      return field_data.send(load_method[:method]) if load_method[:method]
-      field_data
+      ApiFieldDataTransformer.transform(field_data: field_data, load_method: load_method[:method])
     end
   end
 
@@ -276,11 +275,18 @@ class Api::ItemsSearchPresenter
   end
 end
 
-class Array
-  # This class exists to add methods to be used by the RESULT_DATA hash.
-  def screen_visibility
-    return "public" if self.include?("public")
-    return "registered" if self.include?("registered")
-    "private"
+module ApiFieldDataTransformer
+  def self.transform(field_data:, load_method:)
+    case load_method
+    when nil
+      return field_data
+    when :screen_visibility
+      return "public" if field_data.include?("public")
+      return "registered" if field_data.include?("registered")
+      return "private"
+    else
+      return field_data.public_send(load_method) if field_data.respond_to?(load_method)
+      return field_data
+    end
   end
 end
