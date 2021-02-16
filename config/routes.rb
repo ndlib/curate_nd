@@ -126,7 +126,7 @@ CurateNd::Application.routes.draw do
 
   namespace :api do
     get 'items/download/:id', as: 'item_download', controller: 'downloads', action: 'download'
-    resources :items, only: [:show, :index]
+    resources :items, only: [:show, :index], defaults: { :format => 'json' }
     resources :access_tokens, only: [:new, :index, :create, :destroy]
     match 'uploads/new', as: 'trx_initiate', controller: 'uploads', action: 'trx_initiate', via: [:get, :post]
     post 'uploads/:tid/file/new', as: 'trx_new_file', controller: 'uploads', action: 'trx_new_file'
