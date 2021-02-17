@@ -33,22 +33,6 @@
     <h2 id="help">Help</h2>
     <p>Questions? Contact the CurateND Support team at <%= mail_to('curate@nd.edu', 'curate@nd.edu', subject: 'Questions about CurateND') %> or use the form to <%= link_to 'report a problem.', new_help_request_path, class: 'help-report-a-problem request-help' %></p>
 
-    <h2 id="policies"><%= link_to 'Governing policies', policies_path %></h2>
-    <ul>
-      <li><%= link_to 'CurateND Mission', named_policy_path('mission') %></li>
-      <li><%= link_to 'Authoritative Source Location Policy', named_policy_path('authoritative-source') %></li>
-      <li><%= link_to 'Content Format Preservation and Migration Policy', named_policy_path('preservation-migration') %></li>
-      <li><%= link_to 'CurateND Content in Scope Policy', named_policy_path('content') %></li>
-      <li><%= link_to 'Designated Communities Policy', named_policy_path('designated-communities') %></li>
-      <li><%= link_to 'Disaster Recovery Policy', named_policy_path('disaster-recovery') %></li>
-      <li><%= link_to 'General Support Policy for Depositors', named_policy_path('support') %></li>
-      <li><%= link_to 'Persistent Identifier Policy', named_policy_path('persistent-identifier') %></li>
-      <li><%= link_to 'Policy on Deposit and Access Fees', named_policy_path('fees') %></li>
-      <li><%= link_to 'Preservation Backup and Alternate Location Policy', named_policy_path('backup-location') %></li>
-      <li><%= link_to 'Retention and Review Policy', named_policy_path('retention-review') %></li>
-      <li><%= link_to 'Succession Planning Policy', named_policy_path('succession-plan') %></li>
-    </ul>
-
     <h2 id="common-questions">Common Questions</h2>
     <% contact_curatend_support = link_to 'contact CurateND support', new_help_request_path, class: 'help-report-problem request-help' %>
     <dl>
@@ -58,6 +42,11 @@
         It is for preserving and providing access to scholarship (e.g. articles, manuscripts, research data), pedagogical materials, and other
         scholarly material the university has acquired (e.g. the back catalog of the Notre Dame Press).
         One of the largest collections is the <a href="/catalog?f_inclusive[human_readable_type_sim][]=Doctoral+Dissertation&f_inclusive[human_readable_type_sim][]=Master's+Thesis">Electronic Dissertations and Theses</a> since 2005.
+      </dd>
+
+      <dt>What are the governing policies of CurateND?</dt>
+      <dd>
+        All of the governing policies for CurateND can be found on the <%= link_to 'Governing policies', policies_path %> page.
       </dd>
 
       <dt>How can CurateND help me?</dt>
