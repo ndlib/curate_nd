@@ -87,4 +87,11 @@ class CommonObjectsController < ApplicationController
   def show_tombstone_page
     'curation_concern/base/tombstone'
   end
+
+  def show_file_text
+    return "Please access via the DOI." if curation_concern.respond_to?(:doi) && !curation_concern.doi.blank?
+    return "Please access via the source shown above." if curation_concern.respond_to?(:source) && !curation_concern.source.blank?
+    return "Please contact the department listed above for additional information about this #{curation_concern.human_readable_type.downcase}." if curation_concern.respond_to?(:administrative_unit) && !curation_concern.administrative_unit.blank?
+    "Please contact the creator for more information."
+  end
 end

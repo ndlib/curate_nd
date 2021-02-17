@@ -2,10 +2,10 @@
 <% editor = can?(:edit, curation_concern)%>
 
 <section id="attached-files">
+  <h2>Files</h2>
   <% if curation_concern.respond_to?(:generic_files) %>
     <% (files_solr_response, files) = curation_concern.generic_files_page(params[:files_page].to_i, params[:files_per_page].to_i) %>
     <% if files.any? %>
-      <h2>Files</h2>
       <table class="table table-striped related-files">
         <thead>
           <tr>
@@ -33,19 +33,22 @@
       <div class="pager">
         <%= paginate_rsolr_response files_solr_response, :outer_window => 2, :theme => 'blacklight', param_name: :files_page, solr_response: files_solr_response %>
       </div>
-      <% elsif editor %>
-        <h2>Files</h2>
-        <p><em>This <%= curation_concern.human_readable_type.downcase %> has no files associated with it.
-          <br />You must attach at least one file to choose a thumbnail for this <%= curation_concern.human_readable_type.downcase %>.
-        </em></p>
-      <% end %>
-      <% if editor %>
-        <div class="section-actions">
-          <%= link_to new_curation_concern_generic_file_path(curation_concern), class: 'btn' do %>
-            <i class="icon icon-upload"></i> Attach a File
-          <% end %>
-        </div>
-      <% end %>
+    <% elsif editor %>
+      <p><em>This <%= curation_concern.human_readable_type.downcase %> has no files associated with it.
+        <br />You must attach at least one file to choose a thumbnail for this <%= curation_concern.human_readable_type.downcase %>.
+      </em></p>
+    <% else %>
+      <p><em>This <%= curation_concern.human_readable_type.downcase %> has no files associated with it.
+      <%= controller.show_file_text if controller.respond_to?(:show_file_text) %>
+      </em></p>
     <% end %>
+    <% if editor %>
+      <div class="section-actions">
+        <%= link_to new_curation_concern_generic_file_path(curation_concern), class: 'btn' do %>
+          <i class="icon icon-upload"></i> Attach a File
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
 </section>
 <% end %>
