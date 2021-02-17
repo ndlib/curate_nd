@@ -7,9 +7,9 @@ module Sufia
 
       def audit(force = false)
         logs = []
-        self.per_version do |ver|
-          logs << ::GenericFile.audit(ver, force)
-        end
+       # self.per_version do |ver|
+       #   logs << ::GenericFile.audit(ver, force)
+       #end
         logs
       end
 
