@@ -7,6 +7,7 @@ module Sufia
 
       def audit(force = false)
         logs = []
+       # CURATE-14 turn off audits at this level
        # self.per_version do |ver|
        #   logs << ::GenericFile.audit(ver, force)
        #end
@@ -62,7 +63,8 @@ module Sufia
             return latest_audit unless ::GenericFile.needs_audit?(version, latest_audit)
           end
           #  Resque.enqueue(AuditJob, version.pid, version.dsid, version.versionID)
-          Sufia.queue.push(AuditJob.new(version.pid, version.dsid, version.versionID))
+          # CURATE-14 turn off audits at this level
+          # Sufia.queue.push(AuditJob.new(version.pid, version.dsid, version.versionID))
 
           # run the find just incase the job has finished already
           latest_audit = self.find(version.pid).logs(version.dsid).first
