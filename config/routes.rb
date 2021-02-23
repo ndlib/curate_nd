@@ -180,10 +180,10 @@ CurateNd::Application.routes.draw do
   get 'faq',  to: redirect('/faqs')
   get 'orcid_settings', to: 'user_profiles#orcid_settings'
   get 'policies', to: 'static_pages#policies'
+  get 'policies/:policyname', to: 'static_pages#policies'
   get 'tos', to: 'static_pages#tos'
   get 'licenses', to: 'static_pages#licenses'
   get 'subm_agree', to: 'static_pages#subm_agree'
-  get 'policies/:policyname', to: 'static_pages#policies', as: :named_policy
   get '500', to: 'static_pages#error'
   get '502', to: 'static_pages#error', default: { status_code: '502' }
   get '404', to: 'static_pages#error', default: { status_code: '404' }

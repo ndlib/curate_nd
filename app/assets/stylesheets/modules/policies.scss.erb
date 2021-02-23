@@ -4,97 +4,90 @@
   border-bottom: 1px solid $gray-faint;
 }
 
-.policies-page-header {
-  padding: 1em 1em 0;
+.policy-page-header {
+  padding: 1em;
   text-align: center;
-
-  .svg-title {
-    font-size: 16px;
-    margin: 0 auto;
-    max-width: 175px; // 22px tall SVG character
-  }
 }
 
-.curatend-policies {
-  background-color: white;
-  border: 1px solid $gray-faint;
-  box-sizing: border-box;
-  margin: 2em auto 0;
-  max-width: 60em;
-  padding: 0 1em;
-}
+.policy-box {
+  max-width: 62em;
+  margin: 1em auto 1em;
+  padding-bottom: 2em;
 
-@media (min-width: 400px) {
-  .curatend-policies {
-    padding: 1em 2em 0;
-  }
-}
+  .policy-content {
+    background-color: white;
+    border: 1px solid $gray-faint;
+    padding: 1em 1em 1em;
 
-@media (min-width: 768px) {
-  .policies-page-header {
-    padding-top: 32px;
-  }
+    ul {
+      margin: 2;
+    }
 
-  .curatend-policies {
-    padding: 3em 4em 1em;
-  }
-}
+    .policy-list {
+      p {
+        margin-bottom: 1em;
+      }
 
-.policy-list {
-  margin-bottom: 4em;
+      .policy-heading {
+        padding-top: 1em;
+        border-bottom: 1px solid $gray-light;
+      }
 
-  .policy-anchor:focus,
-  .policy-anchor:hover {
-    text-decoration: none;
-    text-shadow: 1px 1px 1px $blue-light;
-  }
+      .policy-subheading {
+        font-size: 20px;
+        font-weight: bold;
+        padding-top: 1em;
+        padding-bottom: 1em;
+      }
 
-  .policy-heading {
-    line-height: 1.4;
-    padding-bottom: 1em;
-  }
+      .policy-subcategory {
+        font-size: 18px;
+        padding-bottom: 1em;
+      }
 
-  .effective-date {
-    display: block;
-  }
-}
+      .policy-explanation {
+        padding: 1em 0 1em 0;
+      }
 
-@media (min-width: 768px) {
-  .policies-page-header .svg-title {
-    max-width: 572px; // 72px tall SVG character
-  }
+      .quote {
+        font-style: italic;
+      }
 
-  .policy-header {
-    position: relative;
+      .emphasis {
+        font-weight: bold;
+        font-variant: small-caps;
+        font-size: 12px;
+        // color: $gray-dark;
+        background-color: $blue-light;
+        border-radius: 5px;
+        padding: 0 7px 2px 5px;
+        color: $gray;
+      }
 
-    .return-to-policy-list {
-      left: 0;
-      line-height: 1.2;
-      position: absolute;
-      top: .5em;
-      width: 7em;
+      .footnotes {
+        &:before {
+          border-bottom: 1px solid $gray-light;
+          content: '';
+          display: block;
+          margin: .5em 0 .5em 0;
+          width: 10em;
+        }
+      }
     }
   }
 }
 
-.policy figure {
-  margin-bottom: 1em;
-  text-align: center;
-}
-
-.footnotes {
-  margin-bottom: 2em;
-
-  &:before {
-    border-bottom: 1px solid $gray-light;
-    content: '';
-    display: block;
-    margin-bottom: .5em;
-    margin-left: -25px;
-    width: 25px;
+@media print {
+  .close,
+  .print {
+    display: none;
   }
 
-  p {
-    margin-bottom: 0;
+  .modal-header {
+    padding: 9px 0;
+  }
+
+  .modal-footer {
+    border: 0;
   }
 }
