@@ -36,6 +36,7 @@ class StaticPagesController < ApplicationController
   end
 
   def policies
+    @hide_title = false;
     render 'policies', layout: 'curate_nd_home'
   end
 
