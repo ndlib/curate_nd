@@ -9,6 +9,5 @@
     }
   )%>
   <%= f.input :title, input_html: { class: 'input-xxlarge'}, required: true %>
-  <% action_name == "new" ? required = true : required = false %>
-  <%= render 'form_administrative_unit', curation_concern: curation_concern, f: f, select_label_id: 'add-to-administrative-unit', button_class: 'btn btn-primary', required: required %>
+  <%= render 'form_administrative_unit', curation_concern: curation_concern, f: f, select_label_id: 'add-to-administrative-unit', button_class: 'btn btn-primary', required: true %>
 </fieldset>
