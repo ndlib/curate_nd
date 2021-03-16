@@ -25,7 +25,7 @@ describe 'curation_concern/base/_form_administrative_unit.html.erb' do
         have_tag('option', text:'Center for Building Communities')
       end
       expect(rendered).to have_tag('optgroup', :with => { :label => 'Centers and Institutes'}) do
-        with_tag('option', text:'Center for Digital Scholarship')
+        with_tag('option', text:'Navari Family Center for Digital Scholarship (NFCDS)')
       end
     end
   end
