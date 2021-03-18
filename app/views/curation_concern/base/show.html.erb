@@ -10,7 +10,6 @@
     <% if display_citation_generation? %>
       <%= link_to 'Generate Citation', citation_path(curation_concern) , class: 'btn citation-modal-js' %>
     <% end %>
-    <% require 'byebug'; debugger; true %>
     <% if can?(:edit, curation_concern) %>
       <%= link_to edit_polymorphic_path([:curation_concern, curation_concern]), class: 'btn' do %>
         <i class="icon icon-pencil"></i> Edit
