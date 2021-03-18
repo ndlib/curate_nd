@@ -22,6 +22,7 @@
       <%= link_to 'Generate Citation', citation_path(curation_concern) , class: 'btn citation-modal-js' %>
     <% end %>
     <%= link_to 'Usage Details', metrics_usage_path(id: curation_concern.noid) , class: 'btn btn-default' %>
+  <% end %>
     <% if has_edit_rights %>
       <%= link_to edit_polymorphic_path([:curation_concern, curation_concern]), class: 'btn btn-default' do %>
         <i class="icon icon-pencil"></i> Edit
@@ -33,7 +34,6 @@
     <% if RepoManager.with_active_privileges?(current_user) %>
       <%= link_to 'Reindex this Item', admin_reindex_pid_path(curation_concern.id) , class: 'btn btn-primary' %>
     <% end %>
-  <% end %>
 <% end %>
 
 <% details = capture do %>

@@ -10,6 +10,7 @@
     <% if display_citation_generation? %>
       <%= link_to 'Generate Citation', citation_path(curation_concern) , class: 'btn citation-modal-js' %>
     <% end %>
+  <% end %>
     <% if can?(:edit, curation_concern) %>
       <%= link_to edit_polymorphic_path([:curation_concern, curation_concern]), class: 'btn' do %>
         <i class="icon icon-pencil"></i> Edit
@@ -18,7 +19,6 @@
     <% if RepoManager.with_active_privileges?(current_user) %>
       <%= link_to 'Reindex this Item', admin_reindex_pid_path(curation_concern.id) , class: 'btn btn-primary' %>
     <% end %>
-  <% end %>
 <% end %>
 
 <% details = capture do %>
