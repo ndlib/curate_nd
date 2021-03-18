@@ -1,5 +1,6 @@
 <% has_read_rights = can?(:read, curation_concern) %>
 <% has_edit_rights = can?(:edit, curation_concern) %>
+<% doi = curation_concern.doi.sub("doi:", "") if curation_concern.respond_to?(:doi) && !curation_concern.doi.blank? %>
 
 <% content_for :page_title, construct_page_title(curation_concern.title) if curation_concern.title %>
 
@@ -9,7 +10,10 @@
 <% else %>
   <h1><%= richly_formatted_text(curation_concern.to_s, title: true) %></h1>
 <% end %>
-  <span class="human-readable-type"><%= curation_concern.human_readable_type %></span>
+  <span>
+    <div class="human-readable-type"><%= curation_concern.human_readable_type %></div>
+    <div data-badge-popover="right" data-badge-type="3" data-doi="<%= doi %>" class="altmetric-embed pull-right"></div>
+  </span>
 <% end %>
 
 <% content_for :page_actions do %>

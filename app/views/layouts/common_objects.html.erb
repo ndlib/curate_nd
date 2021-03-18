@@ -2,7 +2,6 @@
 <% content_for :body do %>
 
   <%= render 'shared/header' %>
-
   <div id="main" role="main" class="page-main container <%= yield(:page_class) if content_for?(:page_class)%>">
     <% if content_for?(:page_header) %>
       <div class="row">
@@ -37,6 +36,8 @@
   </div>
 
   <%= render 'footer' %>
+
+<script type='text/javascript' src='https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js'></script>
 
 <% end %>
 
