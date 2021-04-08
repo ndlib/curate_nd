@@ -12,6 +12,17 @@ server {
     }
 }
 server {
+    # Setting default_server on these can cause redirect loops.
+    listen 443 ssl;
+    listen [::]:443 ssl;
+
+    ssl_certificate <%= @ssl_certificate %>;
+    ssl_certificate_key <%= @ssl_certificate_key %>;
+
+    server_name ~^www.(?<domain>.+)$;
+    return 301 https://$domain$request_uri;
+}
+server {
     listen 443 ssl default_server deferred;
     server_name _;
     ssl_certificate      <%= @ssl_certificate %>;
