@@ -96,8 +96,13 @@ class CurationConcern::GenericFilesController < CurationConcern::BaseController
   end
 
   def orphan
+    parent_id = begin
+      curation_concern.parent.id
+    rescue
+      "null"
+    end
     result = OrphanFileService.orphan_file(file_id: curation_concern.pid, requested_by: current_user)
-    notice = (result == true ? 'File has been successfully orphaned' : 'Unable to orphan this file')
+    notice = (result == true ? "File has been successfully orphaned from parent '#{ parent_id}'" : 'Unable to orphan this file')
     redirect_to common_object_path(curation_concern), notice: notice
   end
 
