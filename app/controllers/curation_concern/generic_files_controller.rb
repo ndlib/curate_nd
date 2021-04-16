@@ -95,6 +95,12 @@ class CurationConcern::GenericFilesController < CurationConcern::BaseController
     redirect_to common_object_path(curation_concern)
   end
 
+  def orphan
+    result = OrphanFileService.orphan_file(file_id: curation_concern.pid, requested_by: current_user)
+    notice = (result == true ? 'File has been successfully orphaned' : 'Unable to orphan this file')
+    redirect_to common_object_path(curation_concern), notice: notice
+  end
+
   register :actor do
     CurationConcern::Utility.actor(curation_concern, current_user, attributes_for_actor)
   end

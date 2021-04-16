@@ -34,6 +34,9 @@
     <% if RepoManager.with_active_privileges?(current_user) %>
       <%= link_to 'Reindex this Item', admin_reindex_pid_path(curation_concern.id) , class: 'btn btn-primary' %>
     <% end %>
+    <% if curation_concern.is_a?(GenericFile) && can?(:orphan, GenericFile) %>
+      <%= link_to 'Orphan File', orphan_path(id: curation_concern.noid) , class: 'btn btn-danger' %>
+    <% end %>
 <% end %>
 
 <% details = capture do %>

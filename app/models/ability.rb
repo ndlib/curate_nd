@@ -23,8 +23,10 @@ class Ability
 
       if super_administrators.include?(current_user.to_s)
         can [:manage], Admin::AuthorityGroup
+        can [:orphan], GenericFile
       else
         cannot [:manage], Admin::AuthorityGroup
+        cannot [:orphan], GenericFile
       end
 
       if repository_administrators.include?(current_user.to_s)
