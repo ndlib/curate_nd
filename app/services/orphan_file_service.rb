@@ -9,6 +9,8 @@ class OrphanFileService
     true
   end
 
+  private
+
   def self.remove_parent!
     ds = @object.datastreams["RELS-EXT"].to_rels_ext
     ds_array = ds.lines
