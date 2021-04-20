@@ -169,6 +169,7 @@ CurateNd::Application.routes.draw do
 
   get'/usage/:id(.:format)', to: 'metrics/usage#show', as: 'metrics_usage'
   get'/characterize/:id', to: 'curation_concern/generic_files#characterize_file', as: 'characterize'
+  get'/orphan/:id', to: 'curation_concern/generic_files#orphan', as: 'orphan'
 
   get 'get_started', to: redirect('deposit')
   get 'deposit', to: 'classify_concerns#new'
