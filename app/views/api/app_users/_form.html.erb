@@ -1,0 +1,13 @@
+<%= simple_form_for :new_api_user, url: api_app_users_new_path do |f| %>
+  <div class='same-line'>
+  <%= f.input :user_name, label: "Username" %>
+  </div>
+  <div class='same-line'>
+    <%= f.input :application, label: "Application Name" %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, 'Create App User', class: 'btn btn-danger' %>
+    <%= link_to 'Back', api_access_tokens_path %>
+  </div>
+<% end %>

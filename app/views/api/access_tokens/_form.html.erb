@@ -1,11 +1,17 @@
 <%= simple_form_for(@api_access_token) do |f| %>
   <%= f.error_notification %>
 
-  <fieldset>
-    <%= f.association :user, label: "Create token for user", :label_method => lambda { |user| "#{user.name}" }, selected: current_user.id %>
-  </fieldset>
+    <fieldset>
+      <div class='same-line'>
+        <%= f.association :user, label: "Create token for user", :label_method => lambda { |user| "#{user.name} (#{user.username})" }, selected: current_user.id, input_html: { class: 'input-xlarge' } %>
+      </div>
+      <div class='same-line pull-right'>
+        <%= link_to 'Create Application User', api_app_users_new_path %>
+      </div>
+    </fieldset>
 
   <div class="form-actions">
     <%= f.button :submit, 'Create API Token', class: 'btn btn-danger' %>
+    <%= link_to 'Back', api_access_tokens_path %>
   </div>
 <% end %>
