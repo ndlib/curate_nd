@@ -5,9 +5,11 @@
       <div class='same-line'>
         <%= f.association :user, label: "Create token for user", :label_method => lambda { |user| "#{user.name} (#{user.username})" }, selected: current_user.id, input_html: { class: 'input-xlarge' } %>
       </div>
-      <div class='same-line pull-right'>
-        <%= link_to 'Create Application User', api_app_users_new_path %>
-      </div>
+      <% if can? :manage, ApiAccessToken %>
+        <div class='same-line pull-right'>
+          <%= link_to 'Create Application User', api_app_users_new_path %>
+        </div>
+      <% end %>
     </fieldset>
 
   <div class="form-actions">
