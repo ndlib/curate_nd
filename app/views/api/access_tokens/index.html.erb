@@ -8,7 +8,7 @@
   <h1>API Access Token List</h1>
 <% end %>
 
-<% if current_user.can? :manage, ApiAccessToken %>
+<% if current_user.can? :edit, ApiAccessToken %>
   <%= link_to 'Create New Token', new_api_access_token_path, { class: "btn btn-success" } %>
 <% else %>
   <%= link_to 'Create New Token', new_api_access_token_path(api_access_token: { user_id: current_user.id }), class: 'btn btn-success' %>
