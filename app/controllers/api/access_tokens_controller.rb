@@ -37,7 +37,7 @@ module Api
       def api_access_token_list
         @api_access_tokens =
         begin
-          if can? :manage, ApiAccessToken
+          if can? :edit, ApiAccessToken
             @api_access_tokens = ApiAccessToken.all
           else
             @api_access_tokens = ApiAccessToken.where(issued_by: current_user.user_key)
@@ -63,7 +63,7 @@ module Api
 
       def api_access_token_params_with_user
         param_list = api_access_token_params.merge!({ :issued_by => current_user.user_key })
-        if cannot? :manage, ApiAccessToken
+        if cannot? :edit, ApiAccessToken
           param_list[:user_id] = params[:api_access_token][:user_id]
         end
         param_list

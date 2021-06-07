@@ -19,5 +19,12 @@ describe Admin::AuthorityGroup::SuperAdmin do
     it 'is also an admin' do
       expect(CurateND::AdminConstraint.is_admin?(user1)).to be_truthy
     end
+
+    it 'gives additional authority' do
+      expect(user1.can?(:orphan, GenericFile)).to be_truthy
+      expect(user1.can?(:manage, ApiAccessToken)).to be_truthy
+      expect(user2.can?(:orphan, GenericFile)).to be_falsey
+      expect(user2.can?(:manage, ApiAccessToken)).to be_falsey
+    end
   end
 end

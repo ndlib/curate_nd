@@ -97,10 +97,15 @@ class Ability
   end
 
   def api_token_permissions
-    if CurateND::AdminConstraint.is_admin?(current_user)
+    # no special authority = able to create token for self & view own tokens
+    # edit = able to create token for all users & view all tokens
+    # manage = edit permissions + able to create api only users
+    if super_administrators.include?(current_user.to_s)
       can [:manage], ApiAccessToken
+    elsif CurateND::AdminConstraint.is_admin?(current_user)
+      can [:edit], ApiAccessToken
     else
-      cannot [:manage], ApiAccessToken
+      cannot [:edit, :manage], ApiAccessToken
     end
   end
 
