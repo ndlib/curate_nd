@@ -421,7 +421,6 @@ GEM
     orm_adapter (0.5.0)
     parser (2.7.2.0)
       ast (~> 2.4.1)
-    pdf_thumbnailer (1.2.0)
     poltergeist (1.18.1)
       capybara (>= 2.1, < 4)
       cliver (~> 0.3.1)
@@ -510,6 +509,7 @@ GEM
       vegas (~> 0.1.2)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    rmagick (4.2.2)
     roboto (1.0.1)
       rails (>= 4.2)
     rsolr (1.0.13)
@@ -737,7 +737,6 @@ DEPENDENCIES
   omniauth-oauth2
   omniauth-oktaoauth
   omniauth-orcid (= 0.6)
-  pdf_thumbnailer
   poltergeist (~> 1.5)
   quiet_assets
   rack-mini-profiler
@@ -754,6 +753,7 @@ DEPENDENCIES
   redcarpet
   redis (~> 3.3.3)
   resque-pool!
+  rmagick
   roboto
   rspec-html-matchers (~> 0.6.1)
   rspec-its (~> 1.0.1)
