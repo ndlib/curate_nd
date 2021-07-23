@@ -1,4 +1,4 @@
-require 'pdf_thumbnailer'
+require 'rmagick'
 
 module Sufia
   module GenericFile
@@ -9,14 +9,11 @@ module Sufia
       def create_thumbnail
         return unless self.content.has_content?
 
-        logger.info "CURATE228 call create_thumbnail"
         if video?
           create_video_thumbnail
         elsif pdf?
-        logger.info "CURATE228 PDF thumbnail"
           create_pdf_thumbnail
         else
-        logger.info "CURATE228 derivative thumbnail"
           create_derivatives
         end
         self.save
@@ -41,17 +38,24 @@ module Sufia
 
       def create_pdf_thumbnail
 
-        PdfThumbs.configure img_dir: '/tmp', thumb_sizes: 493
-
-        output_file = Dir::Tmpname.create(['PDFThumbnailer', ".png"], '/tmp'){}
-
-        content.to_tempfile do |f|
-          num_pages = PdfThumbs.thumbnail_single! "/tmp", File.basename(f.path)
-        end
-
-        self.thumbnail.content = File.open(output_file, 'rb').read
+        # Create PDF file  from Active Object
+        pdf_info = content.to_tempfile
+        pdf_filename = pdf_info.path
+        thumb_filename = File.join(File.dirname(pdf_filename),File.basename(pdf_filename, ".*") + ".png")
+        
+        #Create RMagick object from PDF
+        # Get and resize First page of PDF
+        # Write to Thumbnail FileName
+        pdf_first_page = Magick::ImageList.new(pdf_filename + "[0]")
+        pdf_thumbnail = pdf_first_page.scale(338, 493)
+        pdf_thumbnail.write(thumb_filename)
+        
+        #Using new thumbnail, set thumbnail dtatstream in Active Object
+        self.thumbnail.content = File.open(thumb_filename, 'rb').read
         self.thumbnail.mimeType = 'image/png'
         self.save
+
+        File.delete(pdf_filename, thumb_filename)
       end
 
     end
