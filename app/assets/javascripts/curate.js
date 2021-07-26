@@ -8,11 +8,6 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //
-//= require jquery-ui-1.9.2/jquery.ui.widget
-//= require jquery-ui-1.9.2/jquery.ui.core
-//= require jquery-ui-1.9.2/jquery.ui.menu
-//= require jquery-ui-1.9.2/jquery.ui.position
-//= require jquery-ui-1.9.2/jquery.ui.autocomplete
 //
 //= require blacklight/blacklight
 //

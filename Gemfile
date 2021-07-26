@@ -46,6 +46,7 @@ group :default do
   gem 'hydra-head', "~> 6.4.0"
   gem 'jettywrapper'
   gem 'jquery-rails'
+  gem 'jquery-ui-rails'
   gem 'jshintrb'
   gem 'json-ld'
   gem 'kaminari'

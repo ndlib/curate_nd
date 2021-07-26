@@ -16,6 +16,7 @@
 //= require L.Control.Pan
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
 //= require csrf_token
 //
 //= require blacklight/blacklight
