@@ -50,7 +50,7 @@ module Sufia
           # Write to Thumbnail FileName
           pdf_first_page = Magick::ImageList.new(pdf_filename + "[0]")
           pdf_thumbnail = pdf_first_page.scale(338, 493)
-          pdf_thumbnail.write(thumb_filename)
+          pdf_thumbnail.write(thumb_filename) { self.quality = 50 } # default is 75
           File.delete(pdf_filename)
         end
         
