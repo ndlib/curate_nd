@@ -51,6 +51,7 @@ module Sufia
           pdf_first_page = Magick::ImageList.new(pdf_filename + "[0]")
           pdf_thumbnail = pdf_first_page.scale(338, 493)
           pdf_thumbnail.write(thumb_filename)
+          File.delete(pdf_filename)
         end
         
         #Using new thumbnail, set thumbnail dtatstream in Active Object
@@ -59,7 +60,7 @@ module Sufia
         self.save
 
         #cleanup /tmp
-        File.delete(pdf_filename, thumb_filename)
+        File.delete(thumb_filename)
       end
 
     end
