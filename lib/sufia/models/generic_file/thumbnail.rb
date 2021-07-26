@@ -54,7 +54,7 @@ module Sufia
           File.delete(pdf_filename)
         end
         
-        #Using new thumbnail, set thumbnail dtatstream in Active Object
+        #Using new thumbnail, set thumbnail datastream in Active Object
         self.thumbnail.content = File.open(thumb_filename, 'rb').read
         self.thumbnail.mimeType = 'image/png'
         self.save
