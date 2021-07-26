@@ -39,22 +39,24 @@ module Sufia
       def create_pdf_thumbnail
 
         # Create PDF file  from Active Object
-        pdf_info = content.to_tempfile
-        pdf_filename = pdf_info.path
-        thumb_filename = File.join(File.dirname(pdf_filename),File.basename(pdf_filename, ".*") + ".png")
+        content.to_tempfile do |temp_info|
+          pdf_filename = temp_info.path
+          thumb_filename = File.join(File.dirname(pdf_filename),File.basename(pdf_filename, ".*") + ".png")
         
-        #Create RMagick object from PDF
-        # Get and resize First page of PDF
-        # Write to Thumbnail FileName
-        pdf_first_page = Magick::ImageList.new(pdf_filename + "[0]")
-        pdf_thumbnail = pdf_first_page.scale(338, 493)
-        pdf_thumbnail.write(thumb_filename)
+          #Create RMagick object from PDF
+          # Get and resize First page of PDF
+          # Write to Thumbnail FileName
+          pdf_first_page = Magick::ImageList.new(pdf_filename + "[0]")
+          pdf_thumbnail = pdf_first_page.scale(338, 493)
+          pdf_thumbnail.write(thumb_filename)
+        end
         
         #Using new thumbnail, set thumbnail dtatstream in Active Object
         self.thumbnail.content = File.open(thumb_filename, 'rb').read
         self.thumbnail.mimeType = 'image/png'
         self.save
 
+        #cleanup /tmp
         File.delete(pdf_filename, thumb_filename)
       end
 
