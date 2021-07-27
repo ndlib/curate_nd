@@ -47,10 +47,16 @@ module Sufia
         
           #Create RMagick object from PDF
           # Get and resize First page of PDF
+          # Size to 198x288 or 338x493, based on page size
           # Write to Thumbnail FileName
           pdf_first_page = Magick::ImageList.new(pdf_filename + "[0]")
-          pdf_thumbnail = pdf_first_page.scale(300, 437)
-          pdf_thumbnail.write(thumb_filename) { self.depth = 8 } 
+          if pdf_first_page.filesize > 300000
+            pdf_thumbnail = pdf_first_page.scale(198, 288)
+          else
+            pdf_thumbnail = pdf_first_page.scale(338, 493)
+          end
+
+          pdf_thumbnail.write(thumb_filename) { [ self.compression = Magick::ZipCompression, self.depth = 8, self.quality = 0] }
           File.delete(pdf_filename)
         end
         
