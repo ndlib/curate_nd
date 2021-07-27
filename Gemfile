@@ -65,6 +65,7 @@ group :default do
   gem 'nokogiri', '~> 1.11'
   gem "oai"
   gem 'omniauth-oktaoauth'
+  gem 'rmagick'
   gem 'rails_autolink'
   gem 'rails-observers'
   gem 'rails', '~> 4.2.11.0'
