@@ -49,8 +49,8 @@ module Sufia
           # Get and resize First page of PDF
           # Write to Thumbnail FileName
           pdf_first_page = Magick::ImageList.new(pdf_filename + "[0]")
-          pdf_thumbnail = pdf_first_page.scale(338, 493)
-          pdf_thumbnail.write(thumb_filename) { self.quality = 50 } # default is 75
+          pdf_thumbnail = pdf_first_page.scale(300, 437)
+          pdf_thumbnail.write(thumb_filename) { self.depth = 8 } 
           File.delete(pdf_filename)
         end
         
