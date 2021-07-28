@@ -11,12 +11,15 @@
   }
 
   .applied-filter {
-    direction: ltr;
+    white-space: normal;
   }
 
   .applied-constraints {
-    direction: rtl;
-    overflow-y: auto;
+    .btn {
+      text-align: left;
+      max-width: 88%;
+      vertical-align:top;
+    }
   }
 
   .btn-group + .btn-group {
