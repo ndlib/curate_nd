@@ -40,7 +40,7 @@
 <% unless work_item[:issue].blank? %>
   <meta name="citation_issue" content="<%= work_item[:issue] %>" />
 <% end %>
-<% if curation_concern.generic_files.present? %>
+<% if curation_concern.respond_to?(:generic_files) && curation_concern.generic_files.present? %>
   <% curation_concern.generic_files.each do |file| %>
     <% if file.filename.include?('pdf') %>
       <meta name="citation_pdf_url" content="<%= download_url(file).to_s %>" />
