@@ -1,8 +1,0 @@
----
-:backends:
-  - json
-:hierarchy:
-  - vagrant
-
-:json:
-  :datadir: /var/lib/hiera
