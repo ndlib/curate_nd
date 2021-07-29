@@ -35,7 +35,7 @@ CurateNd::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = ENV.fetch('ASSET_DEBUG', false)
 
-  config.application_root_url = "https://localhost:3000"
+  config.application_root_url = "http://localhost:3000"
 
   # for iiif image viewer
   config.manifest_viewer = "https://viewer-iiif.library.nd.edu/universalviewer/index.html#?manifest="

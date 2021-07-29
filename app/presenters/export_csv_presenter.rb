@@ -32,7 +32,7 @@ class ExportCsvPresenter
     def load_attributes(item, attr_array)
       combined_value = ''
       attr_array.each do |attr|
-        val = item.has_key?(attr) ? item[attr] : ''
+        val = item.has_key?(attr) ? formatted_value_for_output(item[attr], attr) : ''
         combined_value = join_values(combined_value, val)
       end
       combined_value
@@ -42,5 +42,19 @@ class ExportCsvPresenter
       return value1 if value2.blank?
       value2 = (value2.is_a?(Array) ? value2.join(connector) : value2).gsub('University of Notre Dame::', '')
       value1.blank? ? value2 : value1 + connector + value2
+    end
+
+    def formatted_value_for_output(attribute_value, attr)
+      case attr
+      when "id"
+        return convert_to_url(attribute_value)
+      else
+        return attribute_value
+      end
+    end
+
+    def convert_to_url(val)
+      base_url = Rails.configuration.application_root_url
+      base_url + '/show/' + val
     end
 end
