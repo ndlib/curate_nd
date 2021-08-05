@@ -79,7 +79,11 @@ module Blacklight::Solr
     deprecation_deprecate :has_next?
 
     def last_page?
-      current_page >= total_pages
+      # this method doesn't work in blacklight, because total_pages isn't
+      # actually correct. Since we always ask for limit+1, if we don't have
+      # more than we need, we know we are done.
+      # current_page >= total_pages
+      total_count <= limit
     end
 
     def first_page?
@@ -108,8 +112,11 @@ module Blacklight::Solr
     private
       # setting limit to 0 implies no limit
       def items_for_limit(values)
+        # This method does not work in blacklight. Because we only have limit+1
+        # items, we can't use offset. However since our data set consists of
+        # the items we want plus 1, we can just use the first items.
         # limit != 0 ? values.slice(offset, limit) : values
-        values
+        limit != 0 ? values.first(limit) : values
       end
   end
 end
