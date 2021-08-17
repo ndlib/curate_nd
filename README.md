@@ -22,9 +22,9 @@ bundle install --without headless
 ```console
 bundle exec rake curatend:jetty:start
 ```
-### 1.a Skipping MySQL password
+<!-- ### 1.a Skipping MySQL password
 
-You may consider adding `export SKIP_MYSQL_PASSWORD_FOR_LOCAL_DEVELOPMENT="true"` (or adding this to your `.bashrc` or `.profile`).  That export will tell the Rails configuration to skip using a password for the `config/database.yml` user in the local environment.
+You may consider adding `export SKIP_MYSQL_PASSWORD_FOR_LOCAL_DEVELOPMENT="true"` (or adding this to your `.bashrc` or `.profile`).  That export will tell the Rails configuration to skip using a password for the `config/database.yml` user in the local environment. -->
 
 ### 2. Run specs
 To execute the full test suite, run
