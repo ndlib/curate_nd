@@ -51,9 +51,9 @@ module Sufia
           # Write to Thumbnail FileName
           pdf_first_page = Magick::ImageList.new(pdf_filename + "[0]")
           if pdf_first_page.filesize > 300000
-            pdf_thumbnail = pdf_first_page.scale(198, 288)
+            pdf_thumbnail = pdf_first_page.resize_to_fit(198, 288)
           else
-            pdf_thumbnail = pdf_first_page.scale(338, 493)
+            pdf_thumbnail = pdf_first_page.resize_to_fit(338, 493)
           end
 
           pdf_thumbnail.write(thumb_filename) { [ self.compression = Magick::ZipCompression, self.depth = 8, self.quality = 0] }
