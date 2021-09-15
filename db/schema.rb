@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190813192509) do
+ActiveRecord::Schema.define(version: 20210914204130) do
 
   create_table "activity_engine_activities", force: :cascade do |t|
     t.integer  "user_id",       limit: 4
@@ -273,6 +273,18 @@ ActiveRecord::Schema.define(version: 20190813192509) do
     t.text     "response_text",    limit: 65535
     t.string   "response_status",  limit: 255
   end
+
+  create_table "orphan_file_requests", force: :cascade do |t|
+    t.string   "user_id",        limit: 255
+    t.string   "user_email",     limit: 255
+    t.string   "file_id",        limit: 255
+    t.string   "work_id",        limit: 255
+    t.datetime "completed_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "orphan_file_requests", ["user_id"], name: "index_orphan_file_requests_on_user_id", using: :btree
 
   create_table "proxy_deposit_rights", force: :cascade do |t|
     t.integer  "grantor_id", limit: 4
