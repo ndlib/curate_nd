@@ -1,0 +1,16 @@
+<%= simple_form_for(@orphan_file_request) do |f| %>
+  <fieldset class="required with-side-padding">
+    <legend><%= 'CurateND: Request File Removal' %></legend>
+    <p><%= "I am requesting the removal of file id: #{@file_to_orphan.noid} (#{@file_to_orphan.filename})" %></p>
+    <p><%= "from work id: #{@parent_work.noid} (#{@parent_work.title})" %><p>
+    <%= f.input :file_id, as: 'hidden', input_html: { value: @file_to_orphan.noid } %>
+    <%= f.input :work_id, as: 'hidden', input_html: { value: @parent_work.noid } %>
+    <%= f.input :user_id, as: 'hidden', input_html: { value: current_user.id } %>
+    <%= f.input :user_email, label: "Requester's email:", input_html: { value: current_user.email } %>
+  </fieldset>
+
+  <div class="form-actions">
+    <%= f.submit 'Submit', class: 'btn btn-primary' %>
+    <a href="#" id="never-mind" class="btn btn-link" data-dismiss="modal">Cancel</a>
+  </div>
+<% end %>
