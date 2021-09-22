@@ -57,6 +57,9 @@
         <i class="icon icon-trash"></i> 
         <% if removal_request_received_for?(curation_concern) %>
           File Removal Request Received
+          <span class="tooltip icon icon-question-sign">
+            <span class="tooltiptext">Your file removal request has been submitted and should be processed within 5 business days. If you have any questions or concerns, please contact the CurateND team at: curate@nd.edu</span>
+          </span>
         <% else %>
          <%= link_to 'Request File Removal', new_orphan_file_request_path(file_id: curation_concern), class: 'request-file-removal' %>
         <% end %>
