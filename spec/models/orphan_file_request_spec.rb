@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe OrphanFileRequest do
   let(:user) { FactoryGirl.create(:user) }
-  let(:request_factory) { FactoryGirl.create(:orphan_file_request, file_id: 'id', work_id: 'admin unit', user_id: user.id, user_email: "user@example.com") }
+  let(:request_factory) { FactoryGirl.create(:orphan_file_request, file_id: '12345', work_id: '67890', user_id: user.id, user_email: "user@example.com") }
   let(:bad_factory) { FactoryGirl.create(:orphan_file_request) }
 
   
@@ -19,6 +19,8 @@ describe OrphanFileRequest do
   end
 
   describe '#mark_completed' do
+    let(:subject) { request_factory }
+  
     it 'should accept a "completed date"' do
       subject.mark_completed
       expect(subject.completed_date).to_not be_nil

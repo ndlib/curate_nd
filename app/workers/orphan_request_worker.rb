@@ -10,7 +10,11 @@ class OrphanRequestWorker
    end
 
   def run
-    request = OrphanFileRequest.find(request_id)
-    OrphanRequestMailer.notify(request).deliver
+    begin
+      request = OrphanFileRequest.find(request_id)
+      OrphanRequestMailer.notify(request).deliver
+    rescue ActiveRecord::RecordNotFound => e
+      Raven.capture_exception(e)
+    end
   end
 end
