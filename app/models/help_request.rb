@@ -42,6 +42,6 @@ class HelpRequest < ActiveRecord::Base
   end
 
   def send_notification
-    Sufia.queue.push(NotificationWorker.new(id))
+    Sufia.queue.push(NotificationWorker.new(id, :help))
   end
 end

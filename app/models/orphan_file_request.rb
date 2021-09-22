@@ -11,6 +11,6 @@ class OrphanFileRequest < ActiveRecord::Base
   private
 
   def send_notification
-    Sufia.queue.push(OrphanRequestWorker.new(id))
+    Sufia.queue.push(NotificationWorker.new(id, :orphan))
   end
 end

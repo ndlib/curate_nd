@@ -1,13 +1,26 @@
 class NotificationMailer < ActionMailer::Base
-
-  def notify(help_request)
-    mail(from: sender_email(help_request),
-        to: recipients_list,
-        subject: "#{t('sufia.product_name')}: Help Request - #{help_request.id} [#{Rails.env}]",
-        body: prepare_body(help_request))
+  def notify(request, request_type)
+    case request_type
+    when :orphan
+      orphan_notify(request)
+    else
+      help_notify(request)
+    end
   end
 
   private
+
+  # in order for service-now ticket to be created, subject text must begin with the following
+  def service_now_subject_matcher
+    "#{t('sufia.product_name')}: Help Request"
+  end
+
+  def help_notify(help_request)
+    mail(from: sender_email(help_request),
+        to: recipients_list,
+        subject: "#{service_now_subject_matcher} - #{help_request.id} [#{Rails.env}]",
+        body: prepare_body(help_request))
+  end
 
   def prepare_body(help_request)
     body  = "From: #{sender_email(help_request)}\n"
@@ -17,6 +30,22 @@ class NotificationMailer < ActionMailer::Base
     body += "Resolution: #{help_request.resolution}\n"
     body += "Name: #{help_request.name}\n"
     body += "Message: #{help_request.how_can_we_help_you}"
+    body
+  end
+
+  def orphan_notify(orphan_file_request)
+    mail(from: orphan_file_request.user_email,
+      to: recipients_list,
+      subject: "#{service_now_subject_matcher} - Remove File #{orphan_file_request.file_id} [#{Rails.env}]",
+      body: prepare_orphan_body(orphan_file_request))
+  end
+
+  def prepare_orphan_body(orphan_file_request)
+    body  = "From: #{orphan_file_request.user_email}\n"
+    body += "Requesting User: #{user_info(orphan_file_request.user_id)}\n"
+    body += "File ID: #{orphan_file_request.file_id}\n"
+    body += "Work ID: #{orphan_file_request.work_id}\n"
+    body += "Message: I am requesting removal of #{t('sufia.product_name')} file #{orphan_file_request.file_id} from work id #{orphan_file_request.work_id}.\n"
     body
   end
 
@@ -32,5 +61,10 @@ class NotificationMailer < ActionMailer::Base
   def default_sender
     @sender ||= YAML.load(File.open(File.join(Rails.root, "config/smtp_config.yml")))
     return @sender[Rails.env]["smtp_user_name"]
+  end
+
+  def user_info(id)
+    requesting_user = User.find(id)
+    requesting_user.username + ': ' + requesting_user.name
   end
 end
