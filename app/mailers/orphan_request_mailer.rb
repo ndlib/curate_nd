@@ -15,7 +15,7 @@ class OrphanRequestMailer < ActionMailer::Base
     body += "File ID: #{orphan_file_request.file_id}\n"
     body += "Work ID: #{orphan_file_request.work_id}\n"
     body += "Message: I am requesting removal of #{t('sufia.product_name')} file #{orphan_file_request.file_id} from work id #{orphan_file_request.work_id}.\n"
-    body += "#{t('sufia.product_name')} Url: #{Rails.configuration.application_root_url}/show/#{orphan_file_request.file_id}"
+    # body += "#{t('sufia.product_name')} Url: #{Rails.configuration.application_root_url}/show/#{orphan_file_request.file_id}"
     body
   end
 
