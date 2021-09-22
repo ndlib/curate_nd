@@ -3,7 +3,7 @@ class OrphanRequestMailer < ActionMailer::Base
   def notify(orphan_file_request)
     mail(from: orphan_file_request.user_email,
       to: recipients_list,
-      subject: "#{t('sufia.product_name')}: Orphan File Request - File ID #{orphan_file_request.file_id} [#{Rails.env}]",
+      subject: "#{t('sufia.product_name')}: Help Request - Orphan File #{orphan_file_request.file_id} [#{Rails.env}]",
       body: prepare_body(orphan_file_request))
   end
 
