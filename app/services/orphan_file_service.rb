@@ -6,7 +6,7 @@ class OrphanFileService
     remove_parent!
     @object = find_object(file_id) #reload updated object
     @object.update_index
-    OrphanFileRequest.where(file_id: @object.noid).first.mark_completed
+    OrphanFileRequest.where(file_id: @object.noid).first.mark_completed_by(requested_by)
     true
   end
 

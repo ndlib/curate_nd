@@ -4,8 +4,8 @@ class OrphanFileRequest < ActiveRecord::Base
   validates_uniqueness_of :file_id
   after_create :send_notification
 
-  def mark_completed
-    update_attribute(:completed_date, Time.now)
+  def mark_completed_by(updating_user)
+    update(completed_date: Time.now, updating_user_id: updating_user.id)
   end
 
   private

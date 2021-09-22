@@ -21,9 +21,10 @@ describe OrphanFileRequest do
   describe '#mark_completed' do
     let(:subject) { request_factory }
   
-    it 'should accept a "completed date"' do
-      subject.mark_completed
+    it 'should accept a "completed date" and updating_user' do
+      subject.mark_completed_by(user)
       expect(subject.completed_date).to_not be_nil
+      expect(subject.updating_user_id).to_not be_nil
     end
   end
 end
