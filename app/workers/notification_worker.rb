@@ -3,14 +3,20 @@ class NotificationWorker
     :help_request_notifications
   end
 
-  attr_accessor :help_request_id
+  attr_accessor :request_id, :request_type
 
-  def initialize(help_request_id)
-    self.help_request_id = help_request_id
+  def initialize(request_id, request_type=:help)
+    self.request_id = request_id
+    self.request_type = request_type
   end
 
   def run
-    help_request = HelpRequest.find(help_request_id)
-    NotificationMailer.notify(help_request).deliver
+    case request_type
+    when :orphan
+      request = OrphanFileRequest.find(request_id)
+    else
+      request = HelpRequest.find(request_id)
+    end
+    NotificationMailer.notify(request, request_type).deliver
   end
 end

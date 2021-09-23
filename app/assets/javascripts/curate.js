@@ -41,6 +41,7 @@
 //= require curate/sort_and_per_page
 //= require curate/grid_view_controls
 //= require curate/form_input_mask
+//= require orphan_file_modal
 //
 //= require curate/bendo/cache_status
 //= require curate/bendo/recall_item

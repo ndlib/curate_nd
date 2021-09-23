@@ -53,10 +53,17 @@
       </div>
     <% end %>
     <% if has_edit_rights %>
-        <div class="same-line shift-right">
-        <%= mail_to('curate@nd.edu', subject: "Requesting removal of file", body: "I am requesting removal of file #{curation_concern.title} located in CurateND at #{Rails.configuration.application_root_url+common_object_path(curation_concern)}.") do %>
-        <i class="icon icon-trash"></i> Request File Removal <% end %>
-        </div>
+      <div class="same-line shift-right">
+        <i class="icon icon-trash"></i> 
+        <% if removal_request_received_for?(curation_concern) %>
+          File Removal Request Received
+          <span class="tooltip icon icon-question-sign">
+            <span class="tooltiptext">Your file removal request has been submitted and should be processed within 5 business days. If you have any questions or concerns, please contact the CurateND team at: curate@nd.edu</span>
+          </span>
+        <% else %>
+         <%= link_to 'Request File Removal', new_orphan_file_request_path(file_id: curation_concern), class: 'request-file-removal' %>
+        <% end %>
+      </div>
     <% end %>
   <% when FindingAid %>
     <%# Only display file list of finding aids to editors. See DLTP-1304 %>
