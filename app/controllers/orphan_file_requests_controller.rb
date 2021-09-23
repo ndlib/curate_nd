@@ -44,7 +44,8 @@ class OrphanFileRequestsController < ApplicationController
         :work_id,
         :user_id,
         :user_email,
-        :completed_date
+        :completed_date,
+        :updating_user_id
       )
     end
 
