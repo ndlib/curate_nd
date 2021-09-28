@@ -122,13 +122,15 @@ class ArticleMetadataDatastream < ActiveFedora::NtriplesRDFDatastream
 
     map.size({to: "format#extent", in: RDF::QualifiedDC})
 
-    map.identifier({to: 'identifier#doi', in: RDF::QualifiedDC}) do |index|
-      index.as :stored_searchable, :facetable
+    map.basic_identifier({to: 'identifier', in: RDF::DC}) do |index|
+      index.as :stored_searchable
+    end
+
+    map.doi(to: "identifier#doi", in: RDF::QualifiedDC) do |index|
+      index.as :stored_searchable
     end
 
     map.issn({to: 'identifier#issn', in: RDF::QualifiedDC})
-
-    map.doi({to: 'identifier#doi', in: RDF::QualifiedDC})
 
     map.source(to: 'source', in: RDF::DC) do |index|
       index.type :text

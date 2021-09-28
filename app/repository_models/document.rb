@@ -89,8 +89,6 @@ class Document < ActiveFedora::Base
   attribute :collection_name,            datastream: :descMetadata, multiple: true
   attribute :contributor_institution,    datastream: :descMetadata, multiple: true
   attribute :recommended_citation,       datastream: :descMetadata, multiple: true
-  attribute :doi,                        datastream: :descMetadata, multiple: false
-  attribute :identifier,                 datastream: :descMetadata, multiple: false
   attribute :permission,
     label: "Use Permission",
     datastream: :descMetadata, multiple: false

@@ -85,7 +85,10 @@ class GenericWorkRdfDatastream < ActiveFedora::NtriplesRDFDatastream
 
     map.requires({in: RDF::DC})
 
-    map.identifier({in: RDF::DC}) do |index|
+    map.basic_identifier({to: 'identifier', in: RDF::DC}) do |index|
+      index.as :stored_searchable
+    end
+    map.doi(to: "identifier#doi", in: RDF::QualifiedDC) do |index|
       index.as :stored_searchable
     end
 

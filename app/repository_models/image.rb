@@ -130,11 +130,7 @@ class Image < ActiveFedora::Base
       label: "Use Permission",
       multiple: false
 
-    ds.attribute :identifier,
-      multiple: false,
-      editable: false
-
-    ds.attribute :doi,
+    ds.attribute :basic_identifier,
       multiple: false,
       editable: false
 

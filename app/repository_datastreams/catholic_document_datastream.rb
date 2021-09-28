@@ -99,6 +99,9 @@ class CatholicDocumentDatastream < ActiveFedora::NtriplesRDFDatastream
       index.as :stored_searchable, :facetable
     end
 
+    map.basic_identifier({to: 'identifier', in: RDF::DC}) do |index|
+      index.as :stored_searchable
+    end
     map.doi(to: 'identifier#doi', in: RDF::QualifiedDC) do |index|
       index.as :stored_searchable
     end

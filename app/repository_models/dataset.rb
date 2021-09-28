@@ -47,8 +47,6 @@ class Dataset < ActiveFedora::Base
   attribute :temporal_coverage,       datastream: :descMetadata, multiple: true
   attribute :spatial_coverage,        datastream: :descMetadata, multiple: true
   attribute :creator,                 datastream: :descMetadata, multiple: true
-  attribute :identifier,              datastream: :descMetadata, multiple: false
-  attribute :doi,                     datastream: :descMetadata, multiple: false
   attribute :permission,
     label: "Use Permission",
     datastream: :descMetadata, multiple: false

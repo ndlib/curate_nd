@@ -89,11 +89,10 @@ class DissertationDatastream < ActiveFedora::NtriplesRDFDatastream
     map.coverage_temporal(to: "coverage#temporal", in: RDF::QualifiedDC) do |index|
       index.as :stored_searchable, :facetable
     end
-
-    map.identifier(in: RDF::DC) do |index|
-      index.as :stored_searchable,:facetable
+ 
+    map.basic_identifier({to: 'identifier', in: RDF::DC}) do |index|
+      index.as :stored_searchable
     end
-
     map.doi(to: "identifier#doi", in: RDF::QualifiedDC) do |index|
       index.as :stored_searchable
     end

@@ -376,7 +376,7 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("desc_metadata__rights", :stored_searchable, type: :string), label: "Rights"
     config.add_index_field solr_name("human_readable_type", :stored_searchable, type: :string), label: "Resource Type"
     config.add_index_field solr_name("desc_metadata__format", :stored_searchable, type: :string), label: "File Format"
-    config.add_index_field solr_name("desc_metadata__identifier", :stored_searchable, type: :string), label: "Identifier"
+    config.add_index_field solr_name("desc_metadata__identifier", :stored_searchable, type: :string), label: "DOI Identifier"
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
@@ -395,7 +395,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("desc_metadata__rights", :stored_searchable, type: :string), label: "Rights"
     config.add_show_field solr_name("human_readable_type", :stored_searchable, type: :string), label: "Resource Type"
     config.add_show_field solr_name("desc_metadata__format", :stored_searchable, type: :string), label: "File Format"
-    config.add_show_field solr_name("desc_metadata__identifier", :stored_searchable, type: :string), label: "Identifier"
+    config.add_show_field solr_name("desc_metadata__identifier", :stored_searchable, type: :string), label: "DOI Identifier"
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields
@@ -427,7 +427,7 @@ class CatalogController < ApplicationController
       contributor_institution_name = solr_name("desc_metadata__contributor_institution", :stored_searchable, type: :string)
       subject_name = solr_name("desc_metadata__subject", :stored_searchable, type: :string)
       author_name = solr_name("desc_metadata__author", :stored_searchable, type: :string)
-      identifier_name = solr_name("desc_metadata__identifier", :facetable, type: :string)
+      identifier_name = solr_name("desc_metadata__identifier", :stored_searchable, type: :string)
       urn  = solr_name("desc_metadata__urn", :stored_searchable, type: :string)
       degree_name  = solr_name("degree_name", :stored_searchable, type: :string)
       degree_disciplines = solr_name("degree_disciplines", :stored_searchable, type: :string)
@@ -583,7 +583,7 @@ class CatalogController < ApplicationController
       field.solr_parameters = {
         :"spellcheck.dictionary" => "identifier"
       }
-      solr_name = solr_name("desc_metadata__id", :stored_searchable, type: :string)
+      solr_name = solr_name("desc_metadata__identifier", :stored_searchable, type: :string)
       field.solr_local_parameters = {
         :qf => solr_name,
         :pf => solr_name

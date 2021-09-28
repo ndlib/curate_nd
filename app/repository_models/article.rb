@@ -127,17 +127,12 @@ class Article < ActiveFedora::Base
     datastream: :descMetadata, multiple: false
   attribute :temporal_coverage,
     datastream: :descMetadata, multiple: false
-  attribute :identifier,
-    datastream: :descMetadata, multiple: false,
-    editable: false
   attribute :issn,
     datastream: :descMetadata, multiple: false,
     editable: true
   attribute :eIssn,
     hint: "The electronic ISSN, or eISSN of the publication in which the article appeared.",
     datastream: :descMetadata, multiple: false
-  attribute :doi,
-    datastream: :descMetadata, editable: true
   attribute :rights,
     datastream: :descMetadata, multiple: false,
     default: "All rights reserved",

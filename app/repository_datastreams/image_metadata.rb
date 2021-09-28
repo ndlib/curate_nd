@@ -64,11 +64,12 @@ class ImageMetadata < ActiveFedora::NtriplesRDFDatastream
       index.as :stored_sortable
     end
 
-    map.identifier({to: 'identifier#doi', in: RDF::QualifiedDC}) do |index|
-      index.as :stored_searchable,:facetable
+    map.basic_identifier({to: 'identifier', in: RDF::DC}) do |index|
+      index.as :stored_searchable
     end
-
-    map.doi(to: "identifier#doi", in: RDF::QualifiedDC)
+    map.doi(to: "identifier#doi", in: RDF::QualifiedDC) do |index|
+      index.as :stored_searchable
+    end
 
     map.subject(in: RDF::DC) do |index|
       index.as :stored_searchable, :facetable

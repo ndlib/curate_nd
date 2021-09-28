@@ -10,18 +10,29 @@ module CurationConcern
       extend ActiveSupport::Concern
       included do
         include ActiveFedora::RegisteredAttributes
-        attribute :identifier,
+        attribute :doi,
           datastream: :descMetadata,
-          multiple: false, editable: false, displayable: true
+          multiple: false
         attribute :doi_assignment_strategy,
-          multiple: false, editable: true, displayable: false
+          multiple: false
         attribute :existing_identifier,
-          multiple: false, editable: true, displayable: false,
+          multiple: false, 
           writer: lambda {|value| normalize_identifier(value) }
 
         validate :remove_white_space_in_doi
 
+        alias_method :identifier, :doi
+        alias_method :identifier=, :doi=
+
         attr_writer :doi_remote_service
+
+        # desc_metadata__doi_tesim is added automatically to solr (via active_fedora perhaps?) 
+        # This insures that desc_metadata__identifier_tesim is also present for backward compatibility.
+        def to_solr(solr_doc = {})
+          super
+          solr_doc['desc_metadata__identifier_tesim'] = self.doi
+          solr_doc
+        end
 
         protected
 
