@@ -112,8 +112,6 @@ class CatholicDocument < ActiveFedora::Base
     datastream: :descMetadata, multiple: true,
     label: "Departments and Units",
     hint: "Departments and Units that creator belong to."
-  attribute :doi,
-    datastream: :descMetadata, multiple: false
   attribute :rights,
       datastream: :descMetadata, multiple: false,
       default: "All rights reserved",
@@ -131,7 +129,4 @@ class CatholicDocument < ActiveFedora::Base
   attribute :files,
     multiple: true, form: {as: :file}, label: "Upload Files",
     hint: "CTRL-Click (Windows) or CMD-Click (Mac) to select multiple files."
-
-  alias_method :identifier, :doi
-  alias_method :identifier=, :doi=
 end

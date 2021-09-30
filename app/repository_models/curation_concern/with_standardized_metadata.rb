@@ -105,7 +105,6 @@ module CurationConcern
     # alternate_title
     # application_date
     # artist
-    # assign_doi
     # author
     # available
     # based_near

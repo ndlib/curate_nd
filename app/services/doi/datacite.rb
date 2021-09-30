@@ -12,7 +12,12 @@ module Doi
     end
 
     def self.remote_uri_for(identifier)
-      URI.parse(File.join(resolver_url, identifier))
+      begin
+       URI.parse(File.join(resolver_url, identifier))
+      rescue URI::InvalidURIError => e
+        Raven.capture_exception(e)
+        nil
+      end
     end
 
     private

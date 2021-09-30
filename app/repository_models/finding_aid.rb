@@ -36,7 +36,7 @@ class FindingAid < ActiveFedora::Base
     datastream: :descMetadata, multiple: true,
     label: "Departments and Units",
     hint: "Departments and Units that creator belong to."
-  attribute :identifier, datastream: :descMetadata, multiple: false
+  attribute :basic_identifier, datastream: :descMetadata, multiple: false
   attribute :date_uploaded,
     default: lambda { Date.today.to_s("%Y-%m-%d") }
   attribute :date_modified,

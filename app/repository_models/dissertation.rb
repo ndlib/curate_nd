@@ -129,8 +129,6 @@ class Dissertation < ActiveFedora::Base
       multiple: true,
       label: "Coverage Spatial",
       hint: " The general region that the materials are related to when applicable."
-    ds.attribute :identifier,
-      multiple: false
     ds.attribute :format,
       multiple: false,
       editable: false
@@ -158,14 +156,6 @@ class Dissertation < ActiveFedora::Base
           allow_blank: true,
           aleph_identifier: true
       }
-  end
-
-  def doi=(doi)
-    self.identifier = doi
-  end
-
-  def doi
-    self.identifier
   end
 
   attribute :files,

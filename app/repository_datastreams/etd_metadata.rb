@@ -84,14 +84,13 @@ class EtdMetadata < ActiveFedora::NtriplesRDFDatastream
 
     map.code_list(to: 'description#code_list', in: RDF::QualifiedDC)
 
-    map.identifier(in: RDF::DC) do |index|
-      index.as :stored_searchable,:facetable
-    end
-
     map.urn(to: "identifier#other", in: RDF::QualifiedDC) do |index|
       index.as :stored_searchable, :symbol
     end
 
+    map.basic_identifier({to: 'identifier', in: RDF::DC}) do |index|
+      index.as :stored_searchable
+    end
     map.doi(to: "identifier#doi", in: RDF::QualifiedDC) do |index|
       index.as :stored_searchable
     end

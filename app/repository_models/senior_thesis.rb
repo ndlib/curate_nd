@@ -68,11 +68,6 @@ class SeniorThesis < ActiveFedora::Base
   attribute :publisher,
     default: ["University of Notre Dame"],
     datastream: :descMetadata, multiple: true
-  attribute :assign_doi,
-    label: 'Assign Digital Object Identifier (DOI)',
-    hint: "A Digital Object Identifier (DOI) is a permanent link to your Senior Thesis. It's an easy way for other people to cite your work",
-    displayable: false, multiple: false,
-    default: true
   attribute :rights,
     datastream: :descMetadata, multiple: false,
     default: "All rights reserved",
@@ -142,9 +137,6 @@ class SeniorThesis < ActiveFedora::Base
   def citation
     @citation ||= Citation.new(self)
   end
-
-  alias_method :doi, :identifier
-  alias_method :doi=, :identifier=
 
   private
   def parse_person_names(values)
