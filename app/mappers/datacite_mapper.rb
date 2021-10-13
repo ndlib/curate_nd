@@ -1,15 +1,29 @@
+# frozen_string_literal: true
+
 class DataciteMapper
   def self.call(curation_concern)
     {
-      status: "public",
-      profile: "datacite",
-      target: Curate.permanent_url_for(curation_concern),
-      datacite_resourcetype: "CreativeWork",
-      datacite_resourcetypegeneral: "Other",
-      datacite_creator: Array.wrap(curation_concern.creator).collect(&:to_s).join(", "),
-      datacite_title: curation_concern.title,
-      datacite_publisher: (I18n.t('sufia.institution_name')),
-      datacite_publicationyear: curation_concern.date_uploaded.year,
+      "data": {
+        "id": "#{ENV.fetch('DOI_SHOULDER')}/#{curation_concern.noid}",
+        "type": 'dois',
+        "attributes": {
+          "event": 'publish',
+          "doi": "#{ENV.fetch('DOI_SHOULDER')}/#{curation_concern.noid}",
+          "publisher": I18n.t('sufia.institution_name'),
+          "creators": [{
+            "name": curation_concern.creator
+          }],
+          "titles": [{
+            "title": curation_concern.title
+          }],
+          "publicationYear": curation_concern.date_uploaded.year,
+          "types": {
+            "resourceType": 'CreativeWork',
+            "resourceTypeGeneral": 'Other'
+          },
+          "url": Curate.permanent_url_for(curation_concern)
+        }
+      }
     }
   end
 end

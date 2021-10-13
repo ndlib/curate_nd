@@ -245,9 +245,6 @@ GEM
     erubis (2.7.0)
     eventmachine (1.2.7)
     execjs (2.7.0)
-    ezid-client (1.8.0)
-      hashie (~> 3.4, >= 3.4.3)
-      nokogiri
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.2.1)
@@ -682,7 +679,7 @@ DEPENDENCIES
   breach-mitigation-rails
   breadcrumbs_on_rails
   browser
-  bundler (~> 1.17.3)
+  bundler (< 2.0)
   byebug (~> 9.0.6)
   capistrano (~> 2.15)
   capybara (~> 2.4)
@@ -702,7 +699,6 @@ DEPENDENCIES
   devise_masquerade
   dry-equalizer (= 0.2.2)
   email_validator
-  ezid-client (~> 1.8)
   factory_girl_rails (~> 4.2.0)
   figaro
   flamegraph
@@ -758,6 +754,7 @@ DEPENDENCIES
   redcarpet
   redis (~> 3.3.3)
   resque-pool!
+  rest-client (~> 1.6.7)
   rmagick
   roboto
   rspec-html-matchers (~> 0.6.1)
