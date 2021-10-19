@@ -2,28 +2,16 @@ require 'spec_helper'
 
 module Doi
   RSpec.describe Datacite do
-    let(:ezid_identifier) { double(Object, id: 1) }
+    let(:datacite_identifier) { {"data"=>{"id"=>"10.81068/987654336", "type"=>"dois", "attributes"=>{"doi"=>"10.81068/987654336", "prefix"=>"10.81068", "suffix"=>"987654336", "creators"=>[{"name"=>"Mark Suhovecky"}], "titles"=>[{"title"=>"DOI MAdness PArt Two"}], "publisher"=>"Curate ND", "publicationYear"=>2021, "types"=>{"schemaOrg"=>"ScholarlyArticle", "citeproc"=>"article-journal", "bibtex"=>"article", "ris"=>"RPRT", "resourceTypeGeneral"=>"Text"}, "url"=>"https://curate.nd.edu/show/987654336", "metadataVersion"=>0, "created"=>"2021-10-18T21:07:37.000Z", "registered"=>"2021-10-18T21:07:37.000Z", "published"=>"2021", "updated"=>"2021-10-18T21:07:37.000Z"}}}}
+    let(:remapped_hash)  {  { "data": { "type": "dois", "attributes": { "event": "publish", "doi": "10.81068/987654336", "publisher": "Curate ND", "creators": [{ "name": "Mark Suhovecky" }], "titles": [{ "title": "DOI MAdness PArt Two" }], "publicationYear": 2021, "types": { "resourceTypeGeneral": "Text" }, "url": "https://curate.nd.edu/show/987654336" } } } }
     let(:curation_concern) { instance_double(ActiveFedora::Base) }
-    let(:remapped_hash) { { id: 1 } }
     let(:subject) { Doi::Datacite }
 
     describe '#mint' do
-      it 'uses the DataciteMapper before minting' do
-        allow(Ezid::Identifier).to receive(:mint).and_return(ezid_identifier)
-        expect(DataciteMapper).to receive(:call).with(curation_concern)
-        subject.mint(curation_concern)
-      end
-
-      it 'uses the Ezid gem to mint the object with the remapped object' do
+      it 'Returns the id given by DOI:Datacite::create_doi' do
         allow(DataciteMapper).to receive(:call).and_return(remapped_hash)
-        expect(Ezid::Identifier).to receive(:mint).with(remapped_hash).and_return(ezid_identifier)
-        subject.mint(curation_concern)
-      end
-
-      it 'returns the id given by Ezid::Identifier' do
-        allow(DataciteMapper).to receive(:call).and_return(remapped_hash)
-        allow(Ezid::Identifier).to receive(:mint).and_return(ezid_identifier)
-        expect(subject.mint(curation_concern)).to eq(ezid_identifier.id)
+        allow(subject).to receive(:create_doi).with(remapped_hash).and_return( "doi:" + datacite_identifier['data']['id'])
+        expect(subject.mint(curation_concern)).to eq('doi:10.81068/987654336')
       end
     end
 

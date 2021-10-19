@@ -8,7 +8,7 @@ module Doi
   class Datacite
     def self.mint(target)
       doi_request_object = DataciteMapper.call(target)
-      create_doi(doi_request_object).id
+      create_doi(doi_request_object)
     end
 
     def self.normalize_identifier(value)
@@ -40,9 +40,9 @@ module Doi
         url: "https://#{ENV.fetch('DOI_HOST')}/dois/",
         headers: { 'Authorization' => "Basic #{Base64.encode64(auth_details)}",
                    'Content-Type' => 'application/vnd.api+json' },
-        payload: JSON.parse(doi_request)
+        payload: doi_request
       )
-      response.body
+    return 'doi:' + JSON.parse(response.body)['data']['id']
     rescue RestClient::Exception => e
       Raven.capture_exception(e)
       nil

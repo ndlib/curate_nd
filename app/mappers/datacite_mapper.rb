@@ -11,7 +11,7 @@ class DataciteMapper
           "doi": "#{ENV.fetch('DOI_SHOULDER')}/#{curation_concern.noid}",
           "publisher": I18n.t('sufia.institution_name'),
           "creators": [{
-            "name": curation_concern.creator
+            "name": Array.wrap(curation_concern.creator).collect(&:to_s).join(", ")
           }],
           "titles": [{
             "title": curation_concern.title
