@@ -4,11 +4,11 @@ class DataciteMapper
   def self.call(curation_concern)
     {
       "data": {
-        "id": "#{ENV.fetch('DOI_SHOULDER')}/#{curation_concern.noid}",
+        "id": "#{Figaro.env.doi_shoulder}/#{curation_concern.noid}",
         "type": 'dois',
         "attributes": {
           "event": 'publish',
-          "doi": "#{ENV.fetch('DOI_SHOULDER')}/#{curation_concern.noid}",
+          "doi": "#{Figaro.env.doi_shoulder}/#{curation_concern.noid}",
           "publisher": I18n.t('sufia.institution_name'),
           "creators": [{
             "name": Array.wrap(curation_concern.creator).collect(&:to_s).join(", ")

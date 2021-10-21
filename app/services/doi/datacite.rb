@@ -26,18 +26,18 @@ module Doi
 
     # Concatenate user:password for basic authentication
     def self.auth_details
-      "#{ENV.fetch('DOI_USERNAME')}:#{ENV.fetch('DOI_PASSWORD')}"
+      "#{Figaro.env.doi_username}:#{Figaro.env.doi_password}"
     end
 
     def self.resolver_url
-      ENV.fetch('DOI_RESOLVER')
+      Figaro.env.doi_resolver
     end
 
     # send doi minting request to datacite
     def self.create_doi(doi_request)
       response = RestClient::Request.execute(
         method: :post,
-        url: "https://#{ENV.fetch('DOI_HOST')}/dois/",
+        url: "https://#{Figaro.env.doi_host}/dois/",
         headers: { 'Authorization' => "Basic #{Base64.encode64(auth_details)}",
                    'Content-Type' => 'application/vnd.api+json' },
         payload: doi_request
