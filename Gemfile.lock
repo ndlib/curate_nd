@@ -360,7 +360,7 @@ GEM
     mime-types-data (3.2020.1104)
     mini_magick (4.11.0)
     mini_mime (1.0.2)
-    mini_portile2 (2.5.1)
+    mini_portile2 (2.6.1)
     minitest (5.14.3)
     mono_logger (1.1.0)
     morphine (0.1.1)
@@ -380,8 +380,8 @@ GEM
       net-ssh (>= 4.0.0)
     noid (0.6.6)
       backports
-    nokogiri (1.11.4)
-      mini_portile2 (~> 2.5.0)
+    nokogiri (1.12.5)
+      mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
     nokogumbo (2.0.2)
       nokogiri (~> 1.8, >= 1.8.4)
@@ -429,7 +429,7 @@ GEM
     public_suffix (4.0.6)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
-    racc (1.5.2)
+    racc (1.6.0)
     rack (1.6.13)
     rack-contrib (1.8.0)
       rack (~> 1.4)
@@ -733,7 +733,7 @@ DEPENDENCIES
   net-ssh (~> 4.1.0)
   noid (~> 0.6.6)
   noids_client!
-  nokogiri (~> 1.11)
+  nokogiri (~> 1.12)
   oai
   omniauth-oauth2
   omniauth-oktaoauth

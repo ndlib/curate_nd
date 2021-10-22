@@ -61,7 +61,7 @@ group :default do
   gem 'nest', '~> 1.1'
   gem 'noid', '~> 0.6.6'
   gem 'noids_client', github: 'ndlib/noids_client'
-  gem 'nokogiri', '~> 1.11'
+  gem 'nokogiri', '~> 1.12'
   gem "oai"
   gem 'omniauth-oktaoauth'
   gem 'rmagick'
