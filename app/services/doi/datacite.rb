@@ -24,6 +24,8 @@ module Doi
       nil
     end
 
+private
+
     # Concatenate user:password for basic authentication
     def self.auth_details
       "#{Figaro.env.doi_username}:#{Figaro.env.doi_password}"
