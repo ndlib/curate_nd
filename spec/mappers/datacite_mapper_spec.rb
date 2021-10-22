@@ -1,4 +1,4 @@
-
+require 'spec_helper'
 
 RSpec.describe DataciteMapper do
   let(:remapped_hash) { { id: 1 } }
