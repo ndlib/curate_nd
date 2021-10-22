@@ -2,16 +2,20 @@ require 'spec_helper'
 
 module Doi
   RSpec.describe Datacite do
-    let(:datacite_identifier) { {"data"=>{"id"=>"10.81068/987654336", "type"=>"dois", "attributes"=>{"doi"=>"10.81068/987654336", "prefix"=>"10.81068", "suffix"=>"987654336", "creators"=>[{"name"=>"Mark Suhovecky"}], "titles"=>[{"title"=>"DOI MAdness PArt Two"}], "publisher"=>"Curate ND", "publicationYear"=>2021, "types"=>{"schemaOrg"=>"ScholarlyArticle", "citeproc"=>"article-journal", "bibtex"=>"article", "ris"=>"RPRT", "resourceTypeGeneral"=>"Text"}, "url"=>"https://curate.nd.edu/show/987654336", "metadataVersion"=>0, "created"=>"2021-10-18T21:07:37.000Z", "registered"=>"2021-10-18T21:07:37.000Z", "published"=>"2021", "updated"=>"2021-10-18T21:07:37.000Z"}}}}
-    let(:remapped_hash)  {  { "data": { "type": "dois", "attributes": { "event": "publish", "doi": "10.81068/987654336", "publisher": "Curate ND", "creators": [{ "name": "Mark Suhovecky" }], "titles": [{ "title": "DOI MAdness PArt Two" }], "publicationYear": 2021, "types": { "resourceTypeGeneral": "Text" }, "url": "https://curate.nd.edu/show/987654336" } } } }
-    let(:curation_concern) { instance_double(ActiveFedora::Base) }
     let(:subject) { Doi::Datacite }
+    let(:curation_concern) { instance_double(ActiveFedora::Base) }
+    let(:response) { double(RestClient::Response, 
+      body: '{ "data": { "id": "10.xxxx/987654336" }}')}
 
     describe '#mint' do
-      it 'Returns the id given by DOI:Datacite::create_doi' do
-        allow(DataciteMapper).to receive(:call).and_return(remapped_hash)
-        allow(subject).to receive(:create_doi).with(remapped_hash).and_return( "doi:" + datacite_identifier['data']['id'])
-        expect(subject.mint(curation_concern)).to eq('doi:10.81068/987654336')
+      let(:minted_doi) { Doi::Datacite.mint(curation_concern) }
+      before do
+        allow(RestClient::Request).to receive(:execute).and_return(response)
+      end
+      it 'mints a DOI via a request to the DOI hosting service and prepends identifier with "doi:"' do
+        expect(DataciteMapper).to receive(:call).with(curation_concern)
+        expect(RestClient::Request).to receive(:execute)
+        expect(minted_doi).to start_with('doi:')
       end
     end
 
@@ -26,7 +30,7 @@ module Doi
         ['https://doi:10.123/abc', 'doi:10.123/abc'],
         ["https://doi.org/10.1002/ppsc.201700420", "doi:10.1002/ppsc.201700420"]
       ].each do |given, expected|
-        it "normalizes #{given.inspect} to #{expected.inspect}" do
+        it "normalizes a doi" do
           expect(subject.normalize_identifier(given)).to eq(expected)
         end
       end
