@@ -1,4 +1,4 @@
-
+require 'spec_helper'
 
 RSpec.describe DataciteMapper do
   let(:remapped_hash) { { id: 1 } }
@@ -14,6 +14,10 @@ RSpec.describe DataciteMapper do
 
       it 'makes it public' do
         expect(subject[:data][:attributes]).to include(event: 'publish')
+      end
+
+      it 'sends identifier to mint rather than auto-generating' do
+        expect(subject[:data][:attributes]).to include(doi: "#{Figaro.env.doi_shoulder}/#{curation_concern.noid}")
       end
 
       it 'uses the Curate.permanent_url_for for the target' do
