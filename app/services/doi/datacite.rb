@@ -20,7 +20,7 @@ module Doi
     def self.remote_uri_for(identifier)
       URI.parse(File.join(resolver_url, identifier))
     rescue URI::InvalidURIError => e
-      Raven.capture_exception(e)
+      Sentry.capture_exception(e)
       nil
     end
 
@@ -46,7 +46,7 @@ private
       )
     return 'doi:' + JSON.parse(response.body)['data']['id']
     rescue RestClient::Exception => e
-      Raven.capture_exception(e)
+      Sentry.capture_exception(e)
       nil
     end
   end

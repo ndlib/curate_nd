@@ -117,7 +117,7 @@ class BatchIngestor
 
   def report_to_error_handler(params, code)
     exception = BatchIngestHTTPError.new("HTTP request failed with status #{code} for\n\t#{params.inspect}")
-    Raven.capture_exception(exception)
+    Sentry.capture_exception(exception)
     raise exception
   end
 end
