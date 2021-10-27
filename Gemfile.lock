@@ -150,7 +150,7 @@ GEM
       railties (>= 3.0)
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
-    brakeman (5.0.4)
+    brakeman (5.1.1)
     breach-mitigation-rails (0.2.2)
       activesupport
       rack
@@ -708,7 +708,7 @@ DEPENDENCIES
   blacklight (> 4.5.0, < 7.0)
   blacklight-hierarchy!
   bootstrap-datepicker-rails
-  brakeman (< 5.1)
+  brakeman
   breach-mitigation-rails
   breadcrumbs_on_rails
   browser

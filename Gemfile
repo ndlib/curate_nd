@@ -154,5 +154,5 @@ group :development do
   gem 'rubocop', '~> 0.48.1', require: false # Necessary as part of upgrade to Rails 4.1.0; added for ruby versioning
   gem 'rails-erb-lint', require: false
   gem 'scss-lint', require: false
-  gem 'brakeman', '< 5.1'
+  gem 'brakeman'
 end
