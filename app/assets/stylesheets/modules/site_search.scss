@@ -7,7 +7,7 @@
   }
 
   .search-query {
-    @include border-radius($input-border-radius);
+    border-radius: $input-border-radius;
     height: 2.1em;
     padding-left: .6em;
     padding-right: 12%;
