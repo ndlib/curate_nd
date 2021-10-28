@@ -73,14 +73,14 @@ group :default do
   gem 'redcarpet'
   gem 'redis', '~> 3.3.3' # Necessary as part of upgrade to Rails 4.1.0; added for ruby versioning
   gem 'resque-pool', github: 'ndlib/resque-pool', branch: 'master'
-  gem 'rest-client', '~> 1.6.7'
+  gem 'rest-client' # '~> 1.6.7'
   gem 'roboto'
   gem 'rubydora', '~> 1.7.4'
   gem 'sanitize'
   gem 'sass', '3.4.1' # Maybe necessary as part of upgrade to Rails 4.1.0; added for ruby versioning; at 3.4.25, I encountered "undefined method `log_level' for #<ActiveSupport::Logger:0x0000000a736388>"
   gem 'select2-rails'
-  gem 'sentry-raven', '~> 2.7'
-  gem 'share_notify', github: 'samvera-labs/share_notify'
+  gem 'sentry-ruby'
+  gem 'share_notify', github: 'samvera-labs/share_notify', branch: 'main' 
   gem 'simple_form', '~> 3.5.0'
   gem 'unicode'
   gem 'unicorn', '~> 4.0'

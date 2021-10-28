@@ -20,7 +20,7 @@ class OsfIngestWorker
   def run
     BatchIngestor.start_osf_archive_ingest(attributes, job_id_prefix: "osfarchive_#{attributes.fetch(:project_identifier)}_")
   rescue StandardError => exception
-    Raven.capture_exception(exception, extra: { error_class: exception.class, parameters: { OsfIngestWorker_attributes: attributes } } )
+    Sentry.capture_exception(exception, extra: { error_class: exception.class, parameters: { OsfIngestWorker_attributes: attributes } } )
     raise exception
   end
 end

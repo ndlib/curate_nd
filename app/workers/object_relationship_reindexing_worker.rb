@@ -15,7 +15,7 @@ class ObjectRelationshipReindexerWorker
     begin
       Curate::Indexer.reindex_relationships(pid)
     rescue StandardError => exception
-      Raven.capture_exception(exception)
+      Sentry.capture_exception(exception)
       raise exception
     end
   end

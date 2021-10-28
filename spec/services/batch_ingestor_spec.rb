@@ -54,7 +54,7 @@ RSpec.describe BatchIngestor do
     let(:unsuccessful_response) { instance_double(Net::HTTPResponse, code: 500) }
     it 'will report to Error Handler if response code not 200' do
       expect(http).to receive(:request).with(kind_of(Net::HTTP::Put)).and_return(unsuccessful_response)
-      expect(Raven).to receive(:capture_exception)
+      expect(Sentry).to receive(:capture_exception)
       expect { subject }.to raise_error(BatchIngestor::BatchIngestHTTPError)
     end
 
@@ -137,7 +137,7 @@ RSpec.describe BatchIngestor do
 
     it 'throws an exception if the response code is anything other than a 200 and notifies Error Handler' do
       allow(response).to receive(:code).and_return('x')
-      expect(Raven).to receive(:capture_exception)
+      expect(Sentry).to receive(:capture_exception)
       expect{ subject }.to raise_error(BatchIngestor::BatchIngestHTTPError)
     end
 

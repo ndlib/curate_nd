@@ -11,7 +11,7 @@ RSpec.describe ObjectRelationshipReindexerWorker do
     end
 
     it 'will call Error Handler if an exception is encountered and re-raise the exception' do
-      expect(Raven).to receive(:capture_exception)
+      expect(Sentry).to receive(:capture_exception)
       allow(Curate::Indexer).to receive(:reindex_relationships).and_raise(RuntimeError)
       expect { worker.run }.to raise_error(RuntimeError)
     end

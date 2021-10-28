@@ -68,7 +68,7 @@ module CurateHelper
       markup << %( <img class="canonical-image" src=\"#{download_path(curation_concern.representative,  'thumbnail')}\" alt="Thumbnail">)
     rescue ActiveFedora::ObjectNotFoundError => e
       exception = Curate::Exceptions::RepresentativeObjectMissingError.new(e, curation_concern)
-      Raven.capture_exception(exception, extra: { curation_concern: curation_concern.pid } )
+      Sentry.capture_exception(exception, extra: { curation_concern: curation_concern.pid } )
       markup << image_tag('curate/default.png', class: "canonical-image")
     end
     markup << %(</a>)

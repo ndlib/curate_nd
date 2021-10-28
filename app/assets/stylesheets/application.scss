@@ -37,7 +37,8 @@
  *= require 'colorbox'
  *= require_self
  */
-
+ @import 'global-variables';
+ 
 // Inline form fields
 .control-group.inline input {
   margin-bottom: 0;
