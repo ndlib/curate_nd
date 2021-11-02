@@ -256,7 +256,7 @@ before 'deploy', 'env:set_paths'
 #############################################################
 
 set :application, 'curate_nd'
-set :repository,  'https://github.com/ndlib/curate_nd'
+set :repository,  'https://github.com/ndlib/curate_nd.git'
 
 #############################################################
 #  Environments
