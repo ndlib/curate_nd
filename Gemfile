@@ -35,6 +35,7 @@ group :default do
   gem 'devise_masquerade'
   gem 'devise-guests', '~> 0.7'
   gem 'devise', '~>4.7'
+  gem 'down'
   gem 'dry-equalizer', '0.2.2'
   gem 'figaro'
   gem 'flipper'

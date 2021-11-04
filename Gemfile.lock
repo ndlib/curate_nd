@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ndlib/blacklight-hierarchy.git
-  revision: f859aabec78f0a3fb9e71771a42ec534475cdc04
+  revision: 93ad96c081c91072cf2659f3428af266fce507cb
   branch: master
   specs:
     blacklight-hierarchy (0.2.0)
@@ -19,7 +19,7 @@ GIT
 
 GIT
   remote: https://github.com/ndlib/noids_client.git
-  revision: cbcd8da56f42d9939cd757661e93740ada9f2aef
+  revision: d999829fc7bc26bc7a9acf7864d726667d287c5d
   specs:
     noids_client (0.0.2)
       json (~> 2.3)
@@ -27,7 +27,7 @@ GIT
 
 GIT
   remote: https://github.com/ndlib/resque-pool.git
-  revision: 53f8f5776a83b44ccecdfd9b76a5b6725f44f9c8
+  revision: b4c70c6ffaa8419976c8b4107d6f3e754431350d
   branch: master
   specs:
     resque-pool (0.7.0.dev)
@@ -109,10 +109,10 @@ GEM
     arel (6.0.4)
     ast (2.4.2)
     aws-eventstream (1.2.0)
-    aws-partitions (1.518.0)
-    aws-sdk-core (3.121.3)
+    aws-partitions (1.524.0)
+    aws-sdk-core (3.121.6)
       aws-eventstream (~> 1, >= 1.0.2)
-      aws-partitions (~> 1, >= 1.239.0)
+      aws-partitions (~> 1, >= 1.520.1)
       aws-sigv4 (~> 1.1)
       jmespath (~> 1.0)
     aws-sdk-kms (1.50.0)
@@ -150,7 +150,7 @@ GEM
       railties (>= 3.0)
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
-    brakeman (5.1.1)
+    brakeman (5.1.2)
     breach-mitigation-rails (0.2.2)
       activesupport
       rack
@@ -226,7 +226,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise-guests (0.8.0)
+    devise-guests (0.8.1)
       devise
     devise_masquerade (0.6.5)
       devise (>= 2.1.0)
@@ -235,6 +235,8 @@ GEM
     docile (1.4.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
+    down (5.2.4)
+      addressable (~> 2.8)
     dry-configurable (0.13.0)
       concurrent-ruby (~> 1.0)
       dry-core (~> 0.6)
@@ -432,7 +434,7 @@ GEM
     omniauth (1.9.1)
       hashie (>= 3.4.6)
       rack (>= 1.6.2, < 3)
-    omniauth-oauth2 (1.7.1)
+    omniauth-oauth2 (1.7.2)
       oauth2 (~> 1.4)
       omniauth (>= 1.9, < 3)
     omniauth-oktaoauth (0.1.6)
@@ -492,7 +494,7 @@ GEM
       activemodel (>= 4.0)
     rails_autolink (1.1.6)
       rails (> 3.1)
-    rails_best_practices (1.21.0)
+    rails_best_practices (1.22.1)
       activesupport
       code_analyzer (>= 0.5.2)
       erubis
@@ -525,7 +527,7 @@ GEM
     responders (2.4.1)
       actionpack (>= 4.2.0, < 6.0)
       railties (>= 4.2.0, < 6.0)
-    resque (2.1.0)
+    resque (2.2.0)
       mono_logger (~> 1.0)
       multi_json (~> 1.0)
       redis-namespace (~> 1.6)
@@ -614,7 +616,7 @@ GEM
     sentry-ruby-core (4.7.3)
       concurrent-ruby
       faraday
-    sexp_processor (4.15.3)
+    sexp_processor (4.16.0)
     sextant (0.2.4)
       rails (>= 3.2)
     simple_form (3.5.1)
@@ -730,6 +732,7 @@ DEPENDENCIES
   devise (~> 4.7)
   devise-guests (~> 0.7)
   devise_masquerade
+  down
   dry-equalizer (= 0.2.2)
   email_validator
   factory_girl_rails (~> 4.2.0)
