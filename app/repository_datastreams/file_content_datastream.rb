@@ -39,7 +39,9 @@ class FileContentDatastream < ActiveFedora::Datastream
     if controlGroup == 'R'
       download_file_dest = File.join(Figaro.env.curate_worker_tmpdir, File.basename(dsLocation))
       Down::NetHttp.download(dsLocation, headers: { 'X-Api-Key' => Figaro.env.bendo_api_key },
-                                         destination: download_file_dest)
+                                         destination: download_file_dest,
+                                         open_timeout: 300,
+                                         read_timeout: 3600)
       File.open(download_file_dest)
     else
       content
