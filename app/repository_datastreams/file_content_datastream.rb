@@ -40,7 +40,7 @@ class FileContentDatastream < ActiveFedora::Datastream
       download_file_dest = File.join(Figaro.env.curate_worker_tmpdir, File.basename(dsLocation))
       Down::NetHttp.download(dsLocation, headers: { 'X-Api-Key' => Figaro.env.bendo_api_key },
                                          destination: download_file_dest)
-      download_file_dest
+      File.read(download_file_dest)
     else
       content
     end
