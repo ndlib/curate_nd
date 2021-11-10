@@ -47,23 +47,44 @@ class FileContentDatastream < ActiveFedora::Datastream
     # For bendo datastreams, download the file directly rather than use the Activerfedora content,
     # lest for big files we run out of memory.
     if controlGroup == 'R'  # file is in bendo
-      # Create full download path of file
-      download_file_dest = File.join(Figaro.env.curate_worker_tmpdir, File.basename(dsLocation))
-
-      # Set TMPDIR in environment so that open_uri creates its tempfiles in the download area
-      # rather than the system /tmp
-      ENV['TMPDIR'] = Figaro.env.curate_worker_tmpdir + '/tmp'
-
-      # try download from bendo API using dsLocation uri in the datastream
-      Down::NetHttp.download(dsLocation, headers: { 'X-Api-Key' => Figaro.env.bendo_api_key },
-                                         destination: download_file_dest,
-                                         open_timeout: 300,
-                                         read_timeout: 3600)
-
-      #Return open file descriptor so Hydra::FileCharacterization knows not to use the content DS
-      File.open(download_file_dest)
+      download_from_bendo
     else # file is in content datastream
       content
     end
+  end
+
+  def download_from_bendo
+    # Create full download path of file
+    download_file_dest = File.join(Figaro.env.curate_worker_tmpdir, File.basename(dsLocation))
+
+    begin
+      download_from_dsLocation(download_file_dest)
+    resque Down::SystemError
+      if check_bendo_caching != '1'
+        sleep(30)
+        retry
+      end
+    end
+
+    #Return open file descriptor so Hydra::FileCharacterization knows not to use the content DS
+    File.open(download_file_dest)
+  end
+
+  def download_from_dsLocation(file_dest)
+    # Set TMPDIR in environment so that open_uri creates its tempfiles in the download area
+    # rather than the system /tmp
+    ENV['TMPDIR'] = Figaro.env.curate_worker_tmpdir + '/tmp'
+
+    # try download from bendo API using dsLocation uri in the datastream
+    Down::NetHttp.download(dsLocation, headers: { 'X-Api-Key' => Figaro.env.bendo_api_key },
+                                       destination: file_dest,
+                                       open_timeout: 300,
+                                       read_timeout: 3600)
+
+  end
+
+  def check_bendo_caching
+    response = HTTP.head(dsLocation, headers: { 'X-Api-Key' => Figaro.env.bendo_api_key })
+    response.headers['X-Cached']
   end
 end
