@@ -35,3 +35,4 @@ spec/jetty_generator
 .byebug_history
 .DS_Store
 .docker-sync
+config/database.yml

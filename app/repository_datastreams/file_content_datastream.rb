@@ -60,7 +60,7 @@ class FileContentDatastream < ActiveFedora::Datastream
 
     begin
       download_from_dsLocation(download_file_dest)
-    rescue Down::SystemError
+    rescue Down::ServerError
       retry if check_bendo_caching != '1'
     end
 
