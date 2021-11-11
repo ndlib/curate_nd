@@ -39,6 +39,7 @@ group :default do
   gem 'dry-equalizer', '0.2.2'
   gem 'figaro'
   gem 'flipper'
+  gem 'http'
   gem 'httparty'
   gem 'hydra-collections', '~> 1.3.0'
   gem 'hydra-derivatives', '~> 0.0.7'

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'down/net_http'
+require 'http'
 
 # FileContentStream handles Antivirus and File Characterization of content
 class FileContentDatastream < ActiveFedora::Datastream
@@ -59,11 +60,8 @@ class FileContentDatastream < ActiveFedora::Datastream
 
     begin
       download_from_dsLocation(download_file_dest)
-    resque Down::SystemError
-      if check_bendo_caching != '1'
-        sleep(30)
-        retry
-      end
+    rescue Down::SystemError
+      retry if check_bendo_caching != '1'
     end
 
     #Return open file descriptor so Hydra::FileCharacterization knows not to use the content DS
