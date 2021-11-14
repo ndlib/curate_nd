@@ -14,7 +14,7 @@ class FileContentDatastream < ActiveFedora::Datastream
     
     # if the content is in bendo, file_content will be an open file descriptor to the downloaded file,
     # if not, it will be the ActiveFedora object's content datastream
-    file_content = determine_filesource
+    file_content = return_file_content
 
     # Run Clam first, let that possibly raise exceptions
     # Then run fits and return that
@@ -30,6 +30,18 @@ class FileContentDatastream < ActiveFedora::Datastream
     fits
   end
 
+  def return_file_content
+    return unless has_content?
+
+    # For bendo datastreams, download the file directly rather than use the Activerfedora content,
+    # lest for big files we run out of memory.
+    if controlGroup == 'R'  # file is in bendo
+      download_from_bendo
+    else # file is in content datastream
+      content
+    end
+  end
+
   protected
 
   def antivirus_runner
@@ -41,16 +53,6 @@ class FileContentDatastream < ActiveFedora::Datastream
       Curate.configuration.characterization_runner
     else
       Sufia.config.fits_path
-    end
-  end
-
-  def determine_filesource
-    # For bendo datastreams, download the file directly rather than use the Activerfedora content,
-    # lest for big files we run out of memory.
-    if controlGroup == 'R'  # file is in bendo
-      download_from_bendo
-    else # file is in content datastream
-      content
     end
   end
 

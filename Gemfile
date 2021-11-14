@@ -38,6 +38,7 @@ group :default do
   gem 'down'
   gem 'dry-equalizer', '0.2.2'
   gem 'figaro'
+  gem 'fileutils'
   gem 'flipper'
   gem 'http'
   gem 'httparty'

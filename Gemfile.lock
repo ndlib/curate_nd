@@ -284,6 +284,7 @@ GEM
       rake
     figaro (1.2.0)
       thor (>= 0.14.0, < 2)
+    fileutils (1.6.0)
     flamegraph (0.9.5)
     flipper (0.22.2)
     gli (2.20.1)
@@ -748,6 +749,7 @@ DEPENDENCIES
   email_validator
   factory_girl_rails (~> 4.2.0)
   figaro
+  fileutils
   flamegraph
   flipper
   hashie (= 3.4.6)
