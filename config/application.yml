@@ -14,6 +14,7 @@ BATCH_INGESTOR_URL: 'http://localhost:15000/'
 # Examples only... actual values used are in secrets:
 CURATE_HELP_NOTIFICATION_RECIPIENT: curate@nd.edu
 CURATE_HELP_NOTIFICATION_DEFAULT_SENDER: curate@nd.edu
+CURATE_WORKER_TMPDIR: '/tmp'
 
 # These are keys for the sandbox
 ORCID_APP_ID: "0000-0002-6683-6607"
@@ -38,6 +39,7 @@ SENTRY_DSN: 'fakey-mcfake-face'
 S3_BUCKET: 'bucket-name'
 AWS_ACCESS_KEY_ID: 'abcde'
 AWS_SECRET_ACCESS_KEY: 'abcde'
+bendo_api_key: more_fakery
 
 development:
   # Commented out because these create the requirement to start the noids server
@@ -59,7 +61,6 @@ development:
   okta_redirect_uri: fakey
   okta_site: fakey
   okta_token_url: fakey
-  bendo_api_key: ''
 
   # SENTRY_DSN: 'put something here if you want it for testing'
 
