@@ -26,6 +26,7 @@ class FileContentDatastream < ActiveFedora::Datastream
     # If we downloaded it ourselves, delete the tempfile
     if file_content.is_a?(File)
       File.delete(file_content.path)
+      file_content.close unless file_content.nil?
     end
     fits
   end
@@ -63,7 +64,8 @@ class FileContentDatastream < ActiveFedora::Datastream
     begin
       download_from_dsLocation(download_file_dest)
     rescue Down::ServerError
-      retry if check_bendo_caching != '1'
+      sleep(10)
+      retry if check_bendo_caching == '0'
     end
 
     #Return open file descriptor so Hydra::FileCharacterization knows not to use the content DS
