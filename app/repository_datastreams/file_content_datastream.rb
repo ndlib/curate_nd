@@ -26,7 +26,6 @@ class FileContentDatastream < ActiveFedora::Datastream
     # If we downloaded it ourselves, delete the tempfile
     if file_content.is_a?(File)
       File.delete(file_content.path)
-      file_content.close unless file_content.nil?
     end
     fits
   end
