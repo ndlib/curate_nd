@@ -155,7 +155,7 @@ GEM
       activesupport
       rack
     breadcrumbs_on_rails (3.0.1)
-    browser (5.3.1)
+    browser (5.1.0)
     builder (3.2.4)
     byebug (9.0.6)
     cancan (1.6.10)
@@ -725,7 +725,7 @@ DEPENDENCIES
   brakeman
   breach-mitigation-rails
   breadcrumbs_on_rails
-  browser
+  browser (< 5.2.0)
   bundler (< 2.0)
   byebug (~> 9.0.6)
   capistrano (~> 2.15)

@@ -23,7 +23,7 @@ group :default do
   gem 'breach-mitigation-rails'
   gem 'breadcrumbs_on_rails'
   gem 'bundler', '< 2.0'
-  gem 'browser'
+  gem 'browser', '< 5.2.0' # lock version to avoid NoMethodError - undefined method `match?' for Hash
   gem 'chronic', '>= 0.10.2'
   gem 'citeproc-ruby', '~> 1.1.0'
   gem 'citeproc'
