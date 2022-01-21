@@ -44,9 +44,9 @@ private
                    'Content-Type' => 'application/vnd.api+json' },
         payload: doi_request
       )
-    return 'doi:' + JSON.parse(response.body)['data']['id']
-    rescue RestClient::Exception => e
-      Sentry.capture_exception(e)
+      return 'doi:' + JSON.parse(response.body)['data']['id']
+    rescue RestClient::Exception, RestClient::UnprocessableEntity => e
+      Sentry.capture_exception(e, extra: { doi_request: doi_request } )
       nil
     end
   end
