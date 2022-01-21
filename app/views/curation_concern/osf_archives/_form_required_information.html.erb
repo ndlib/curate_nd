@@ -1,7 +1,7 @@
 <fieldset class="required">
   <legend>Required Information</legend>
 
-  <%= f.input :title, input_html: { class: 'input-xlarge' } %>
+  <%= f.input :title, input_html: { class: 'input-xxlarge' } %>
   <%= f.input :description,
               as: :text,
               required: true,
@@ -11,6 +11,6 @@
               },
               label: 'Description'
   %>
-  <%= f.input :source,               label: "Original OSF URL", input_html: {class: 'input-xlarge', type:'url'} %>
+  <%= f.input :source,               label: "Original OSF URL", input_html: {class: 'input-xxlarge', type:'url'} %>
   <%= render 'form_administrative_unit', curation_concern: curation_concern, f: f, select_label_id: 'add-to-administrative-unit', button_class: 'btn btn-primary', required: true %>
 </fieldset>

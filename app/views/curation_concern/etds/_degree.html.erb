@@ -1,5 +1,5 @@
 <%= f.simple_fields_for :degree do |df| %>
-  <%= df.input :level, label: 'Degree Level', collection: Etd.valid_degree_levels, input_html: { class: 'input-xlarge' } %>
-  <%= df.input :discipline, label: 'Degree Discipline', collection: Etd.valid_degree_disciplines, include_hidden: false, input_html: { class: 'input-xlarge', multiple: true } %>
-  <%= df.input :name, label: 'Degree Name', collection: Etd.valid_degree_names, input_html: { class: 'input-xlarge' } %>
+  <%= df.input :level, label: 'Degree Level', collection: Etd.valid_degree_levels, input_html: { class: 'input-xxlarge' } %>
+  <%= df.input :discipline, label: 'Degree Discipline', collection: Etd.valid_degree_disciplines, include_hidden: false, input_html: { class: 'input-xxlarge', multiple: true } %>
+  <%= df.input :name, label: 'Degree Name', collection: Etd.valid_degree_names, input_html: { class: 'input-xxlarge' } %>
 <% end %>

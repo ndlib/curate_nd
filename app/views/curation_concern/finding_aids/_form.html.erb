@@ -10,10 +10,10 @@
     <div class="span12">
       <fieldset class="required">
         <%= f.input :title, input_html: { class: 'input-xxlarge'}, required: true %>
-        <%= f.input :creator, input_html: { class: 'input-xlarge', placeholder: 'George Washington' }, required: true %>
-        <%= f.input :source, input_html: { class: 'input-xlarge'}, required: false %>
-        <%= f.input :relation, as: :multi_value, label: "Related Resource(s)", input_html: {class: 'input-xlarge', type: 'url'} %>
-        <%= f.input :alephIdentifier,         as: :multi_value, label: "Aleph Record Number" , input_html: { class: 'input-xlarge' } %>
+        <%= f.input :creator, input_html: { class: 'input-xxlarge', placeholder: 'George Washington' }, required: true %>
+        <%= f.input :source, input_html: { class: 'input-xxlarge'}, required: false %>
+        <%= f.input :relation, as: :multi_value, label: "Related Resource(s)", input_html: {class: 'input-xxlarge', type: 'url'} %>
+        <%= f.input :alephIdentifier,         as: :multi_value, label: "Aleph Record Number" , input_html: { class: 'input-xxlarge' } %>
         <%= f.input :abstract, input_html: { class: 'input-xxxlarge rich-textarea-js', rows: '9' }, as: :text, required: true %>
         <%= f.hidden_field :visibility, value: 'open' %>
         <%= render 'form_administrative_unit', curation_concern: curation_concern, f: f, select_label_id: 'add-to-administrative-unit', button_class: 'btn btn-primary', required: true %>
