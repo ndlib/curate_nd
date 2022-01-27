@@ -7,4 +7,9 @@ module CommonObjectsHelper
     return true if OrphanFileRequest.where(file_id: object.noid).count > 0
     false
   end
+
+  def removal_request_active?(object)
+    return true if OrphanFileRequest.where(file_id: object.noid, completed_date: nil).count > 0
+    false
+  end
 end

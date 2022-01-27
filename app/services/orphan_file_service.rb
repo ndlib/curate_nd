@@ -3,6 +3,9 @@ class OrphanFileService
     return false unless requested_by.can?(:orphan, GenericFile)
     @object = find_object(file_id)
     return false unless @object
+    requests = OrphanFileRequest.where(file_id: @object.noid)
+    return false unless requests.count > 0
+    return false if requests.last.request_completed?
     remove_parent!
     @object = find_object(file_id) #reload updated object
     @object.update_index
