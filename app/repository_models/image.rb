@@ -41,8 +41,8 @@ class Image < ActiveFedora::Base
 
     ds.attribute :organization,
               datastream: :descMetadata, multiple: true,
-              label: "School & Department",
-              hint: "School and Department that creator belong to."
+              label: "Organization",
+              hint: "Organizations which creators belong to."
 
     ds.attribute :administrative_unit,
               datastream: :descMetadata, multiple: true,

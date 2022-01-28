@@ -29,8 +29,8 @@ class Dataset < ActiveFedora::Base
   attribute :affiliation,datastream: :descMetadata, hint: "Creator's Affiliation to the Institution.", multiple: false
   attribute :organization,
             datastream: :descMetadata, multiple: true,
-            label: "Departments and Units",
-            hint: "Departments and Units that creator belong to."
+            label: "Organization",
+            hint: "Organizations which creators belong to."
   attribute :administrative_unit,
             datastream: :descMetadata, multiple: true,
             label: "School & Department",
