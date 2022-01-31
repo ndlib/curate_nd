@@ -3,6 +3,7 @@
   captured = '' if captured.blank?
   href = curation_concern_generic_file_path(thumbnail.noid) if href.blank?
   width = 100 if width.blank?
+  show_download_link = (current_user && (current_user.can? :read, thumbnail) ? true : false)
 
   if ( thumbnail.image? || thumbnail.pdf? || thumbnail.video? )
     src = download_path(thumbnail, {datastream_id: 'thumbnail'})
@@ -15,7 +16,11 @@
   link_options[:data]  = { alternate: alternate_href } unless alternate_href.blank?
 %>
 
-<%= link_to href, link_options do %>
+<% if show_download_link == true %>
+  <%= link_to href, link_options do %>
+    <%= image_tag(src, width: width, class: 'thumbnail') %>
+    <%= captured %>
+  <% end %>
+<% else %>
   <%= image_tag(src, width: width, class: 'thumbnail') %>
-  <%= captured %>
 <% end %>
