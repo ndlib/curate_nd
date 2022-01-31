@@ -81,6 +81,6 @@
     as: :multi_value,
     input_html: { class: 'input-xxlarge' }
   %>
-
+  <%= f.input :organization,            as: :multi_value, input_html: { class: 'input-xxlarge' } %>
   <%= render partial: 'curation_concern/base/contributor', locals: {f: f, curation_concern: curation_concern} %>
 </fieldset>

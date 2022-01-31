@@ -156,8 +156,8 @@ class Document < ActiveFedora::Base
   # apparently unused(?)
   attribute :format,                     datastream: :descMetadata, multiple: false
   attribute :organization,               datastream: :descMetadata, multiple: true,
-            label: 'School & Department',
-            hint: 'School and Department that creator belong to.'
+            label: "Organization",
+            hint: "Organizations which creators belong to."
   attribute :alephIdentifier,         datastream: :descMetadata, multiple: true,
             validates: {
                 allow_blank: true,
