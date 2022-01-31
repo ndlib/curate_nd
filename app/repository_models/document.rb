@@ -23,6 +23,7 @@ class Document < ActiveFedora::Base
   DOCUMENT_TYPES = [
     'Book Chapter',
     'Book',
+    'Brief',
     'Brochure',
     'Case Study',
     'Document',
