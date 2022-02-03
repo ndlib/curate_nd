@@ -20,6 +20,7 @@ class Document < ActiveFedora::Base
   self.indefinite_article = 'an'
   self.contributor_label = 'Author'
 
+  # the list of valid document types. Changes will require a change to the type mapping on the Primo pipe 
   DOCUMENT_TYPES = [
     'Book Chapter',
     'Book',
