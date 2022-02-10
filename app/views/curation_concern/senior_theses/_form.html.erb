@@ -70,7 +70,7 @@
     <div class="span12">
       <% if curation_concern.respond_to?(:doi) %>
         <%= render "form_doi", curation_concern: curation_concern, f: f %>
-        <% if curation_concern.identifier.present? %>
+        <% if curation_concern.doi.present? && not_curate_minted_doi?(curation_concern.doi) %>
           <%= f.input :identifier, label: 'Changes to DOI can be made here', input_html: { class: 'input-xxlarge' } %>
         <% end %>
       <% end %>

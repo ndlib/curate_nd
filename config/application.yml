@@ -22,7 +22,7 @@ ORCID_APP_SECRET: "e1ff26a2-d889-40be-bd41-acac09214cae"
 
 DOI_USERNAME: "ADD THIS TO YOUR ENV"
 DOI_PASSWORD: "ADD THIS TO YOUR ENV"
-DOI_SHOULDER: "doi:10.5072/FK2"
+DOI_SHOULDER: "doi:10.7274"
 DOI_HOST: "ez.test.datacite.org"
 DOI_RESOLVER: "https://handle.test.datacite.org"
 DOI_PORT: "443"

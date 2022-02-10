@@ -45,6 +45,12 @@ module CurationConcernHelper
     TemporaryAccessToken.build_renewal_request_for(token_sha)
   end
 
+  def not_curate_minted_doi?(doi)
+    # Is this the best way to identify a curate-minted doi?
+    return false if doi.include?(Figaro.env.doi_shoulder)
+    true
+  end
+
   private
 
   def request_recipient
