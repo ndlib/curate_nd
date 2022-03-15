@@ -186,13 +186,17 @@ class Etd < ActiveFedora::Base
   end
 
   def degree_disciplines
-    self.degree.map {|m| m.discipline }.flatten.compact
+    # disciplines come from program name content (in locabulary).
+    @degree_disciplines ||= self.degree.map {|m| m.discipline }.flatten.compact
   end
 
   def department_acronyms
-    # degree_disciplines.collect{|disc| department_acronym_mapper[disc] }.compact
-    degree_disciplines.collect do |disc|
-      ControlledVocabularyService.labels_for_predicate_name(name: 'program_name')
-    end.compact
+    # Program acronyms are no longer used as the primary degree discipline content. This adds indexes to acronyms mapped from the name (where available) to retain the ability to search by acronym.
+    department_acronyms = []
+    degree_disciplines.each do |disc|
+      discipline = ControlledVocabularyService.item_for_predicate_name(name: 'program_name', term_key: 'term_label', term_value: disc)
+      department_acronyms << discipline.acronym unless discipline.nil?
+    end
+    department_acronyms.compact
   end
 end
