@@ -194,7 +194,8 @@ class Etd < ActiveFedora::Base
     # Program acronyms are no longer used as the primary degree discipline content. This adds indexes to acronyms mapped from the name (where available) to retain the ability to search by acronym.
     department_acronyms = []
     degree_disciplines.each do |disc|
-      discipline = ControlledVocabularyService.item_for_predicate_name(name: 'program_name', term_key: 'term_label', term_value: disc)
+      ignore_not_found = (disc.blank? ? true : false)
+      discipline = ControlledVocabularyService.item_for_predicate_name(name: 'program_name', term_key: 'term_label', term_value: disc, ignore_not_found: ignore_not_found)
       department_acronyms << discipline.acronym unless discipline.nil?
     end
     department_acronyms.compact
