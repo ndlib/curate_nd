@@ -18,7 +18,7 @@
 
 <% content_for :page_actions do %>
   <% unless controller.is_orphan_file? %>
-    <% if display_citation_generation? %>
+    <% if display_citation_generation? && !curation_concern.kind_of?(GenericFile) %>
       <%= link_to 'Generate Citation', citation_path(curation_concern) , class: 'btn citation-modal-js' %>
     <% end %>
     <%= link_to 'Usage Details', metrics_usage_path(id: curation_concern.noid) , class: 'btn btn-default' %>
