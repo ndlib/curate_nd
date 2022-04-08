@@ -14,7 +14,7 @@ module Doi
     def self.normalize_identifier(value)
       value.to_s.strip
            .gsub(' ', '')
-           .sub(/\A.*10\./, 'doi:10.')
+           .sub(/\A.*?10\./, 'doi:10.')
     end
 
     def self.remote_uri_for(identifier)

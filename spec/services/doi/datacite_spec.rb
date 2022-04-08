@@ -41,7 +41,9 @@ module Doi
         ["doi: 10.25626/abc123", 'doi:10.25626/abc123'],
         ["doi: 10.25626 / abc123", 'doi:10.25626/abc123'],
         ['https://doi:10.123/abc', 'doi:10.123/abc'],
-        ["https://doi.org/10.1002/ppsc.201700420", "doi:10.1002/ppsc.201700420"]
+        ["https://doi.org/10.1002/ppsc.201700420", "doi:10.1002/ppsc.201700420"],
+        ["https://doi.org/10.1002/ppsc.201700420", "doi:10.1002/ppsc.201700420"],
+        ["https://doi.org/10.1002/12310.56789/abc", "doi:10.1002/12310.56789/abc"]
       ].each do |given, expected|
         it "normalizes a doi" do
           expect(subject.normalize_identifier(given)).to eq(expected)
