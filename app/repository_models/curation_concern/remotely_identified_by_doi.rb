@@ -19,7 +19,7 @@ module CurationConcern
           multiple: false, 
           writer: lambda {|value| normalize_identifier(value) }
 
-        validate :remove_white_space_in_doi
+        validate :remove_white_space_and_normalize_doi
 
         alias_method :identifier, :doi
         alias_method :identifier=, :doi=
@@ -54,8 +54,10 @@ module CurationConcern
 
         private
 
-        def remove_white_space_in_doi
-          self.doi.gsub!(' ', '') if self.respond_to?(:doi) && self.doi.present?
+        def remove_white_space_and_normalize_doi
+          if self.respond_to?(:doi) && self.doi.present?
+            self.doi = normalize_identifier(self.doi)
+          end
         end
       end
     end
