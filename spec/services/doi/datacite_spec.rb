@@ -53,7 +53,7 @@ module Doi
 
     describe '#remote_uri_for' do
       it 'concatenates the resolver url defined in the env with the identifier given' do
-        expect(subject.remote_uri_for('doi:10.25626/abc123').to_s).to eq("#{ENV.fetch('DOI_RESOLVER')}/doi:10.25626/abc123")
+        expect(subject.remote_uri_for('doi:10.25626/abc123').to_s).to eq("#{ENV.fetch('DOI_RESOLVER')}/10.25626/abc123")
       end
     end
   end

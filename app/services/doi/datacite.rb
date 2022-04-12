@@ -18,13 +18,17 @@ module Doi
     end
 
     def self.remote_uri_for(identifier)
-      URI.parse(File.join(resolver_url, identifier))
+      URI.parse(URI.encode(File.join(resolver_url, clean_identifier(identifier))))
     rescue URI::InvalidURIError => e
       Sentry.capture_exception(e)
       nil
     end
 
 private
+
+    def self.clean_identifier(value)
+      normalize_identifier(value).sub(/\A.*?10\./, '10.')
+    end
 
     # Concatenate user:password for basic authentication
     def self.auth_details
