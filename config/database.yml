@@ -33,7 +33,7 @@ local_user: &local_user
   <<: *mysql_settings
   <<: *mysql_connection
   username: root
-  password:
+  password: password
 
 development: &development
   <<: *local_user
