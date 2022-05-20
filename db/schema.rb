@@ -23,6 +23,9 @@ ActiveRecord::Schema.define(version: 20210922214550) do
     t.datetime "updated_at"
   end
 
+  add_index "activity_engine_activities", ["activity_type"], name: "index_activity_engine_activities_on_activity_type", using: :btree
+  add_index "activity_engine_activities", ["subject_id"], name: "index_activity_engine_activities_on_subject_id", using: :btree
+  add_index "activity_engine_activities", ["subject_type"], name: "index_activity_engine_activities_on_subject_type", using: :btree
   add_index "activity_engine_activities", ["user_id"], name: "index_activity_engine_activities_on_user_id", using: :btree
 
   create_table "admin_announcement_dismissals", force: :cascade do |t|
@@ -75,7 +78,6 @@ ActiveRecord::Schema.define(version: 20210922214550) do
     t.integer  "user_id",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "work_id",    limit: 255
   end
 
   add_index "api_access_tokens", ["sha"], name: "index_api_access_tokens_on_sha", unique: true, using: :btree
@@ -146,7 +148,9 @@ ActiveRecord::Schema.define(version: 20210922214550) do
     t.datetime "updated_at"
   end
 
+  add_index "devise_multi_auth_authentications", ["expires_at"], name: "index_devise_multi_auth_authentications_on_expires_at", using: :btree
   add_index "devise_multi_auth_authentications", ["provider", "uid"], name: "index_devise_multi_auth_authentications_on_provider_and_uid", unique: true, using: :btree
+  add_index "devise_multi_auth_authentications", ["user_id"], name: "index_devise_multi_auth_authentications_on_user_id", using: :btree
 
   create_table "domain_terms", force: :cascade do |t|
     t.string "model", limit: 255
@@ -273,6 +277,9 @@ ActiveRecord::Schema.define(version: 20210922214550) do
     t.text     "response_text",    limit: 65535
     t.string   "response_status",  limit: 255
   end
+
+  add_index "orcid_profile_requests", ["orcid_profile_id"], name: "index_orcid_profile_requests_on_orcid_profile_id", using: :btree
+  add_index "orcid_profile_requests", ["user_id"], name: "index_orcid_profile_requests_on_user_id", using: :btree
 
   create_table "orphan_file_requests", force: :cascade do |t|
     t.string   "user_id",          limit: 255
@@ -417,10 +424,6 @@ ActiveRecord::Schema.define(version: 20210922214550) do
     t.string   "website",                              limit: 255
     t.string   "affiliation",                          limit: 255
     t.string   "telephone",                            limit: 255
-    t.string   "avatar_file_name",                     limit: 255
-    t.string   "avatar_content_type",                  limit: 255
-    t.integer  "avatar_file_size",                     limit: 4
-    t.datetime "avatar_updated_at"
     t.text     "group_list",                           limit: 65535
     t.datetime "groups_last_update"
     t.boolean  "agreed_to_terms_of_service",                         default: false

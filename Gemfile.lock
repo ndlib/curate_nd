@@ -249,7 +249,7 @@ GEM
       nokogiri (>= 1.4.3)
     erubi (1.10.0)
     erubis (2.7.0)
-    eventmachine (1.2.7)
+    eventmachine (1.2.1)
     execjs (2.8.1)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
@@ -405,7 +405,7 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
-    mysql2 (0.3.21)
+    mysql2 (0.4.10)
     namae (1.1.1)
     nest (1.1.2)
       redis
@@ -663,7 +663,7 @@ GEM
     stomp (1.4.10)
     test_after_commit (1.2.2)
       activerecord (>= 3.2, < 5.0)
-    thin (1.8.1)
+    thin (1.8.0)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
       rack (>= 1, < 3)
@@ -747,6 +747,7 @@ DEPENDENCIES
   down
   dry-equalizer (= 0.2.2)
   email_validator
+  eventmachine (= 1.2.1)
   factory_girl_rails (~> 4.2.0)
   figaro
   fileutils
@@ -777,7 +778,7 @@ DEPENDENCIES
   method_source
   mini_magick (>= 4.9.4)
   morphine
-  mysql2 (~> 0.3.18)
+  mysql2 (~> 0.4.10)
   namae
   nest (~> 1.1)
   net-ssh (~> 4.1.0)
