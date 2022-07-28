@@ -20,9 +20,11 @@ class Document < ActiveFedora::Base
   self.indefinite_article = 'an'
   self.contributor_label = 'Author'
 
+  # the list of valid document types. Changes will require a change to the type mapping on the Primo pipe 
   DOCUMENT_TYPES = [
     'Book Chapter',
     'Book',
+    'Brief',
     'Brochure',
     'Case Study',
     'Document',
@@ -155,8 +157,8 @@ class Document < ActiveFedora::Base
   # apparently unused(?)
   attribute :format,                     datastream: :descMetadata, multiple: false
   attribute :organization,               datastream: :descMetadata, multiple: true,
-            label: 'School & Department',
-            hint: 'School and Department that creator belong to.'
+            label: "Organization",
+            hint: "Organizations which creators belong to."
   attribute :alephIdentifier,         datastream: :descMetadata, multiple: true,
             validates: {
                 allow_blank: true,

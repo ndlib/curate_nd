@@ -18,7 +18,7 @@
 
 <% content_for :page_actions do %>
   <% unless controller.is_orphan_file? %>
-    <% if display_citation_generation? %>
+    <% if display_citation_generation? && !curation_concern.kind_of?(GenericFile) %>
       <%= link_to 'Generate Citation', citation_path(curation_concern) , class: 'btn citation-modal-js' %>
     <% end %>
     <%= link_to 'Usage Details', metrics_usage_path(id: curation_concern.noid) , class: 'btn btn-default' %>
@@ -34,7 +34,7 @@
     <% if RepoManager.with_active_privileges?(current_user) %>
       <%= link_to 'Reindex this Item', admin_reindex_pid_path(curation_concern.id) , class: 'btn btn-primary' %>
     <% end %>
-    <% if curation_concern.is_a?(GenericFile) && can?(:orphan, GenericFile) %>
+    <% if curation_concern.is_a?(GenericFile) && can?(:orphan, GenericFile) && removal_request_active?(curation_concern) %>
       <%= link_to 'Orphan File', orphan_path(id: curation_concern.noid) , class: 'btn btn-danger' %>
     <% end %>
 <% end %>

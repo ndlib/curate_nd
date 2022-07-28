@@ -4,7 +4,7 @@
 
   <%= f.input :description, input_html: { class: 'input-xxlarge rich-textarea-js', rows: '9' }, as: :text, required: true %>
 
-  <%= f.input :patent_number, input_html: { class: 'input-xlarge' },required: true %>
+  <%= f.input :patent_number, input_html: { class: 'input-xxlarge' },required: true %>
 
   <%= render 'form_administrative_unit', curation_concern: curation_concern, f: f, select_label_id: 'add-to-administrative-unit', button_class: 'btn btn-primary', required: true %>
 </fieldset>

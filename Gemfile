@@ -52,19 +52,19 @@ group :default do
   gem 'jshintrb'
   gem 'json-ld'
   gem 'kaminari'
-  gem 'locabulary', github: 'ndlib/locabulary', ref: 'c692aea4cb188d7d648503856a140dfa87e16a81'
+  gem 'locabulary', github: 'ndlib/locabulary', ref: '44e5059cfd8bb2407a54949f2efef24436120403'
   gem 'lograge'
   gem 'logstash-event'
   gem 'logstash-logger'
   gem 'mailboxer', '~> 0.11'
   gem 'mini_magick', ">= 4.9.4"
   gem 'morphine'
-  gem 'mysql2', '~> 0.3.18'
+  gem 'mysql2', '~> 0.4.10'
   gem 'namae'
   gem 'nest', '~> 1.1'
   gem 'noid', '~> 0.6.6'
   gem 'noids_client', github: 'ndlib/noids_client'
-  gem 'nokogiri', '~> 1.11'
+  gem 'nokogiri', '~> 1.13'
   gem "oai"
   gem 'omniauth-oktaoauth'
   gem 'rmagick'
@@ -144,6 +144,7 @@ group :debug do
   gem 'sextant'
   gem 'simplecov'
   gem 'thin'
+  gem 'eventmachine', '1.2.1'
   gem 'ruby-beautify'
 end
 

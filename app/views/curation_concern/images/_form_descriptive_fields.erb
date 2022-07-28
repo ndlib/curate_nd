@@ -5,10 +5,10 @@
       <div class="span7">
 
         <%= f.input :title,
-          input_html: { class: 'input-xlarge' }
+          input_html: { class: 'input-xxlarge' }
         %>
 
-        <%= f.input :creator,  as: :multi_value, required: true, input_html: { class: 'input-xlarge' } %>
+        <%= f.input :creator,  as: :multi_value, required: true, input_html: { class: 'input-xxlarge' } %>
 
         <%= f.input :date_created,
             label: "Date Created",
@@ -19,7 +19,7 @@
                     as: :select,
                     label: 'Academic Status',
                     collection: affiliations,
-                    input_html: { class: 'input-xlarge' }
+                    input_html: { class: 'input-xxlarge' }
         %>
 
         <%= render 'form_administrative_unit', curation_concern: curation_concern, f: f, select_label_id: 'add-to-administrative-unit', button_class: 'btn btn-primary', required: true %>
@@ -32,15 +32,15 @@
           }
         %>
 
-      <%= f.input :alephIdentifier,         as: :multi_value, label: "Aleph Record Number" , input_html: { class: 'input-xlarge' } %>
+      <%= f.input :alephIdentifier,         as: :multi_value, label: "Aleph Record Number" , input_html: { class: 'input-xxlarge' } %>
 
       <%= f.input :date_digitized,
                   as: :multi_value,
-                  input_html: { class: 'input-xlarge' }
+                  input_html: { class: 'input-xxlarge' }
       %>
       <%= f.input :digitizing_equipment,
                   as: :multi_value,
-                  input_html: { class: 'input-xlarge' }
+                  input_html: { class: 'input-xxlarge' }
       %>
     </div>
 
@@ -49,310 +49,310 @@
       <%= f.input :alternate_title,
                   as: :multi_value,
                   label: "Alternate Title",
-                  input_html: { class: 'input-xlarge' }
+                  input_html: { class: 'input-xxlarge' }
       %>
       <%= f.input :contributor,
                   as: :multi_value,
-                  input_html: { class: 'input-xlarge' }
+                  input_html: { class: 'input-xxlarge' }
       %>
       <%= f.input :source,
                   as: :multi_value,
-                  input_html: { class: 'input-xlarge' }
+                  input_html: { class: 'input-xxlarge' }
       %>
-      <%= f.input :relation,  as: :multi_value, label: "Related Resource(s)", input_html: {class: 'input-xlarge', type: 'url'} %>
+      <%= f.input :relation,  as: :multi_value, label: "Related Resource(s)", input_html: {class: 'input-xxlarge', type: 'url'} %>
 
-      <%= f.input :publisher, as: :multi_value, label: "Publisher", input_html: { class: 'input-xlarge', id: 'publisher' } %>
+      <%= f.input :publisher, as: :multi_value, label: "Publisher", input_html: { class: 'input-xxlarge', id: 'publisher' } %>
 
       <%= f.input :subject,
                   as: :multi_value,
-                  input_html: { class: 'input-xlarge' }
+                  input_html: { class: 'input-xxlarge' }
       %>
       <%= f.input :recommended_citation,
                   as: :multi_value,
                   label: "Recommended Citation",
-                  input_html: { class: 'input-xlarge' }
+                  input_html: { class: 'input-xxlarge' }
       %>
       <%= f.input :language,
                   as: :multi_value,
-                  input_html: { class: 'input-xlarge' }
+                  input_html: { class: 'input-xxlarge' }
       %>
       <%= f.input :size,
                   as: :multi_value,
-                  input_html: { class: 'input-xlarge' }
+                  input_html: { class: 'input-xxlarge' }
       %>
       <%= f.input :requires,
                   as: :multi_value,
-                  input_html: { class: 'input-xlarge' }
+                  input_html: { class: 'input-xxlarge' }
       %>
       <%= f.input :vra_designer,
       		as: :multi_value,
           label: "Designer",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_manufacturer,
       		as: :multi_value,
           label: "Manufacturer",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_printer,
       		as: :multi_value,
           label: "Printer",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_has_technique,
       		as: :multi_value,
           label: "Technique",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_material,
       		as: :multi_value,
           label: "Material",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_cultural_context,
       		as: :multi_value,
           label: "Cultural Context",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :is_part_of,
       		as: :multi_value,
           label: "Part Of",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :is_version_of,
       		as: :multi_value,
           label: "Version Of",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_depth,
       		as: :multi_value,
           label: "Depth",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_diameter,
       		as: :multi_value,
           label: "Diameter",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_height,
       		as: :multi_value,
           label: "Height",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_length,
       		as: :multi_value,
           label: "Length",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_width,
       		as: :multi_value,
           label: "Width",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_weight,
       		as: :multi_value,
           label: "Weight",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_was_performed,
       		as: :multi_value,
           label: "Performance Date",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_was_presented,
       		as: :multi_value,
           label: "Presentation Date",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_was_produced,
           label: "Production Date",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :date_issued,
           label: "Publication Date",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_plan_for,
       		as: :multi_value,
           label: "Plan For",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_preparatory_for,
       		as: :multi_value,
           label: "Preparatory Work For",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_printing_plate_for,
       		as: :multi_value,
           label: "Printing Plate For",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_prototype_for,
       		as: :multi_value,
           label: "Prototype For",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_relief_for,
       		as: :multi_value,
           label: "Relief For",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_replica_of,
       		as: :multi_value,
           label: "Replica Of",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_study_for,
       		as: :multi_value,
           label: "Study For",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_depicts,
       		as: :multi_value,
           label: "Depicts",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_image_of,
       		as: :multi_value,
           label: "Image Of",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_derived_from,
       		as: :multi_value,
           label: "Derived From",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_facsimile_of,
       		as: :multi_value,
           label: "Facsimile Of",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_mate_of,
       		as: :multi_value,
           label: "Mate Of",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_partner_in_set_with,
       		as: :multi_value,
           label: "Partner in Set With",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_was_alteration,
       		as: :multi_value,
           label: "Alteration Date",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_was_commission,
           label: "Commission Date",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_was_designed,
           label: "Date Designed",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_was_destroyed,
           label: "Destruction Date",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_was_discovered,
           label: "Discovery Date",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_was_restored,
       		as: :multi_value,
           label: "Restoration Date",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_place_of_creation,
       		as: :multi_value,
           label: "Place of Creation",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_place_of_discovery,
       		as: :multi_value,
           label: "Place of Discovery",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_place_of_exhibition,
       		as: :multi_value,
           label: "Place of Exhibition",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_place_of_installation,
       		as: :multi_value,
           label: "Place of Installation",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_place_of_publication,
       		as: :multi_value,
           label: "Place of Publication",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_place_of_repository,
       		as: :multi_value,
           label: "Place of Repository",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :vra_place_of_site,
       		as: :multi_value,
           label: "Place of Site",
-      		input_html: { class: 'input-xlarge' }
+      		input_html: { class: 'input-xxlarge' }
       %>
 
       <%= f.input :temporal_coverage,
                   as: :multi_value,
                   label: "Temporal Coverage",
-                  input_html: { class: 'input-xlarge' }
+                  input_html: { class: 'input-xxlarge' }
       %>
       <%= f.input :spatial_coverage,
                   as: :multi_value,
                   label: "Spatial Coverage",
-                  input_html: { class: 'input-xlarge' }
+                  input_html: { class: 'input-xxlarge' }
       %>
-
+      <%= f.input :organization,            as: :multi_value, input_html: { class: 'input-xxlarge' } %>
     </div>
   </div>
 </fieldset>

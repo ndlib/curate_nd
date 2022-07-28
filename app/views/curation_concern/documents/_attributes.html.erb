@@ -58,7 +58,6 @@
   <%= curation_concern_attribute_to_html(curation_concern, :contributor_institution,    'Contributor Institution') %>
   <%= curation_concern_attribute_to_html(curation_concern, :recommended_citation,       'Recommended Citation') %>
   <%= curation_concern_attribute_to_html(curation_concern, :local_identifier,           'Local Identifier') %>
-
   <tr>
     <th>Record Visibility</th>
     <td>
@@ -73,6 +72,7 @@
     <%= curation_concern_attribute_to_html(curation_concern, :license, 'License Agreement') %>
   <% end %>
   <%= decode_administrative_unit(curation_concern, :administrative_unit, 'Departments and Units') %>
+  <%= curation_concern_attribute_to_html(curation_concern, :organization, "Creator Organization(s)") %>
   <%= curation_concern_attribute_to_html(curation_concern, :library_collections, "Member of") %>
   </tbody>
 </table>

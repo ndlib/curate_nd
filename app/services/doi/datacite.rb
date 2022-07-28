@@ -14,17 +14,21 @@ module Doi
     def self.normalize_identifier(value)
       value.to_s.strip
            .gsub(' ', '')
-           .sub(/\A.*10\./, 'doi:10.')
+           .sub(/\A.*?10\./, 'doi:10.')
     end
 
     def self.remote_uri_for(identifier)
-      URI.parse(File.join(resolver_url, identifier))
+      URI.parse(URI.encode(File.join(resolver_url, clean_identifier(identifier))))
     rescue URI::InvalidURIError => e
       Sentry.capture_exception(e)
       nil
     end
 
 private
+
+    def self.clean_identifier(value)
+      normalize_identifier(value).sub(/\A.*?10\./, '10.')
+    end
 
     # Concatenate user:password for basic authentication
     def self.auth_details
@@ -44,9 +48,9 @@ private
                    'Content-Type' => 'application/vnd.api+json' },
         payload: doi_request
       )
-    return 'doi:' + JSON.parse(response.body)['data']['id']
-    rescue RestClient::Exception => e
-      Sentry.capture_exception(e)
+      return 'doi:' + JSON.parse(response.body)['data']['id']
+    rescue RestClient::Exception, RestClient::UnprocessableEntity => e
+      Sentry.capture_exception(e, extra: { doi_request: doi_request } )
       nil
     end
   end

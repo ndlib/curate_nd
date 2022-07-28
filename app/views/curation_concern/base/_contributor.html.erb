@@ -18,10 +18,10 @@
       <%= f.simple_fields_for :contributor do |cf| %>
         <tr class='repeat span12'>
           <td class="name span4">
-            <%= cf.input :contributor, label: false, required: false, wrapper: false, hint: false, input_html: { value: cf.object.contributor.first } %>
+            <%= cf.input :contributor, label: false, required: false, wrapper: false, hint: false, input_html: { value: cf.object.contributor.first, class: 'input-xlarge' } %>
           </td>
           <td class="role span4">
-            <%= cf.input :role, label: false, required: false, wrapper: false, input_html: { value: cf.object.role.first } %>
+            <%= cf.input :role, label: false, required: false, wrapper: false, input_html: { value: cf.object.role.first, class: 'input-xlarge' } %>
           </td>
           <td class="row-controls span4">
           </td>

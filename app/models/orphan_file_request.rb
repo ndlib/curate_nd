@@ -8,6 +8,11 @@ class OrphanFileRequest < ActiveRecord::Base
     update(completed_date: Time.now, updating_user_id: updating_user.id)
   end
 
+  def request_completed?
+    return false if completed_date.blank?
+    true
+  end
+
   private
 
   def send_notification

@@ -4,31 +4,32 @@
               as: :select,
               label: 'Academic Status',
               collection: affiliations,
-              input_html: { class: 'input-xlarge' }
+              input_html: { class: 'input-xxlarge' }
   %>
-  <%= f.input :contributor,             as: :multi_value, input_html: { class: 'input-xlarge' } %>
-  <%= f.input :alternate_title,         as: :multi_value, input_html: { class: 'input-xlarge' } %>
-  <%= f.input :is_part_of,              label: 'Journal or Work Title', input_html: { class: 'input-xlarge' } %>
-  <%= f.input :volume,                  input_html: { class: 'input-xlarge' } %>
-  <%= f.input :issue,                   input_html: { class: 'input-xlarge' } %>
-  <%= f.input :page_start,              label: 'First Page', input_html: { class: 'input-xlarge' } %>
-  <%= f.input :page_end,                label: 'Last Page', input_html: { class: 'input-xlarge' } %>
-  <%= f.input :num_pages,               label: 'Number of Pages', input_html: { class: 'input-xlarge' } %>
-  <%= f.input :publication_date,        placeholder: 'YYYY-MM', input_html: { class: 'input-xlarge' } %>
-  <%= f.input :issn,                    label: 'ISSN', input_html: { class: 'input-xlarge' } %>
-  <%= f.input :eIssn,                   label: 'eISSN', input_html: { class: 'input-xlarge' } %>
-  <%= f.input :isbn,                    label: 'ISBN', input_html: { class: 'input-xlarge' } %>
-  <%= f.input :date_created,            input_html: { class: 'input-xlarge datepicker' } %>
-  <%= f.input :subject,                 as: :multi_value, input_html: { class: 'input-xlarge' } %>
-  <%= f.input :publisher,               as: :multi_value, label: 'Publisher', input_html: { class: 'input-xlarge', id: 'publisher' } %>
-  <%= f.input :recommended_citation,    as: :multi_value, input_html: { class: 'input-xlarge' } %>
-  <%= f.input :language,                as: :multi_value, input_html: { class: 'input-xlarge' } %>
-  <%= f.input :source,                  as: :multi_value, input_html: { class: 'input-xlarge' } %>
-  <%= f.input :relation,                as: :multi_value, label: "Related Resource(s)", input_html: {class: 'input-xlarge', type:'url'} %>
-  <%= f.input :alephIdentifier,         as: :multi_value, label: "Aleph Record Number" , input_html: { class: 'input-xlarge' } %>
-  <%= f.input :temporal_coverage,       as: :multi_value, input_html: { class: 'input-xlarge' } %>
-  <%= f.input :spatial_coverage,        as: :multi_value, input_html: { class: 'input-xlarge' } %>
-  <%= f.input :size,                    as: :multi_value, input_html: { class: 'input-xlarge' } %>
-  <%= f.input :requires,                as: :multi_value, input_html: { class: 'input-xlarge' } %>
+  <%= f.input :contributor,             as: :multi_value, input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :alternate_title,         as: :multi_value, input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :is_part_of,              label: 'Journal or Work Title', input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :volume,                  input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :issue,                   input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :page_start,              label: 'First Page', input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :page_end,                label: 'Last Page', input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :num_pages,               label: 'Number of Pages', input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :publication_date,        placeholder: 'YYYY-MM', input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :issn,                    label: 'ISSN', input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :eIssn,                   label: 'eISSN', input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :isbn,                    label: 'ISBN', input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :date_created,            input_html: { class: 'input-xxlarge datepicker' } %>
+  <%= f.input :subject,                 as: :multi_value, input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :publisher,               as: :multi_value, label: 'Publisher', input_html: { class: 'input-xxlarge', id: 'publisher' } %>
+  <%= f.input :organization,            as: :multi_value, input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :recommended_citation,    as: :multi_value, input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :language,                as: :multi_value, input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :source,                  as: :multi_value, input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :relation,                as: :multi_value, label: "Related Resource(s)", input_html: {class: 'input-xxlarge', type:'url'} %>
+  <%= f.input :alephIdentifier,         as: :multi_value, label: "Aleph Record Number" , input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :temporal_coverage,       as: :multi_value, input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :spatial_coverage,        as: :multi_value, input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :size,                    as: :multi_value, input_html: { class: 'input-xxlarge' } %>
+  <%= f.input :requires,                as: :multi_value, input_html: { class: 'input-xxlarge' } %>
 
 </fieldset>

@@ -11,7 +11,7 @@
       <fieldset class="required">
         <legend>Required Information</legend>
         <%= f.input :title, input_html: { class: 'input-xxlarge'}, required: true %>
-        <%= f.input :creator, input_html: { class: 'input-xlarge', placeholder: 'George Washington' }, required: true %>
+        <%= f.input :creator, input_html: { class: 'input-xxlarge', placeholder: 'George Washington' }, required: true %>
 
         <%= f.input :description, input_html: { class: 'input-xxxlarge rich-textarea-js', rows: '9' }, as: :text, required: true %>
 
@@ -29,13 +29,13 @@
         <p class="help-block">
           Additional information is optional, but helpful for others looking to find your work.
         </p>
-        <%= f.input :advisor, input_html: { placeholder: 'Prof. Roy Hinkley', class: 'input-xlarge' } %>
-        <%= f.input :contributor, input_html: { class: 'input-xlarge' } %>
-        <%= f.input :subject, input_html: { class: 'input-xlarge' } %>
-        <%= f.input :bibliographic_citation, input_html: { class: 'input-xlarge' } %>
-        <%= f.input :language, input_html: { class: 'input-xlarge'} %>
-        <%= f.input :alephIdentifier,         as: :multi_value, label: "Aleph Record Number" , input_html: { class: 'input-xlarge' } %>
-        <%= f.input :publisher, input_html: { class: 'input-xlarge' } %>
+        <%= f.input :advisor, input_html: { placeholder: 'Prof. Roy Hinkley', class: 'input-xxlarge' } %>
+        <%= f.input :contributor, input_html: { class: 'input-xxlarge' } %>
+        <%= f.input :subject, input_html: { class: 'input-xxlarge' } %>
+        <%= f.input :bibliographic_citation, input_html: { class: 'input-xxlarge' } %>
+        <%= f.input :language, input_html: { class: 'input-xxlarge'} %>
+        <%= f.input :alephIdentifier,         as: :multi_value, label: "Aleph Record Number" , input_html: { class: 'input-xxlarge' } %>
+        <%= f.input :publisher, input_html: { class: 'input-xxlarge' } %>
       </fieldset>
     </div>
   </div>
@@ -70,8 +70,8 @@
     <div class="span12">
       <% if curation_concern.respond_to?(:doi) %>
         <%= render "form_doi", curation_concern: curation_concern, f: f %>
-        <% if curation_concern.identifier.present? %>
-          <%= f.input :identifier, label: 'Changes to DOI can be made here', input_html: { class: 'input-xlarge' } %>
+        <% if curation_concern.doi.present? && not_curate_minted_doi?(curation_concern.doi) %>
+          <%= f.input :identifier, label: 'Changes to DOI can be made here', input_html: { class: 'input-xxlarge' } %>
         <% end %>
       <% end %>
     </div>
