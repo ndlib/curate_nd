@@ -9,9 +9,9 @@ GIT
 
 GIT
   remote: https://github.com/ndlib/locabulary.git
-  revision: 5f520f27401866212a5e352824391191bdf17290
+  revision: 272a69e88c7e02b3979f59b02cde7833134faf10
   specs:
-    locabulary (0.8.3)
+    locabulary (0.8.4)
       activesupport (>= 4.0, < 6.0)
       dry-configurable
       json
@@ -398,7 +398,7 @@ GEM
     mini_magick (4.11.0)
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
-    minitest (5.16.2)
+    minitest (5.16.3)
     mono_logger (1.1.1)
     morphine (0.1.1)
     multi_json (1.15.0)
