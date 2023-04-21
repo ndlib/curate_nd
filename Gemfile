@@ -155,7 +155,7 @@ end
 
 group :development do
   gem 'binding_of_caller', :platforms => [:mri_19, :mri_20, :rbx]
-  gem 'rubocop', '~> 0.48.1', require: false # Necessary as part of upgrade to Rails 4.1.0; added for ruby versioning
+  gem 'rubocop', '~> 0.49.0', require: false # Necessary as part of upgrade to Rails 4.1.0; added for ruby versioning
   gem 'rails-erb-lint', require: false
   gem 'scss-lint', require: false
   gem 'brakeman'
