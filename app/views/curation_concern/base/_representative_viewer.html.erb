@@ -72,7 +72,7 @@
 <!-- error, no representative found for id-->
 <% rescue ActiveFedora::ObjectNotFoundError => e %>
   <% exception = Curate::Exceptions::RepresentativeObjectMissingError.new(e, work)%>
-  <% Sentry.capture_exception(exception, extra: { curation_concern: work.pid } ) %>
+  <%
   <!-- error, no representative -->
   <div class="row">
     <div class="work-representation span3">

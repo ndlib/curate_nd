@@ -39,7 +39,7 @@ module Metrics
       @curation_concern ||= begin
         ActiveFedora::Base.load_instance_from_solr(params[:id])
       rescue ActiveFedora::ObjectNotFoundError => e
-        Sentry.capture_exception(e)
+        
         nil
       end
     end

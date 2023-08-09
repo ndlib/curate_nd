@@ -20,7 +20,7 @@ module Doi
     def self.remote_uri_for(identifier)
       URI.parse(URI.encode(File.join(resolver_url, clean_identifier(identifier))))
     rescue URI::InvalidURIError => e
-      Sentry.capture_exception(e)
+      
       nil
     end
 
@@ -50,7 +50,7 @@ private
       )
       return 'doi:' + JSON.parse(response.body)['data']['id']
     rescue RestClient::Exception, RestClient::UnprocessableEntity => e
-      Sentry.capture_exception(e, extra: { doi_request: doi_request } )
+      
       nil
     end
   end

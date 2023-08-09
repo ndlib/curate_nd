@@ -84,7 +84,7 @@ class Api::ShowItemPresenter
         data = merge_hashes(data, parsed_data)
       else
         error_message = "#{item_id}: unknown datastream #{dsname}"
-        Sentry.capture_exception(error_message)
+        
       end
     end
     data
@@ -141,7 +141,7 @@ class Api::ShowItemPresenter
     begin
       bendo_url = bendo_location(ds.datastream_content)
     rescue SocketError => e
-      Sentry.capture_exception(e)
+      
       bendo_url = ""
     end
     data['bendoUrl'] = bendo_url unless bendo_url.blank?
