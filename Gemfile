@@ -59,7 +59,8 @@ group :default do
   gem 'mailboxer', '~> 0.11'
   gem 'mini_magick', ">= 4.9.4"
   gem 'morphine'
-  gem 'mysql2', '~> 0.4.10'
+  #gem 'mysql2', '~> 0.4.10'
+  gem 'sqlite3'
   gem 'namae'
   gem 'nest', '~> 1.1'
   gem 'noid', '~> 0.6.6'
