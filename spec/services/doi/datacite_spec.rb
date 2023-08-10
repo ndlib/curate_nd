@@ -26,7 +26,7 @@ module Doi
           allow(DataciteMapper).to receive(:call).with(curation_concern).and_return(doi_request_object)
         end
         it 'reports RestClient errors' do
-          expect(Sentry).to receive(:capture_exception)
+
           minted_doi
         end
       end

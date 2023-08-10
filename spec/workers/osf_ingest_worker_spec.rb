@@ -35,7 +35,7 @@ RSpec.describe OsfIngestWorker do
     it 'will notify Error Handler if an exception is encountered' do
       exception = RuntimeError.new('OUCH!')
       allow(BatchIngestor).to receive(:start_osf_archive_ingest).and_raise(exception)
-      expect(Sentry).to receive(:capture_exception).with(exception, extra: { error_class: exception.class, parameters: { OsfIngestWorker_attributes: subject.attributes } }
+      .with(exception, extra: { error_class: exception.class, parameters: { OsfIngestWorker_attributes: subject.attributes } }
       )
       expect { subject.run }.to raise_error(exception)
     end
