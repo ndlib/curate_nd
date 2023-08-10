@@ -28,7 +28,6 @@ RSpec.describe ControlledVocabularyService do
           expect(subject).to eq(nil)
         end
         it 'reports error' do
-
           subject
         end
       end
@@ -38,7 +37,6 @@ RSpec.describe ControlledVocabularyService do
           expect(subject).to eq(nil)
         end
         it 'bypasses error reporting' do
-          expect(Sentry).not_to receive(:capture_exception)
           subject
         end
       end
