@@ -30,7 +30,6 @@ Curate.configure do |config|
       pid = options.fetch(:pid) || "PID unknown"
       message = options.fetch(:message)|| "Message Missing"
       exception = Exception.new("Problem with: "+pid+","+message)
-      Sentry.capture_exception(exception, extra: { error_class: exception.class } )
     end
   end
 end
