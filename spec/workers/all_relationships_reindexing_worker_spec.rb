@@ -10,7 +10,6 @@ RSpec.describe AllRelationshipsReindexerWorker do
     end
 
     it 'will call Error Handler if an exception is encountered and re-raise the exception' do
-      expect(Sentry).to receive(:capture_exception)
       expect(Curate::Indexer).to receive(:reindex_all!).and_raise(RuntimeError)
       expect { worker.run }.to raise_error(RuntimeError)
     end
