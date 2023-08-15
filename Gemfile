@@ -82,6 +82,7 @@ group :default do
   gem 'sanitize'
   gem 'sass', '3.4.1' # Maybe necessary as part of upgrade to Rails 4.1.0; added for ruby versioning; at 3.4.25, I encountered "undefined method `log_level' for #<ActiveSupport::Logger:0x0000000a736388>"
   gem 'select2-rails'
+  gem 'sentry-ruby'
   gem 'share_notify', github: 'samvera-labs/share_notify', branch: 'main'
   gem 'simple_form', '~> 3.5.0'
   gem 'unicode'
