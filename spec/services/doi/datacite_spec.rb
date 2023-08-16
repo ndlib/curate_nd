@@ -4,7 +4,7 @@ module Doi
   RSpec.describe Datacite do
     let(:subject) { Doi::Datacite }
     let(:curation_concern) { instance_double(ActiveFedora::Base) }
-    let(:response) { double(RestClient::Response, 
+    let(:response) { double(RestClient::Response,
       body: '{ "data": { "id": "10.xxxx/987654336" }}')}
 
     describe '#mint' do
@@ -24,10 +24,6 @@ module Doi
         before do
           allow(RestClient::Request).to receive(:execute).and_raise(RestClient::UnprocessableEntity)
           allow(DataciteMapper).to receive(:call).with(curation_concern).and_return(doi_request_object)
-        end
-        it 'reports RestClient errors' do
-          expect(Sentry).to receive(:capture_exception)
-          minted_doi
         end
       end
     end

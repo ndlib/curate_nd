@@ -61,7 +61,6 @@ class Citation
       md[:type] = val if val.present?
       CiteProc::Item.new(md)
     rescue TypeError => e
-      Sentry.capture_exception(e, extra: { id: curation_concern.pid })
       nil
     end
   end
@@ -117,7 +116,6 @@ class Citation
     begin
       Date.parse(val)
     rescue ArgumentError => e
-      Sentry.capture_exception(e, extra: { date: val, id: curation_concern.pid })
       nil
     end
   end

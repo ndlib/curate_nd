@@ -13,7 +13,6 @@ class ControlledVocabularyService
     begin
       Locabulary.item_for(predicate_name: name, search_term_key: term_key, search_term_value: term_value)
     rescue Locabulary::Exceptions::ItemNotFoundError => e
-      Sentry.capture_exception(e) unless ignore_not_found
       return nil
     end
   end

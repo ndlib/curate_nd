@@ -3,7 +3,7 @@ on:
   push:
 jobs:
   test-curate_nd:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     # use github hubs to manage service containers
     services:
@@ -39,5 +39,5 @@ jobs:
     - name: Run CI_PREP
       run: RAILS_ENV=ci bundle exec rake curatend:ci_prep
 
-    - name: Run CI Tests 
+    - name: Run CI Tests
       run:  bundle exec rake spec RAILS_ENV=ci
