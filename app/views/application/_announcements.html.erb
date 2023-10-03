@@ -4,10 +4,10 @@
       <div class="span12 announcement-listing">
         <div class="announcement alert alert-info">
           <span class="announcement-text">
-                ATTENTION: CurateND will become read-only at <%= ENV['READ_ONLY_DATE'] %> for an infrastructure update.</br>
+                ATTENTION: CurateND will become read-only on <%= ENV['READ_ONLY_DATE'] %> for an infrastructure update.</br>
                 Submissions cannot be accepted at this time as we upgrade to a new platform.</br>
                 We anticipate this upgrade will be completed by <%= ENV['COMPLETION_DATE'] %>.  Thank you for your patience.</br>
-                If you have any questions, contact the CurateND team at curate@nd.edu.</br>
+                If you have any questions, contact the CurateND team at <a href="mailto:curate@nd.edu">curate@nd.edu</a>.</br>
           </span>
         </div>
         <% Admin::Announcement.for(current_user).each do |announcement| %>
