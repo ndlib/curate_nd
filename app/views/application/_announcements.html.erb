@@ -1,26 +1,31 @@
-  <%#<%- if Admin::Announcement.for(current_user).any? -%>
+<%# <%- if Admin::Announcement.for(current_user).any? -%>
   <div id="announcements" class="container">
     <div class="row">
       <div class="span12 announcement-listing">
-        <%# <% Admin::Announcement.for(current_user).each do |announcement| %>
+        <div class="announcement alert alert-info">
+          <span class="announcement-text">
+                ATTENTION: CurateND will become read-only at <%= ENV['READ_ONLY_DATE'] %> for an infrastructure update.</br>
+                Submissions cannot be accepted at this time as we upgrade to a new platform.</br>
+                We anticipate this upgrade will be completed by <%= ENV['COMPLETION_DATE'] %>.  Thank you for your patience.</br>
+                If you have any questions, contact the CurateND team at curate@nd.edu.</br>
+          </span>
+        </div>
+        <% Admin::Announcement.for(current_user).each do |announcement| %>
           <div class="announcement alert alert-info">
             <span class="announcement-text">
-            <%# <%= announcement %>
-              ATTENTION: CurateND will become read-only at <%= ENV['READ_ONLY_DATE'] %> for an infrastructure update.</br>
-              Submissions cannot be accepted at this time as we upgrade to a new platform.</br>
-              We anticipate this upgrade will be completed by <%= ENV['COMPLETION_DATE'] %>.  Thank you for your patience.</br>
-              If you have any questions, contact the CurateND team at curate@nd.edu.</br>
+            <%= announcement %>
             </span>
 
-            <%# <%= button_to dismiss_announcement_path(id: announcement), method: :delete, remote: true, form_class: 'close', class: 'announcement-dismiss btn btn-link' do %>
-              <%# <span class="icon icon-remove"></span> %>
-              <%# <span class="visuallyhidden"> %>
-                <%# Dismiss this announcement %>
-              <%# </span> %>
-            <%# <% end %>
+            <%= button_to dismiss_announcement_path(id: announcement), method: :delete, remote: true, form_class: 'close', class: 'announcement-dismiss btn btn-link' do %>
+              <span class="icon icon-remove"></span>
+              <span class="visuallyhidden">
+                Dismiss this announcement
+              </span>
+            <% end %>
           </div>
-        <%# <% end %>
+        <% end %>
       </div>
     </div>
   </div>
-  <%#<%- end -%>
+<%# <%- end -%>
+
