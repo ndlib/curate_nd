@@ -1,4 +1,4 @@
-if Rails.env.development?
+if Rails.env.development? && !defined?(Rails::Console)
   require 'byebug/core'
   #Byebug.wait_connection = true
   port = ENV.fetch("BYEBUG_SERVER_PORT", 9876).to_i

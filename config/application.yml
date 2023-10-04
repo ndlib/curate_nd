@@ -41,6 +41,9 @@ AWS_ACCESS_KEY_ID: 'abcde'
 AWS_SECRET_ACCESS_KEY: 'abcde'
 bendo_api_key: more_fakery
 
+READ_ONLY_DATE: "November 1, 2023"
+COMPLETION_DATE: "December 8, 2023"
+
 development:
   # Commented out because these create the requirement to start the noids server
   # in order to run in localhost.

@@ -8,7 +8,5 @@
 <% if current_user %>
   <%= render 'shared/add_content' %>
   <%= render 'shared/my_actions' %>
-<% else %>
-  <%= link_to 'Log In', new_user_session_path, class: 'btn btn-primary login', role: 'menuitem' %>
 <% end %>
 <%= link_to 'FAQ', '/faqs', class: faq_page_classes, role: 'menuitem' %>
