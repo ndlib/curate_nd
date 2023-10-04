@@ -13,7 +13,7 @@ describe "application/_announcements" do
 
     it "renders an empty div" do
       render
-      expect(rendered.strip).to be_empty
+      expect(rendered.strip).to eq "<div id=\"announcements\" class=\"container\">\n    <div class=\"row\">\n      <div class=\"span12 announcement-listing\">\n        <div class=\"announcement alert alert-info\">\n          <span class=\"announcement-text\">\n                ATTENTION: CurateND will become read-only on November 1, 2023 for an infrastructure update.</br>\n                Submissions cannot be accepted at this time as we upgrade to a new platform.</br>\n                We anticipate this upgrade will be completed by December 8, 2023.  Thank you for your patience.</br>\n                If you have any questions, contact the CurateND team at <a href=\"mailto:curate@nd.edu\">curate@nd.edu</a>.</br>\n          </span>\n        </div>\n      </div>\n    </div>\n  </div>"
     end
   end
 
